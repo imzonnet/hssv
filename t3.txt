@@ -1,0 +1,58 @@
+1|111250532301| Dương Hiển An|20/04/93|Quảng Nam| 
+2|111250532302| Đinh Tuấn Anh|13/06/92| Quảng Bình| 
+3|111250532306| Lê Duy Ánh|02/01/93| Quảng Nam| 
+4|111250532308| Hồ Thanh Bình|04/03/93| Nghệ An| 
+5|111250532310| Nguyễn Thành Chung|10/08/93| Quảng Nam| 
+6|111250532312| Nguyễn Quốc Cường|22/09/93|Quảng Trị| 
+7|111250532314| Nguyễn Vĩnh Đạo|26/10/92| Quảng Nam| 
+8|111250532315| Lê Tấn Đạt|01/02/93| Quảng Nam| 
+9|111250532316| Lê Xuân Đạt|16/02/93|Quang Nam| 
+10|111250532317| Phạm Tấn Chính Đạt|08/12/93|Quảng Bình| 
+11|111250532320| Ngô Văn Đức|22/04/93|Hà Tĩnh| 
+12|111250532323| Bùi Tiến Dũng|10/12/92| Quảng Bình| 
+13|111250532324| Nguyễn Công Dược|06/02/91| Nghệ An| 
+14|111250532321| Đinh Thị Kim Dung|29/05/93|Quảng Nam| 
+15|111250532322| Nguyễn Thị Phương Dung|04/12/93|Đắc Lắc| 
+16|111250532326| Trần Duyên|20/06/92| TT Huế| 
+17|111250532330| Phan Việt Hạnh|16/11/92|kon Tum| 
+18|111250532331| Trần Công Hảo|23/03/93|Quảng Nam| 
+19|111250532333| Trần Quang Hậu|19/10/93| Quảng Nam| 
+20|111250532334| Đặng Công Hiền|15/07/92| Đà Nẵng| 
+21|111250532335| Trần Thị Hoàn|05/09/93| Nghệ An| 
+22|111250532336| Nguyễn Văn Hoàng|10/02/93| Quảng Nam| 
+23|111250532337| Thái Bá Hoàng|26/05/93| Đà Nẵng| 
+24|111250532340| Nguyễn Như Hưng|20/02/93| Quảng Nam| 
+25|111250532339| Hồ Hồng Huân|05/06/93| Đà Nẵng| 
+26|111250532341| Phạm Ngọc Huy|16/02/93|Đà Nẵng| 
+27|111250532342| Đào Ngọc Khiêm|24/04/88| Đà Nẵng| 
+28|111250532343| Nguyễn Văn Khoa|03/04/92| Quảng Nam| 
+29|111250532345| Lê Cảnh Khuê|16/12/93| Đà Nẵng| 
+30|111250532348| Nguyễn Chí Linh|20/11/93| Quảng Nam| 
+31|111250532350| Thái Ngọc Long|16/06/93| Đà Nẵng| 
+32|111250532354| Trần Quang Minh|07/01/91| Đà Nẵng| 
+33|111250532355| Lê Thị Ái My|10/01/93|Quảng Nam| 
+34|111250532357| Nguyễn Lê Nhật Nam|03/06/93|Quảng Nam| 
+35|111250532358| Huỳnh Phúc Ngọc|16/08/92| Đà Nẵng| 
+36|111250532359| Nguyễn Hà Ngọc|03/10/93| Đà Nẵng| 
+37|111250532361| Đặng Vũ Nhật Ninh|20/10/93|Ha Noi| 
+38|111250532362| Phan Văn Phi|25/02/93|Quảng nam| 
+39|111250532364| Nguyễn Trọng Minh Quân|12/05/93| Đà Nẵng| 
+40|111250532366| Trần Sang|15/05/93| Đà Nẵng| 
+41|111250532368| Võ Phước Sinh|28/08/92| Đà Nẵng| 
+42|111250532371| Lương Chí Thăng|24/08/92|Hà Tĩnh| 
+43|111250532373| Lê Phi Thành|17/09/93| TT Huế| 
+44|111250532374| Huỳnh Bá Minh Thiện|10/05/93| Đà Nẵng| 
+45|111250532376| Nguyễn Đức Toàn|21/10/93| Gia Lai| 
+46|111250532378| Võ Minh Triết|26/06/93| Đà Nẵng| 
+47|111250532380| Hồ Đình Trung|28/08/93| Đà Nẵng| 
+48|111250532381| Nguyễn Đức Trung|11/04/93| Đà Nẵng| 
+49|111250532382| Trần Đắc Trung|03/11/93|Hà Tĩnh| 
+50|111250532383| Trương Phú Trung|27/09/93|Đà Nẵng| 
+51|111250532391| Hồ Văn Tửu|26/02/93| TT Huế| 
+52|111250532390| Nguyễn Xuân Tưởng|28/02/92|Quảng Nam| 
+53|111250532384| Đặng Trần Ngọc Tuấn|01/05/93| Đà Nẵng| 
+54|111250532385| Đinh Quốc Tuấn|20/09/92| Quảng Nam| 
+55|111250532388| Nguyễn Văn Tuấn|22/10/92| Quảng Trị| 
+56|111250532393| Giang Nguyễn Quốc Việt|08/09/92|Quảng Nam| 
+57|111250532394| Huỳnh Lê Bá Vinh|28/02/93|Đà Nẵng| 
+58|111250532395| Nguyễn Xuân Vinh|17/12/93| Đà Nẵng|

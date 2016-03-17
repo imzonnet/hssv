@@ -1,0 +1,52 @@
+1|111250532101|Ngô Viết Nguyên An|03/12/93|Thanh Khê,Đà Nẵng|
+2|111250532102|Nguyễn Trương An|28/06/93|Thị Trấn Vĩnh Điện H.Điện Bàn T.Quảng Nam|
+3|111250532105|Nguyễn Tuấn Anh|16/10/93|Quảng Bình|
+4|111250532106|Trần Thị Kim Anh|06/06/93|Phong Điền, Thừa Thiên Huế|
+5|111250532107|Bùi Huy Bảo|10/11/93|Thanh Khê,Đà Nẵng|
+6|111250532109|Lưu Trịnh Thành Châu|30/09/93|Đà Nẵng|
+7|111250532110|Trần Ngọc Cường|18/03/93|Quảng Nam|
+8|111250532112|Nguyễn Văn Đại|16/08/93|Quảng Nam|
+9|111250532111|Trần Bình Đà|28/06/90|Đà Nẵng|
+10|111250532117|Hồ Văn Được|30/05/93|Quảng Nam|
+11|111250532118|Đào Phước Hà|29/12/92|TT Huế|
+12|111250532121|Lê Văn Hiếu|06/12/92|Đắc Lắc|
+13|111250532122|Nguyễn Văn Hiếu|20/06/93|Nghệ An|
+14|111250532124|Nguyễn Hữu Hòa|30/11/93|Đà Nẵng|
+15|111250532125|Nguyễn Minh Hoàng|24/10/93|Bình Sơn,Quảng Ngãi|
+16|111250532127|Đinh Ngọc Huy|22/09/93|Sơn Trà Đà Nẵng|
+17|111250532128|Đoàn Quang Huy|10/10/93|Lộc Ninh - Đồng Hới - Quảng Bình|
+18|111250532129|Nguyễn Hồ Thiện Huy|24/08/93|Đà Nẵng|
+19|111250532131|Đặng Văn Khánh|28/07/93|Duy An,Duy Xuyên,Quảng Nam|
+20|111250532133|Hoàng Đức Lâm|29/08/93|Trieu Trung-Trieu Phong-Quang Tri|
+21|111250532136|Võ Đăng Lĩnh|03/10/93|Quảng Nam|
+22|111250532134|Hoàng Thị Liên|15/09/93|Quế Minh, Quế Sơn, Quảng Nam|
+23|111250532184|Trần Đình Lộc|25/03/92|Đà Nẵng|Chuyển từ SP
+24|111250532183|Doãn Mạnh|12/09/89|Tân Ninh-Triệu Sơn-Thanh Hóa|Chuyển từ BK
+25|111250532180|Lê Phúc Ngọc Mẫn|07/05/93|Quảng Trị|
+26|111250532137|Nguyễn Thị Minh|26/03/92|Núi Thành, Quảng Nam|
+27|111250532139|Lê Thị Kim Ngân|10/05/93|SƠN QUẢ,PHONG SƠN,PHONG ĐIỀN,TT HUẾ|
+28|111250532141|Đào Sĩ Đình Nguyên|02/11/93|Hải Quy-Hải Lăng-Quảng Trị|
+29|111250532143|Hoàng Thị Thuý Oanh|10/11/93|Huyện Quảng Ninh, Tỉnh Quảng Bình|
+30|111250532144|Nguyễn Huỳnh Tấn Phát|27/03/93|Tam Kỳ,Quảng Nam|
+31|111250532145|Nguyễn Tấn Phát|05/11/93|Bình Nguyên- Thăng Bình - Quảng Nam|
+32|111250532146|Nguyễn Minh Phương|12/07/93|Trà Dương, Bắc Trà My, Quảng Nam|
+33|111250532147|Nguyễn Bá Quý|05/08/93|Hà Tĩnh|
+34|111250532148|Nguyễn Đình Quý|27/02/93|Quảng Nam|
+35|111250532149|Võ Thanh Sang|20/02/93|eaphê krông păc dak lak|
+36|111250532150|Nguyễn Trinh Sơn|17/09/90|Kỳ Khang - Kỳ Anh - Hà Tĩnh|
+37|111250532152|Lưu Thanh Tâm|15/12/93|Quận Sơn Trà, TP Đà Nẵng|
+38|111250532153|Lê Đức Thắng|22/12/93|Quảng Nam|
+39|111250532178|Nguyễn Văn Thạch|23/10/93|Thanh Phong, Thanh Chương,Nghệ An|
+40|111250532154|Nguyễn Thế Thành|29/07/93|Quế Xuân 1 Quế Sơn Quảng Nam|
+41|111250532181|Phan Văn Thai|13/11/92|Nghệ An|
+42|111250532179|Nguyễn Minh Thanh|02/03/92|Xã Đức Hoá, huyện Tuyên Hoá, tỉnh Quảng Bình|
+43|111250532161|Nguyễn Công Toàn|02/05/93|Quảng Nam|
+44|111250532162|Nguyễn Đình Toàn|12/11/92|Quảng Trị|
+45|111250532163|Nguyễn Thị Bích Trâm|27/05/93|Quảng Nam|
+46|111250532165|Nguyễn Thị Trinh|29/06/93|Duy Xuyên,Quảng Nam|
+47|111250532166|Trương Thanh Trúc|24/03/93|Đà Nẵng|
+48|111250532171|Dương Trần Vũ|23/10/92|Huyện Duy Xuyên-Tỉnh Quảng Nam|
+49|111250532173|Nguyễn Phi Vũ|20/10/92|Đà Nẵng|
+50|111250532174|Phạm Tuấn Vũ|01/01/93|Tiên Mỹ - Tiên Phước - Quảng Nam|
+51|111250532175|Tôn Thất Vũ|01/01/93|TT Huế|
+52|111250532182|Hà Xuân Vương|15/01/93|Quảng Bình|
