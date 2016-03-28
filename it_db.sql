@@ -2,10 +2,10 @@
 -- version 4.1.12
 -- http://www.phpmyadmin.net
 --
--- Client :  127.0.0.1
--- Généré le :  Jeu 17 Mars 2016 à 09:39
--- Version du serveur :  5.6.16
--- Version de PHP :  5.5.11
+-- Host: 127.0.0.1
+-- Generation Time: Mar 28, 2016 at 05:47 PM
+-- Server version: 5.6.16
+-- PHP Version: 5.5.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données :  `it_db`
+-- Database: `it_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `canbo`
+-- Table structure for table `canbo`
 --
 
 CREATE TABLE IF NOT EXISTS `canbo` (
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `canbo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `canbo`
+-- Dumping data for table `canbo`
 --
 
 INSERT INTO `canbo` (`MaCB`, `TenCB`, `MatKhau`, `Email`, `Phone`, `ChucVu`) VALUES
@@ -50,7 +50,35 @@ INSERT INTO `canbo` (`MaCB`, `TenCB`, `MatKhau`, `Email`, `Phone`, `ChucVu`) VAL
 -- --------------------------------------------------------
 
 --
--- Structure de la table `chitietgiayxacnhan`
+-- Table structure for table `chinhtridaukhoa`
+--
+
+CREATE TABLE IF NOT EXISTS `chinhtridaukhoa` (
+  `MaSV` varchar(12) NOT NULL,
+  `HoTen` varchar(255) NOT NULL,
+  `NgaySinh` date NOT NULL,
+  `Nganh` varchar(12) NOT NULL,
+  `Diem` varchar(255) NOT NULL,
+  `Lop` varchar(12) NOT NULL,
+  PRIMARY KEY (`MaSV`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `chinhtridaukhoa`
+--
+
+INSERT INTO `chinhtridaukhoa` (`MaSV`, `HoTen`, `NgaySinh`, `Nganh`, `Diem`, `Lop`) VALUES
+('141250412204', 'Lê Tất Bảo', '0000-00-00', 'C71', '{"1":"x","2":"x","3":"x","4":"x","5":"x","6":"x"}', 'CT08'),
+('141250432103', 'Bùi Tuấn Anh', '0000-00-00', 'C78', '{"1":"x","2":"x","3":"x","4":"x","5":"x","6":"x"}', 'CT08'),
+('141250432106', 'Lê Bá Bảo', '0000-00-00', 'C78', '{"1":"","2":"","3":"","4":"","5":"","6":""}', 'CT08'),
+('141250512202', 'Trần Trọng Ân', '0000-00-00', 'C72', '{"1":"x","2":"x","3":"x","4":"x","5":"x","6":"x"}', 'CT08'),
+('141250532302', 'Trần Tuấn Anh', '0000-00-00', 'C74', '{"1":"","2":"","3":"","4":"","5":"","6":""}', 'CT08'),
+('141250642101', 'Hà Nguyễn Quốc Bảo', '0000-00-00', 'C84', '{"1":"x","2":"x","3":"x","4":"x","5":"x","6":"x"}', 'CT08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chitietgiayxacnhan`
 --
 
 CREATE TABLE IF NOT EXISTS `chitietgiayxacnhan` (
@@ -69,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `chitietgiayxacnhan` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
--- Contenu de la table `chitietgiayxacnhan`
+-- Dumping data for table `chitietgiayxacnhan`
 --
 
 INSERT INTO `chitietgiayxacnhan` (`MaXN`, `MaSV`, `MaHK`, `DiaChiNhan`, `NhanXet`, `NgayXN`, `MaLG`, `SoLanCap`) VALUES
@@ -84,7 +112,7 @@ INSERT INTO `chitietgiayxacnhan` (`MaXN`, `MaSV`, `MaHK`, `DiaChiNhan`, `NhanXet
 -- --------------------------------------------------------
 
 --
--- Structure de la table `chitietyeucau`
+-- Table structure for table `chitietyeucau`
 --
 
 CREATE TABLE IF NOT EXISTS `chitietyeucau` (
@@ -100,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `chitietyeucau` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `chitietyeucau`
+-- Dumping data for table `chitietyeucau`
 --
 
 INSERT INTO `chitietyeucau` (`MaYC`, `MaLG`, `MaHK`, `TrangThai`, `NgayXN`, `GhiChu`) VALUES
@@ -207,7 +235,7 @@ INSERT INTO `chitietyeucau` (`MaYC`, `MaLG`, `MaHK`, `TrangThai`, `NgayXN`, `Ghi
 -- --------------------------------------------------------
 
 --
--- Structure de la table `doituong`
+-- Table structure for table `doituong`
 --
 
 CREATE TABLE IF NOT EXISTS `doituong` (
@@ -217,7 +245,7 @@ CREATE TABLE IF NOT EXISTS `doituong` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
 --
--- Contenu de la table `doituong`
+-- Dumping data for table `doituong`
 --
 
 INSERT INTO `doituong` (`MaDT`, `TenDT`) VALUES
@@ -244,7 +272,7 @@ INSERT INTO `doituong` (`MaDT`, `TenDT`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `giayxacnhan`
+-- Table structure for table `giayxacnhan`
 --
 
 CREATE TABLE IF NOT EXISTS `giayxacnhan` (
@@ -255,7 +283,7 @@ CREATE TABLE IF NOT EXISTS `giayxacnhan` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
 --
--- Contenu de la table `giayxacnhan`
+-- Dumping data for table `giayxacnhan`
 --
 
 INSERT INTO `giayxacnhan` (`MaXN`, `MaYC`) VALUES
@@ -287,7 +315,7 @@ INSERT INTO `giayxacnhan` (`MaXN`, `MaYC`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `hedaotao`
+-- Table structure for table `hedaotao`
 --
 
 CREATE TABLE IF NOT EXISTS `hedaotao` (
@@ -297,7 +325,7 @@ CREATE TABLE IF NOT EXISTS `hedaotao` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
--- Contenu de la table `hedaotao`
+-- Dumping data for table `hedaotao`
 --
 
 INSERT INTO `hedaotao` (`MaDaoTao`, `TenHDT`) VALUES
@@ -311,7 +339,7 @@ INSERT INTO `hedaotao` (`MaDaoTao`, `TenHDT`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `hocky`
+-- Table structure for table `hocky`
 --
 
 CREATE TABLE IF NOT EXISTS `hocky` (
@@ -322,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `hocky` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- Contenu de la table `hocky`
+-- Dumping data for table `hocky`
 --
 
 INSERT INTO `hocky` (`id`, `MaHK`) VALUES
@@ -334,7 +362,7 @@ INSERT INTO `hocky` (`id`, `MaHK`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `hocphi`
+-- Table structure for table `hocphi`
 --
 
 CREATE TABLE IF NOT EXISTS `hocphi` (
@@ -347,7 +375,7 @@ CREATE TABLE IF NOT EXISTS `hocphi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `hocphi`
+-- Dumping data for table `hocphi`
 --
 
 INSERT INTO `hocphi` (`MaSV`, `MaHK`, `TongTien`, `TienDaNop`) VALUES
@@ -526,7 +554,7 @@ INSERT INTO `hocphi` (`MaSV`, `MaHK`, `TongTien`, `TienDaNop`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `khoa`
+-- Table structure for table `khoa`
 --
 
 CREATE TABLE IF NOT EXISTS `khoa` (
@@ -537,7 +565,7 @@ CREATE TABLE IF NOT EXISTS `khoa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `khoa`
+-- Dumping data for table `khoa`
 --
 
 INSERT INTO `khoa` (`MaKhoa`, `TenKhoa`) VALUES
@@ -549,7 +577,7 @@ INSERT INTO `khoa` (`MaKhoa`, `TenKhoa`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ktx_phong`
+-- Table structure for table `ktx_phong`
 --
 
 CREATE TABLE IF NOT EXISTS `ktx_phong` (
@@ -561,7 +589,7 @@ CREATE TABLE IF NOT EXISTS `ktx_phong` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `ktx_phong`
+-- Dumping data for table `ktx_phong`
 --
 
 INSERT INTO `ktx_phong` (`MaPhong`, `SoLuong`, `HienDangO`, `LoaiPhong`) VALUES
@@ -594,7 +622,7 @@ INSERT INTO `ktx_phong` (`MaPhong`, `SoLuong`, `HienDangO`, `LoaiPhong`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `loaigiay`
+-- Table structure for table `loaigiay`
 --
 
 CREATE TABLE IF NOT EXISTS `loaigiay` (
@@ -604,7 +632,7 @@ CREATE TABLE IF NOT EXISTS `loaigiay` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- Contenu de la table `loaigiay`
+-- Dumping data for table `loaigiay`
 --
 
 INSERT INTO `loaigiay` (`MaLG`, `TenLG`) VALUES
@@ -615,7 +643,7 @@ INSERT INTO `loaigiay` (`MaLG`, `TenLG`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `lop`
+-- Table structure for table `lop`
 --
 
 CREATE TABLE IF NOT EXISTS `lop` (
@@ -631,7 +659,7 @@ CREATE TABLE IF NOT EXISTS `lop` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `lop`
+-- Dumping data for table `lop`
 --
 
 INSERT INTO `lop` (`MaLop`, `MaNganh`, `MaDaoTao`, `MaCB`) VALUES
@@ -649,7 +677,7 @@ INSERT INTO `lop` (`MaLop`, `MaNganh`, `MaDaoTao`, `MaCB`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `nganh`
+-- Table structure for table `nganh`
 --
 
 CREATE TABLE IF NOT EXISTS `nganh` (
@@ -661,7 +689,7 @@ CREATE TABLE IF NOT EXISTS `nganh` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `nganh`
+-- Dumping data for table `nganh`
 --
 
 INSERT INTO `nganh` (`MaNganh`, `TenNganh`, `MaKhoa`) VALUES
@@ -677,7 +705,7 @@ INSERT INTO `nganh` (`MaNganh`, `TenNganh`, `MaKhoa`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `nghenghiep`
+-- Table structure for table `nghenghiep`
 --
 
 CREATE TABLE IF NOT EXISTS `nghenghiep` (
@@ -687,7 +715,7 @@ CREATE TABLE IF NOT EXISTS `nghenghiep` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
--- Contenu de la table `nghenghiep`
+-- Dumping data for table `nghenghiep`
 --
 
 INSERT INTO `nghenghiep` (`MaNghe`, `TenNghe`) VALUES
@@ -702,7 +730,7 @@ INSERT INTO `nghenghiep` (`MaNghe`, `TenNghe`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ngoaitru`
+-- Table structure for table `ngoaitru`
 --
 
 CREATE TABLE IF NOT EXISTS `ngoaitru` (
@@ -720,21 +748,21 @@ CREATE TABLE IF NOT EXISTS `ngoaitru` (
   UNIQUE KEY `MaSV` (`MaSV`,`NgayDen`),
   KEY `ngoaitru_ibfk_2` (`MaPhuong`),
   KEY `ngoaitru_ibfk_3` (`MaHK`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=238 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=263 ;
 
 --
--- Contenu de la table `ngoaitru`
+-- Dumping data for table `ngoaitru`
 --
 
 INSERT INTO `ngoaitru` (`MaNT`, `MaSV`, `TenChuTro`, `DiaChi`, `DienThoai`, `MaPhuong`, `MaHK`, `NgayDen`, `NgayDi`, `NgayXN`) VALUES
 (5, '111250532137', 'Nguyễn Đức Anh', '122 ông ích khiêm', '123456789', '20227', 113, '2013-10-14', '2013-10-02', NULL),
 (8, '111250532204', 'Nguyễn Văn A', 'dasdsa', '1231323625', '20254', 113, '2013-10-30', '2013-11-29', NULL),
 (134, '111250532280', 'Võ Thị Tuyết', '74/27 Ông Ích khiêm', '01226942196', '02119', 113, '1970-01-01', '2013-12-01', NULL),
-(135, '111250532207', 'Lê Văn Quang', '62 Hoàng Tích Trí', '0935333329', '20230', 113, '1970-01-01', NULL, NULL),
-(136, '111250532208', 'Đào Thị Thu', 'Số 1, Tân An 1, Tổ 57', '0982454345', '20230', 113, '1970-01-01', NULL, NULL),
-(137, '111250532209', 'Hồ Duy An', 'K89/32 Thanh Sơn', '0982454346', '20236', 113, '1970-01-01', NULL, NULL),
-(138, '111250532210', 'Võ Đình Cang', '26 Nguyễn Trường Tộ', '0935508905', '20239', 113, '2011-03-10', NULL, NULL),
-(139, '111250532211', 'Nguyễn Thị Thu', 'K586/04 Điện Biên Phủ', '0935508906', '20257', 113, '1970-01-01', NULL, NULL),
+(135, '111250532207', 'Lê Văn Quang', '62 Hoàng Tích Trí', '0935333329', '20230', 113, '1970-01-01', '2014-01-10', NULL),
+(136, '111250532208', 'Đào Thị Thu', 'Số 1, Tân An 1, Tổ 57', '0982454345', '20230', 113, '1970-01-01', '2014-01-12', NULL),
+(137, '111250532209', 'Hồ Duy An', 'K89/32 Thanh Sơn', '0982454346', '20236', 113, '1970-01-01', '2015-01-10', NULL),
+(138, '111250532210', 'Võ Đình Cang', '26 Nguyễn Trường Tộ', '0935508905', '20239', 113, '2011-03-10', '2015-01-12', NULL),
+(139, '111250532211', 'Nguyễn Thị Thu', 'K586/04 Điện Biên Phủ', '0935508906', '20257', 113, '1970-01-01', '2016-01-10', NULL),
 (140, '111250532216', 'Đặng Văn Thạch', '87 Cao Thắng', '0935508907', '20258', 113, '1970-01-01', '2013-12-05', NULL),
 (141, '111250532214', 'Hà Thị Kim Chi', 'K268/28 Trần Cao Vân', '01229590399', '07603', 113, '1970-01-01', '2013-12-05', NULL),
 (142, '111250532217', 'Nguyễn Văn Thành', 'K586/04 Điện Biên Phủ', '01229590400', '04702', 113, '1970-01-01', '2013-12-05', NULL),
@@ -805,32 +833,57 @@ INSERT INTO `ngoaitru` (`MaNT`, `MaSV`, `TenChuTro`, `DiaChi`, `DienThoai`, `MaP
 (213, '111250532204', 'Nguyễn Đức Anh', '48 Cao Thắng', '3256524652', '20207', 113, '2013-12-06', '2013-12-10', NULL),
 (215, '111250532204', 'Hoàng Văn Dũng', '44 Cao Thắng', '0985654658', '20230', 113, '2013-12-12', '2014-01-06', NULL),
 (216, '111250532137', 'Nguyễn Thị Minh', '54 Hải Sơn', '0974466237', '20227', 113, '2013-11-01', '2013-12-05', NULL),
-(217, '111250532216', 'Đặng Văn Thạch', '87 Cao Thắng', '0935508907', '20258', 113, '2013-12-20', NULL, NULL),
-(218, '111250532214', 'Hà Thị Kim Chi', 'K268/28 Trần Cao Vân', '01229590399', '07603', 113, '2013-12-20', NULL, NULL),
-(219, '111250532217', 'Nguyễn Văn Thành', 'K586/04 Điện Biên Phủ', '01229590400', '04702', 113, '2013-12-20', NULL, NULL),
-(220, '111250532222', 'Đặng Văn Thạch', '88 Cao Thắng', '01229590402', '02119', 113, '2013-12-20', NULL, NULL),
-(221, '111250532223', 'Đặng Văn Thạch', '87 Cao Thắng', '0906610963', '20230', 113, '2013-12-20', NULL, NULL),
-(222, '111250532224', 'Võ Thị Đức', '544 Núi Thành', '05113638739', '20230', 113, '2013-12-20', NULL, NULL),
-(223, '111250532231', 'Nữ tu Huỳnh Thị An', '16 Phan Tứ, Mỹ An', '05113836248', '20239', 113, '2013-12-20', NULL, NULL),
-(224, '111250532236', 'Từ Thị Thành', 'Tổ 28 p. Thanh Khuê Mỹ', '0935044000', '20258', 113, '2013-12-20', NULL, NULL),
-(225, '111250532237', 'Đào Ngọc Dũng', 'H28/84 Trần Cao Vân', '05113713181', '07603', 113, '2013-12-20', NULL, NULL),
-(226, '111250532240', 'Hồ Kiệu', '12A Phường Hòa Minh', '01682893975', '02119', 113, '2013-12-20', NULL, NULL),
-(227, '111250532241', 'Nguyễn Phi Hải', '293/22 Nguyễn Tất Thành', '0905228027', '02119', 113, '2013-12-20', NULL, NULL),
-(228, '111250532246', 'Nguyễn Văn Bi', '07A Lê Thánh Tôn', '05113830053', '20230', 113, '2013-12-20', NULL, NULL),
-(229, '111250532279', 'Nguyễn Thị Hường', 'K40/1 Phan Thanh', '0905889464', '20230', 113, '2013-12-20', NULL, NULL),
-(230, '111250532249', 'Đặng Văn Thạch', '87 Cao Thắn', '0906610963', '20236', 113, '2013-12-20', NULL, NULL),
-(231, '111250532253', 'Nguyễn Phi Hải', '293/22 Nguyễn Tất Thành', '0906610964', '20239', 113, '2013-12-20', NULL, NULL),
-(232, '111250532254', 'Chu Thị Lịch', '293/22 Nguyễn Tất Thành', '0906610965', '20257', 113, '2013-12-20', NULL, NULL),
-(233, '111250532255', 'Trịnh Xuân Thái', 'K172/24 Trần Cao Vân', '0905011878', '20258', 113, '2013-12-20', NULL, NULL),
-(234, '111250532260', 'Lê Đắc Khoa', 'K158A/69 Trần Cao Vân', '0974466237', '04702', 113, '2013-12-20', NULL, NULL),
-(235, '111250532272', 'Hoàng Thị Hồng', '22A - Lê Quang Sung', '0987983405', '20230', 113, '2013-12-20', NULL, NULL),
-(236, '111250532269', 'Võ Thị Tài', 'K322/H54/32 Hải Phòng', '01689658965', '20236', 113, '2013-12-20', NULL, NULL),
-(237, '111250532137', 'Hoàng Anh Tuấn', '42 Cao Thắng', '0987983405', '20227', 113, '2013-12-05', '2013-12-06', NULL);
+(217, '111250532216', 'Đặng Văn Thạch', '87 Cao Thắng', '0935508907', '20258', 113, '2013-12-20', '2016-03-28', NULL),
+(218, '111250532214', 'Hà Thị Kim Chi', 'K268/28 Trần Cao Vân', '01229590399', '07603', 113, '2013-12-20', '2016-03-28', NULL),
+(219, '111250532217', 'Nguyễn Văn Thành', 'K586/04 Điện Biên Phủ', '01229590400', '04702', 113, '2013-12-20', '2016-03-28', NULL),
+(220, '111250532222', 'Đặng Văn Thạch', '88 Cao Thắng', '01229590402', '02119', 113, '2013-12-20', '2016-03-28', NULL),
+(221, '111250532223', 'Đặng Văn Thạch', '87 Cao Thắng', '0906610963', '20230', 113, '2013-12-20', '2016-03-28', NULL),
+(222, '111250532224', 'Võ Thị Đức', '544 Núi Thành', '05113638739', '20230', 113, '2013-12-20', '2016-03-28', NULL),
+(223, '111250532231', 'Nữ tu Huỳnh Thị An', '16 Phan Tứ, Mỹ An', '05113836248', '20239', 113, '2013-12-20', '2016-03-28', NULL),
+(224, '111250532236', 'Từ Thị Thành', 'Tổ 28 p. Thanh Khuê Mỹ', '0935044000', '20258', 113, '2013-12-20', '2016-03-28', NULL),
+(225, '111250532237', 'Đào Ngọc Dũng', 'H28/84 Trần Cao Vân', '05113713181', '07603', 113, '2013-12-20', '2016-03-28', NULL),
+(226, '111250532240', 'Hồ Kiệu', '12A Phường Hòa Minh', '01682893975', '02119', 113, '2013-12-20', '2016-03-28', NULL),
+(227, '111250532241', 'Nguyễn Phi Hải', '293/22 Nguyễn Tất Thành', '0905228027', '02119', 113, '2013-12-20', '2016-03-28', NULL),
+(228, '111250532246', 'Nguyễn Văn Bi', '07A Lê Thánh Tôn', '05113830053', '20230', 113, '2013-12-20', '2016-03-28', NULL),
+(229, '111250532279', 'Nguyễn Thị Hường', 'K40/1 Phan Thanh', '0905889464', '20230', 113, '2013-12-20', '2016-03-28', NULL),
+(230, '111250532249', 'Đặng Văn Thạch', '87 Cao Thắn', '0906610963', '20236', 113, '2013-12-20', '2016-03-28', NULL),
+(231, '111250532253', 'Nguyễn Phi Hải', '293/22 Nguyễn Tất Thành', '0906610964', '20239', 113, '2013-12-20', '2016-03-28', NULL),
+(232, '111250532254', 'Chu Thị Lịch', '293/22 Nguyễn Tất Thành', '0906610965', '20257', 113, '2013-12-20', '2016-03-28', NULL),
+(233, '111250532255', 'Trịnh Xuân Thái', 'K172/24 Trần Cao Vân', '0905011878', '20258', 113, '2013-12-20', '2016-03-28', NULL),
+(234, '111250532260', 'Lê Đắc Khoa', 'K158A/69 Trần Cao Vân', '0974466237', '04702', 113, '2013-12-20', '2016-03-28', NULL),
+(235, '111250532272', 'Hoàng Thị Hồng', '22A - Lê Quang Sung', '0987983405', '20230', 113, '2013-12-20', '2016-03-28', NULL),
+(236, '111250532269', 'Võ Thị Tài', 'K322/H54/32 Hải Phòng', '01689658965', '20236', 113, '2013-12-20', '2016-03-28', NULL),
+(237, '111250532137', 'Hoàng Anh Tuấn', '42 Cao Thắng', '0987983405', '20227', 113, '2013-12-05', '2013-12-06', NULL),
+(238, '111250532207', 'Lê Văn Quang', '62 Hoàng Tích Trí', '0935333329', '20230', 113, '2014-01-10', NULL, NULL),
+(239, '111250532208', 'Đào Thị Thu', 'Số 1, Tân An 1, Tổ 57', '0982454345', '20230', 113, '2014-01-12', NULL, NULL),
+(240, '111250532209', 'Hồ Duy An', 'K89/32 Thanh Sơn', '0982454346', '20236', 113, '2015-01-10', NULL, NULL),
+(241, '111250532210', 'Võ Đình Cang', '26 Nguyễn Trường Tộ', '0935508905', '20239', 113, '2015-01-12', NULL, NULL),
+(242, '111250532211', 'Nguyễn Thị Thu', 'K586/04 Điện Biên Phủ', '0935508906', '20257', 113, '2016-01-10', NULL, NULL),
+(243, '111250532216', 'Đặng Văn Thạch', '87 Cao Thắng', '0935508907', '20258', 113, '2016-03-28', NULL, NULL),
+(244, '111250532214', 'Hà Thị Kim Chi', 'K268/28 Trần Cao Vân', '01229590399', '07603', 113, '2016-03-28', NULL, NULL),
+(245, '111250532217', 'Nguyễn Văn Thành', 'K586/04 Điện Biên Phủ', '01229590400', '04702', 113, '2016-03-28', NULL, NULL),
+(246, '111250532222', 'Đặng Văn Thạch', '88 Cao Thắng', '01229590402', '02119', 113, '2016-03-28', NULL, NULL),
+(247, '111250532223', 'Đặng Văn Thạch', '87 Cao Thắng', '0906610963', '20230', 113, '2016-03-28', NULL, NULL),
+(248, '111250532224', 'Võ Thị Đức', '544 Núi Thành', '05113638739', '20230', 113, '2016-03-28', NULL, NULL),
+(249, '111250532231', 'Nữ tu Huỳnh Thị An', '16 Phan Tứ, Mỹ An', '05113836248', '20239', 113, '2016-03-28', NULL, NULL),
+(250, '111250532236', 'Từ Thị Thành', 'Tổ 28 p. Thanh Khuê Mỹ', '0935044000', '20258', 113, '2016-03-28', NULL, NULL),
+(251, '111250532237', 'Đào Ngọc Dũng', 'H28/84 Trần Cao Vân', '05113713181', '07603', 113, '2016-03-28', NULL, NULL),
+(252, '111250532240', 'Hồ Kiệu', '12A Phường Hòa Minh', '01682893975', '02119', 113, '2016-03-28', NULL, NULL),
+(253, '111250532241', 'Nguyễn Phi Hải', '293/22 Nguyễn Tất Thành', '0905228027', '02119', 113, '2016-03-28', NULL, NULL),
+(254, '111250532246', 'Nguyễn Văn Bi', '07A Lê Thánh Tôn', '05113830053', '20230', 113, '2016-03-28', NULL, NULL),
+(255, '111250532279', 'Nguyễn Thị Hường', 'K40/1 Phan Thanh', '0905889464', '20230', 113, '2016-03-28', NULL, NULL),
+(256, '111250532249', 'Đặng Văn Thạch', '87 Cao Thắn', '0906610963', '20236', 113, '2016-03-28', NULL, NULL),
+(257, '111250532253', 'Nguyễn Phi Hải', '293/22 Nguyễn Tất Thành', '0906610964', '20239', 113, '2016-03-28', NULL, NULL),
+(258, '111250532254', 'Chu Thị Lịch', '293/22 Nguyễn Tất Thành', '0906610965', '20257', 113, '2016-03-28', NULL, NULL),
+(259, '111250532255', 'Trịnh Xuân Thái', 'K172/24 Trần Cao Vân', '0905011878', '20258', 113, '2016-03-28', NULL, NULL),
+(260, '111250532260', 'Lê Đắc Khoa', 'K158A/69 Trần Cao Vân', '0974466237', '04702', 113, '2016-03-28', NULL, NULL),
+(261, '111250532272', 'Hoàng Thị Hồng', '22A - Lê Quang Sung', '0987983405', '20230', 113, '2016-03-28', NULL, NULL),
+(262, '111250532269', 'Võ Thị Tài', 'K322/H54/32 Hải Phòng', '01689658965', '20236', 113, '2016-03-28', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `phuong`
+-- Table structure for table `phuong`
 --
 
 CREATE TABLE IF NOT EXISTS `phuong` (
@@ -844,7 +897,7 @@ CREATE TABLE IF NOT EXISTS `phuong` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `phuong`
+-- Dumping data for table `phuong`
 --
 
 INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
@@ -11976,7 +12029,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `quan`
+-- Table structure for table `quan`
 --
 
 CREATE TABLE IF NOT EXISTS `quan` (
@@ -11990,7 +12043,7 @@ CREATE TABLE IF NOT EXISTS `quan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `quan`
+-- Dumping data for table `quan`
 --
 
 INSERT INTO `quan` (`MaQuan`, `TenQuan`, `Cap`, `ToaDo`, `MaTinh`) VALUES
@@ -12695,7 +12748,7 @@ INSERT INTO `quan` (`MaQuan`, `TenQuan`, `Cap`, `ToaDo`, `MaTinh`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `renluyen`
+-- Table structure for table `renluyen`
 --
 
 CREATE TABLE IF NOT EXISTS `renluyen` (
@@ -12713,7 +12766,7 @@ CREATE TABLE IF NOT EXISTS `renluyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `renluyen`
+-- Dumping data for table `renluyen`
 --
 
 INSERT INTO `renluyen` (`MaSV`, `MaHK`, `MaLop`, `Diem`, `DiemCD`, `XepLoai`, `NgayXN`, `GhiChu`) VALUES
@@ -12801,7 +12854,7 @@ INSERT INTO `renluyen` (`MaSV`, `MaHK`, `MaLop`, `Diem`, `DiemCD`, `XepLoai`, `N
 -- --------------------------------------------------------
 
 --
--- Structure de la table `sinhvien`
+-- Table structure for table `sinhvien`
 --
 
 CREATE TABLE IF NOT EXISTS `sinhvien` (
@@ -12834,7 +12887,7 @@ CREATE TABLE IF NOT EXISTS `sinhvien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `sinhvien`
+-- Dumping data for table `sinhvien`
 --
 
 INSERT INTO `sinhvien` (`MaSV`, `MatKhau`, `HoTen`, `NgaySinh`, `GioiTinh`, `CMND`, `NgayCap`, `NoiCap`, `DiaChi`, `MaPhuong`, `HoTenCha`, `MaNgheCha`, `HoTenMe`, `MaNgheMe`, `DoiTuong`, `NgayNhapHoc`, `NgayKetThuc`, `KhoaHoc`, `MaLop`, `TinhTrang`) VALUES
@@ -13062,7 +13115,7 @@ INSERT INTO `sinhvien` (`MaSV`, `MatKhau`, `HoTen`, `NgaySinh`, `GioiTinh`, `CMN
 -- --------------------------------------------------------
 
 --
--- Structure de la table `sinhvien_phong`
+-- Table structure for table `sinhvien_phong`
 --
 
 CREATE TABLE IF NOT EXISTS `sinhvien_phong` (
@@ -13083,7 +13136,7 @@ CREATE TABLE IF NOT EXISTS `sinhvien_phong` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=130 ;
 
 --
--- Contenu de la table `sinhvien_phong`
+-- Dumping data for table `sinhvien_phong`
 --
 
 INSERT INTO `sinhvien_phong` (`Id`, `MaSV`, `MaPhong`, `MaHK`, `TrangThai`, `NgayDK`, `NgayXN`, `NguoiXN`, `GhiChu`) VALUES
@@ -13103,7 +13156,7 @@ INSERT INTO `sinhvien_phong` (`Id`, `MaSV`, `MaPhong`, `MaHK`, `TrangThai`, `Nga
 -- --------------------------------------------------------
 
 --
--- Structure de la table `thongtinphanhoi`
+-- Table structure for table `thongtinphanhoi`
 --
 
 CREATE TABLE IF NOT EXISTS `thongtinphanhoi` (
@@ -13118,7 +13171,7 @@ CREATE TABLE IF NOT EXISTS `thongtinphanhoi` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
--- Contenu de la table `thongtinphanhoi`
+-- Dumping data for table `thongtinphanhoi`
 --
 
 INSERT INTO `thongtinphanhoi` (`MaSo`, `TieuDe`, `NoiDung`, `NguoiGoi`, `MaSoCha`, `ThoiGianCapNhat`, `TrangThai`) VALUES
@@ -13132,7 +13185,7 @@ INSERT INTO `thongtinphanhoi` (`MaSo`, `TieuDe`, `NoiDung`, `NguoiGoi`, `MaSoCha
 -- --------------------------------------------------------
 
 --
--- Structure de la table `tinh`
+-- Table structure for table `tinh`
 --
 
 CREATE TABLE IF NOT EXISTS `tinh` (
@@ -13143,7 +13196,7 @@ CREATE TABLE IF NOT EXISTS `tinh` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `tinh`
+-- Dumping data for table `tinh`
 --
 
 INSERT INTO `tinh` (`MaTinh`, `TenTinh`, `Cap`) VALUES
@@ -13214,7 +13267,7 @@ INSERT INTO `tinh` (`MaTinh`, `TenTinh`, `Cap`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `yeucaucapgiay`
+-- Table structure for table `yeucaucapgiay`
 --
 
 CREATE TABLE IF NOT EXISTS `yeucaucapgiay` (
@@ -13226,7 +13279,7 @@ CREATE TABLE IF NOT EXISTS `yeucaucapgiay` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=76 ;
 
 --
--- Contenu de la table `yeucaucapgiay`
+-- Dumping data for table `yeucaucapgiay`
 --
 
 INSERT INTO `yeucaucapgiay` (`MaYC`, `MaSV`, `NgayYC`) VALUES
@@ -13298,11 +13351,11 @@ INSERT INTO `yeucaucapgiay` (`MaYC`, `MaSV`, `NgayYC`) VALUES
 (75, '111250532137', '2014-01-13 14:22:22');
 
 --
--- Contraintes pour les tables exportées
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `chitietgiayxacnhan`
+-- Constraints for table `chitietgiayxacnhan`
 --
 ALTER TABLE `chitietgiayxacnhan`
   ADD CONSTRAINT `chitietgiayxacnhan_ibfk_1` FOREIGN KEY (`MaSV`) REFERENCES `sinhvien` (`MaSV`),
@@ -13311,7 +13364,7 @@ ALTER TABLE `chitietgiayxacnhan`
   ADD CONSTRAINT `chitietgiayxacnhan_ibfk_5` FOREIGN KEY (`MaHK`) REFERENCES `hocky` (`MaHK`);
 
 --
--- Contraintes pour la table `chitietyeucau`
+-- Constraints for table `chitietyeucau`
 --
 ALTER TABLE `chitietyeucau`
   ADD CONSTRAINT `chitietyeucau_ibfk_1` FOREIGN KEY (`MaYC`) REFERENCES `yeucaucapgiay` (`MaYC`),
@@ -13319,20 +13372,20 @@ ALTER TABLE `chitietyeucau`
   ADD CONSTRAINT `chitietyeucau_ibfk_3` FOREIGN KEY (`MaHK`) REFERENCES `hocky` (`MaHK`);
 
 --
--- Contraintes pour la table `giayxacnhan`
+-- Constraints for table `giayxacnhan`
 --
 ALTER TABLE `giayxacnhan`
   ADD CONSTRAINT `giayxacnhan_ibfk_1` FOREIGN KEY (`MaYC`) REFERENCES `yeucaucapgiay` (`MaYC`);
 
 --
--- Contraintes pour la table `hocphi`
+-- Constraints for table `hocphi`
 --
 ALTER TABLE `hocphi`
   ADD CONSTRAINT `hocphi_ibfk_1` FOREIGN KEY (`MaHK`) REFERENCES `hocky` (`MaHK`),
   ADD CONSTRAINT `HPhiSV` FOREIGN KEY (`MaSV`) REFERENCES `sinhvien` (`MaSV`);
 
 --
--- Contraintes pour la table `lop`
+-- Constraints for table `lop`
 --
 ALTER TABLE `lop`
   ADD CONSTRAINT `fk_macb` FOREIGN KEY (`MaCB`) REFERENCES `canbo` (`MaCB`),
@@ -13340,13 +13393,13 @@ ALTER TABLE `lop`
   ADD CONSTRAINT `LopNganh` FOREIGN KEY (`MaNganh`) REFERENCES `nganh` (`MaNganh`);
 
 --
--- Contraintes pour la table `nganh`
+-- Constraints for table `nganh`
 --
 ALTER TABLE `nganh`
   ADD CONSTRAINT `nganh_ibfk_1` FOREIGN KEY (`MaKhoa`) REFERENCES `khoa` (`MaKhoa`);
 
 --
--- Contraintes pour la table `ngoaitru`
+-- Constraints for table `ngoaitru`
 --
 ALTER TABLE `ngoaitru`
   ADD CONSTRAINT `ngoaitru_ibfk_1` FOREIGN KEY (`MaSV`) REFERENCES `sinhvien` (`MaSV`),
@@ -13354,19 +13407,19 @@ ALTER TABLE `ngoaitru`
   ADD CONSTRAINT `ngoaitru_ibfk_3` FOREIGN KEY (`MaHK`) REFERENCES `hocky` (`MaHK`);
 
 --
--- Contraintes pour la table `phuong`
+-- Constraints for table `phuong`
 --
 ALTER TABLE `phuong`
   ADD CONSTRAINT `PhuongQuan` FOREIGN KEY (`MaQuan`) REFERENCES `quan` (`MaQuan`);
 
 --
--- Contraintes pour la table `quan`
+-- Constraints for table `quan`
 --
 ALTER TABLE `quan`
   ADD CONSTRAINT `QuanTinh` FOREIGN KEY (`MaTinh`) REFERENCES `tinh` (`MaTinh`);
 
 --
--- Contraintes pour la table `renluyen`
+-- Constraints for table `renluyen`
 --
 ALTER TABLE `renluyen`
   ADD CONSTRAINT `renluyen_ibfk_1` FOREIGN KEY (`MaSV`) REFERENCES `sinhvien` (`MaSV`),
@@ -13374,14 +13427,14 @@ ALTER TABLE `renluyen`
   ADD CONSTRAINT `renluyen_ibfk_4` FOREIGN KEY (`MaHK`) REFERENCES `hocky` (`MaHK`);
 
 --
--- Contraintes pour la table `sinhvien`
+-- Constraints for table `sinhvien`
 --
 ALTER TABLE `sinhvien`
   ADD CONSTRAINT `sinhvien_ibfk_1` FOREIGN KEY (`MaPhuong`) REFERENCES `phuong` (`MaPhuong`),
   ADD CONSTRAINT `sinhvien_ibfk_5` FOREIGN KEY (`MaLop`) REFERENCES `lop` (`MaLop`);
 
 --
--- Contraintes pour la table `sinhvien_phong`
+-- Constraints for table `sinhvien_phong`
 --
 ALTER TABLE `sinhvien_phong`
   ADD CONSTRAINT `sinhvien_phong_ibfk_1` FOREIGN KEY (`MaSV`) REFERENCES `sinhvien` (`MaSV`),
@@ -13389,7 +13442,7 @@ ALTER TABLE `sinhvien_phong`
   ADD CONSTRAINT `sinhvien_phong_ibfk_3` FOREIGN KEY (`MaHK`) REFERENCES `hocky` (`MaHK`);
 
 --
--- Contraintes pour la table `yeucaucapgiay`
+-- Constraints for table `yeucaucapgiay`
 --
 ALTER TABLE `yeucaucapgiay`
   ADD CONSTRAINT `yeucaucapgiay_ibfk_1` FOREIGN KEY (`MaSV`) REFERENCES `sinhvien` (`MaSV`);
