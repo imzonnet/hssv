@@ -11,7 +11,7 @@ class CanBo extends CI_Controller
     {
         parent::__construct();
         
-        $this->load->model(array('mcanbo','mgiayxn','msinhvien','maddress','mngoaitru','mrenluyen','mlopsh','mktx','mnoitru'));
+        $this->load->model(array('mcanbo','mgiayxn','msinhvien','maddress','mngoaitru','mrenluyen','mlopsh','mktx','mnoitru','mctdaukhoa'));
         
         if($this->my_auth->is_Login()) 
         {
@@ -1380,9 +1380,16 @@ class CanBo extends CI_Controller
         if(!$this->my_auth->is_CanBo()) {redirect("canbo/login");}
         $data['cb_id'] = $this->cb->macb;
         $data['cb_name'] = $this->cb->tencb;
-        $ngayxn = $this->my_auth->setDate();
         $data['task_name']   = "Thêm danh sách điểm rèn luyện";
         $data['sub_views']  =   "ct_them";
+        $this->load->view("home/main_layout",$data);
+    }
+    public function xemdsctdk(){
+        if(!$this->my_auth->is_CanBo()) {redirect("canbo/login");}
+        $data['cb_id'] = $this->cb->macb;
+        $data['cb_name'] = $this->cb->tencb;
+        $data['task_name']   = "Thêm danh sách điểm rèn luyện";
+        $data['sub_views']  =   "ct_them_xem";
         $config['upload_path'] = './upload/chinhtri/';
         $config['allowed_types'] = 'xls|xlsx';
         $CI = get_instance();
@@ -1394,37 +1401,95 @@ class CanBo extends CI_Controller
             } else {
                 $file = $CI->upload->data();
                 $url = 'upload/chinhtri/'.$file['file_name'];
+                $this->session->set_flashdata('surl', $url);
                 $this->load->library("excel");
+                if($this->session->flashdata('surl') != null){
+                    $objPHPExcel = PHPExcel_IOFactory::load($this->session->flashdata('surl'));
+                }
                 $objPHPExcel = PHPExcel_IOFactory::load($url);
                 foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
                     $worksheetTitle     = $worksheet->getTitle();
                     $highestRow         = $worksheet->getHighestRow()-6; // e.g. 10
                     $highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
                     $nrColumns = ord($highestColumn) - 64;
-                    $data['sbd'] = $worksheet->getCellByColumnAndRow(3, 5)->getValue();
+                    $data['masv'] = $worksheet->getCellByColumnAndRow(3, 5)->getValue();
                     $data['hovaten']= $worksheet->getCellByColumnAndRow(4, 5)->getValue();
                     $data['ngaysinh'] = $worksheet->getCellByColumnAndRow(6, 5)->getValue();
                     $data['nganh'] = $worksheet->getCellByColumnAndRow(7, 5)->getValue();
                     $data['lop'] = $worksheet->getCellByColumnAndRow(13, 5)->getValue();
-                    for ($row = 6; $row <= 40; ++ $row) {
+                    $rowOnPage = 40;
+                    $soPage= ceil($highestRow / $rowOnPage);
+                    $currentpage = $this->uri->segment(3);
+
+                    if($currentpage == 0){
+                        $recordStart =5;
+                        $recordEnd =  $recordStart + $rowOnPage;
+                    }
+                    else{
+                        $recordStart = $rowOnPage * $currentpage;
+                        $recordEnd =  $recordStart + $rowOnPage;
+                    }
+                    for ($row = $recordStart ; $row <= $recordEnd; ++ $row) {
                         $ctdk[] = array(
-                            'sbd' => trim($worksheet->getCellByColumnAndRow(3, $row)->getValue()),
+                            'stt' => trim($worksheet->getCellByColumnAndRow(0, $row)->getValue()),
+                            'masv' => trim($worksheet->getCellByColumnAndRow(2, $row)->getValue()),
                             'hovachulot' => trim($worksheet->getCellByColumnAndRow(4, $row)->getValue()),
                             'ten' =>trim($worksheet->getCellByColumnAndRow(5,$row)->getValue()),
                             'ngaysinh' => trim($worksheet->getCellByColumnAndRow(6, $row)->getValue()),
                             'nganh' => trim($worksheet->getCellByColumnAndRow(7, $row)->getValue()),
-                            'lop' => trim($worksheet->getCellByColumnAndRow(13, $row)->getValue()),
+                            'lop' => trim($worksheet->getCellByColumnAndRow(14, $row)->getValue()),
                         );
                     }
                   }
                   $data['ds']  =   $ctdk;
-                  $data['sub_views']  =   "ct_them_xem";
+            }
+        }
+        $this->load->view("home/main_layout",$data);
+    }
+    public function addctdaukhoa(){
+        if(!$this->my_auth->is_CanBo()) {redirect("canbo/login");}
+        $data['cb_id'] = $this->cb->macb;
+        $data['cb_name'] = $this->cb->tencb;
+        $data['task_name']   = "Thêm danh sách điểm rèn luyện";
+        $data['sub_views']  =   "ct_them_add";
+        $config['upload_path'] = './upload/chinhtri/';
+        $config['allowed_types'] = 'xls|xlsx';
+        $CI = get_instance();
+        $CI->load->library('upload', $config);
+        $ctdk = array();
+        if($this->input->post('done') !="") {
+                $this->load->library("excel");
+                $objPHPExcel = PHPExcel_IOFactory::load($this->session->flashdata('surl'));
+                foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+                    $worksheetTitle     = $worksheet->getTitle();
+                    $highestRow         = $worksheet->getHighestRow()-6; // e.g. 10
+                    $highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
+                    $nrColumns = ord($highestColumn) - 64;
+                    for ($row = 5 ; $row <= 15; ++ $row) {
+                            $masv = trim($worksheet->getCellByColumnAndRow(2, $row)->getValue());
+                            $ngaysinh = trim($worksheet->getCellByColumnAndRow(6, $row)->getValue());
+                            $nganh = trim($worksheet->getCellByColumnAndRow(7, $row)->getValue());
+                            $diem['ngay1'] = trim($worksheet->getCellByColumnAndRow(8, $row)->getValue());
+                            $diem['ngay2'] = trim($worksheet->getCellByColumnAndRow(9, $row)->getValue());
+                            $diem['ngay3'] = trim($worksheet->getCellByColumnAndRow(10, $row)->getValue());
+                            $diem['ngay4'] = trim($worksheet->getCellByColumnAndRow(11, $row)->getValue());
+                            $diem['ngay5'] = trim($worksheet->getCellByColumnAndRow(12, $row)->getValue());
+                            $diem['ngay6'] = trim($worksheet->getCellByColumnAndRow(13, $row)->getValue());
+                            $hovachulot = trim($worksheet->getCellByColumnAndRow(4, $row)->getValue());
+                            $ten = trim($worksheet->getCellByColumnAndRow(5,$row)->getValue());
+                            $hovaten = $hovachulot.' '.$ten;
+                            $lop = trim($worksheet->getCellByColumnAndRow(14, $row)->getValue());
+                            $this->mctdaukhoa->addchinhtridaukhoa($masv,$hovaten,$ngaysinh,$nganh,json_encode($diem),$lop);
+                  }
+                  $data['success'] ='Thêm thành công';
             }
         }
         $this->load->view("home/main_layout",$data);
     }
      /*************************************************************************************
                                         Khac
+    }
+    }
     *************************************************************************************/
     /**
      * Phan hoi sinh vien

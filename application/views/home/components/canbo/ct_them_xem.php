@@ -1,9 +1,9 @@
 <h4 class="text-center">DANH SÁCH SINH VIÊN CHÍNH TRỊ ĐẦU KHÓA</h4>
-<form action="canbo/themsvnt" method="post">
+<form action="canbo/addctdaukhoa" method="post">
     <table class="table table-bordered table-striped ngoaitru">
         <tr>
             <th>STT</th>
-            <th>Số BD</th>
+            <th>Mã SV</th>
             <th>Họ Tên</th>
             <th>Ngày Sinh</th>
             <th>Ngành</th>
@@ -14,8 +14,8 @@
         foreach($ds as $k =>$v) {
     ?>
             <tr>
-                <td><?php echo $i; ?></td>
-                <td><?php echo $v['sbd']; ?></td>
+                <td><?php echo $v['stt']; ?></td>
+                <td><?php echo $v['masv']; ?></td>
                 <td><?php echo $v['hovachulot'].' '.$v['ten']; ?></td>
                 <td><?php echo $v['ngaysinh']; ?></td>
                 <td><?php echo $v['nganh']; ?></td>
@@ -26,3 +26,6 @@
         }
     ?>
     </table>
+    <a href='canbo/themdiemctdk' class="btn btn-inverse">Hủy Bỏ</a>
+    <button type="submit" name="done" class="btn btn-primary" value="ok">Xác Nhận</button>
+</form>
