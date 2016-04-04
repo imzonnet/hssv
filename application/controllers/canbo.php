@@ -11,7 +11,7 @@ class CanBo extends CI_Controller
     {
         parent::__construct();
         
-        $this->load->model(array('mcanbo','mgiayxn','msinhvien','maddress','mngoaitru','mrenluyen','mlopsh','mktx','mnoitru','mctdaukhoa'));
+        $this->load->model(array('mcanbo','mgiayxn','msinhvien','maddress','mngoaitru','mrenluyen','mlopsh','mktx','mnoitru','mctdaukhoa','mtuyendung'));
         
         if($this->my_auth->is_Login()) 
         {
@@ -490,8 +490,7 @@ class CanBo extends CI_Controller
      * bao cao danh sach sinh vien noi tru theo lop sinh hoat
      */
     
-    public function thongKeDsSvNoiTruTheoLop($malop)
-    {
+    public function thongKeDsSvNoiTruTheoLop($malop){
         if(!$this->my_auth->is_CanBo()) {redirect("canbo/login");}
         $data['sub_views']  =   "bc_tk_lopsh_noitru";
         $data['malop']     =   $malop;
@@ -1247,7 +1246,7 @@ class CanBo extends CI_Controller
         $data['cb_id']      =   $this->cb_id;
         $data['cb_name']    =   $this->cb->tencb;
         $data['task_name']  =   "Kết quả tìm kiếm điểm rèn luyện";
-		$data['ds_lop']     =   $this->mlopsh->dsLopSH();
+        $data['ds_lop']     =   $this->mlopsh->dsLopSH();
         $data['ds_hk']      =   $this->mhocky->listHK();
         if($this->input->post('search')!="")
         {
@@ -1260,8 +1259,8 @@ class CanBo extends CI_Controller
             $data['lopsh']      = $malop; 
             $data['mahk']       = $mahk;
             $data['thongke']    = $this->mrenluyen->thongkeDRL($malop,$mahk); //thong ke
-            $max                = count($this->mrenluyen->dsDRL($malop, $mahk)); //count rows posts
-            $min                = 20;
+            $max = count($this->mrenluyen->dsDRL($malop, $mahk)); //count rows posts
+            $min = 20;
             //$config['base_url'] = site_url($base_url);
             $cf['base_url']     = site_url('canbo/ketquadrllsh/'.$malop.'/'.$mahk);
             $cf['total_rows']   = $max;
@@ -1412,17 +1411,11 @@ class CanBo extends CI_Controller
                     $highestRow         = $worksheet->getHighestRow()-6; // e.g. 10
                     $highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
                     $nrColumns = ord($highestColumn) - 64;
-                    $data['masv'] = $worksheet->getCellByColumnAndRow(3, 5)->getValue();
-                    $data['hovaten']= $worksheet->getCellByColumnAndRow(4, 5)->getValue();
-                    $data['ngaysinh'] = $worksheet->getCellByColumnAndRow(6, 5)->getValue();
-                    $data['nganh'] = $worksheet->getCellByColumnAndRow(7, 5)->getValue();
-                    $data['lop'] = $worksheet->getCellByColumnAndRow(13, 5)->getValue();
-                    $rowOnPage = 40;
+                    $rowOnPage = 160;
                     $soPage= ceil($highestRow / $rowOnPage);
-                    $currentpage = $this->uri->segment(3);
-
+                    $currentpage = $this->uri->segment(3,0);
                     if($currentpage == 0){
-                        $recordStart =5;
+                        $recordStart = 5;
                         $recordEnd =  $recordStart + $rowOnPage;
                     }
                     else{
@@ -1433,6 +1426,7 @@ class CanBo extends CI_Controller
                         $ctdk[] = array(
                             'stt' => trim($worksheet->getCellByColumnAndRow(0, $row)->getValue()),
                             'masv' => trim($worksheet->getCellByColumnAndRow(2, $row)->getValue()),
+                            'bienlaiso' => trim($worksheet->getCellByColumnAndRow(3, $row)->getValue()),
                             'hovachulot' => trim($worksheet->getCellByColumnAndRow(4, $row)->getValue()),
                             'ten' =>trim($worksheet->getCellByColumnAndRow(5,$row)->getValue()),
                             'ngaysinh' => trim($worksheet->getCellByColumnAndRow(6, $row)->getValue()),
@@ -1447,50 +1441,251 @@ class CanBo extends CI_Controller
         $this->load->view("home/main_layout",$data);
     }
     public function addctdaukhoa(){
-        if(!$this->my_auth->is_CanBo()) {redirect("canbo/login");}
-        $data['cb_id'] = $this->cb->macb;
-        $data['cb_name'] = $this->cb->tencb;
-        $data['task_name']   = "Thêm danh sách điểm rèn luyện";
-        $data['sub_views']  =   "ct_them_add";
-        $config['upload_path'] = './upload/chinhtri/';
-        $config['allowed_types'] = 'xls|xlsx';
-        $CI = get_instance();
-        $CI->load->library('upload', $config);
-        $ctdk = array();
-        if($this->input->post('done') !="") {
-                $this->load->library("excel");
-                $objPHPExcel = PHPExcel_IOFactory::load($this->session->flashdata('surl'));
-                foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
-                    $worksheetTitle     = $worksheet->getTitle();
-                    $highestRow         = $worksheet->getHighestRow()-6; // e.g. 10
-                    $highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
-                    $nrColumns = ord($highestColumn) - 64;
-                    for ($row = 5 ; $row <= 15; ++ $row) {
-                            $masv = trim($worksheet->getCellByColumnAndRow(2, $row)->getValue());
-                            $ngaysinh = trim($worksheet->getCellByColumnAndRow(6, $row)->getValue());
-                            $nganh = trim($worksheet->getCellByColumnAndRow(7, $row)->getValue());
-                            $diem['ngay1'] = trim($worksheet->getCellByColumnAndRow(8, $row)->getValue());
-                            $diem['ngay2'] = trim($worksheet->getCellByColumnAndRow(9, $row)->getValue());
-                            $diem['ngay3'] = trim($worksheet->getCellByColumnAndRow(10, $row)->getValue());
-                            $diem['ngay4'] = trim($worksheet->getCellByColumnAndRow(11, $row)->getValue());
-                            $diem['ngay5'] = trim($worksheet->getCellByColumnAndRow(12, $row)->getValue());
-                            $diem['ngay6'] = trim($worksheet->getCellByColumnAndRow(13, $row)->getValue());
-                            $hovachulot = trim($worksheet->getCellByColumnAndRow(4, $row)->getValue());
-                            $ten = trim($worksheet->getCellByColumnAndRow(5,$row)->getValue());
-                            $hovaten = $hovachulot.' '.$ten;
-                            $lop = trim($worksheet->getCellByColumnAndRow(14, $row)->getValue());
-                            $this->mctdaukhoa->addchinhtridaukhoa($masv,$hovaten,$ngaysinh,$nganh,json_encode($diem),$lop);
-                  }
-                  $data['success'] ='Thêm thành công';
+            if(!$this->my_auth->is_CanBo()) {redirect("canbo/login");}
+            $data['cb_id'] = $this->cb->macb;
+            $data['cb_name'] = $this->cb->tencb;
+            $data['task_name']   = "Thêm danh sách điểm rèn luyện";
+            $data['sub_views']  =   "ct_them_add";
+            $config['upload_path'] = './upload/chinhtri/';
+            $config['allowed_types'] = 'xls|xlsx';
+            $CI = get_instance();
+            $CI->load->library('upload', $config);
+            $ctdk = array();
+            if($this->input->post('done') !="") {
+                        $this->load->library("excel");
+                        if($this->session->flashdata('surl') != null){ $objPHPExcel = PHPExcel_IOFactory::load($this->session->flashdata('surl'));}
+                        $objPHPExcel = PHPExcel_IOFactory::load($this->session->flashdata('surl'));
+                        foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+                                    $highestRow         = $worksheet->getHighestRow(); // e.g. 10
+                                    $highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
+                                    $nrColumns = ord($highestColumn) - 64;
+                                    $soluongthemmoi = $soluongcapnhat = 0;
+                                    for ($row = 5 ; $row <= $highestRow; ++ $row) {
+                                                $masv = trim($worksheet->getCellByColumnAndRow(2, $row)->getValue());
+                                                $bienlaiso = trim($worksheet->getCellByColumnAndRow(3,$row)->getValue());
+                                                $ns = trim($worksheet->getCellByColumnAndRow(6, $row)->getValue());
+                                                $ngay = substr($ns, 0,2);
+                                                $thang = substr($ns,3,2);
+                                                $nam =substr($ns,6,4);
+                                                $ngaysinh = $nam.'-'.$thang.'-'.$ngay;
+                                                $nganh = trim($worksheet->getCellByColumnAndRow(7, $row)->getValue());
+                                                $diem['ngay1'] = trim($worksheet->getCellByColumnAndRow(8, $row)->getValue());
+                                                $diem['ngay2'] = trim($worksheet->getCellByColumnAndRow(9, $row)->getValue());
+                                                $diem['ngay3'] = trim($worksheet->getCellByColumnAndRow(10, $row)->getValue());
+                                                $diem['ngay4'] = trim($worksheet->getCellByColumnAndRow(11, $row)->getValue());
+                                                $diem['ngay5'] = trim($worksheet->getCellByColumnAndRow(12, $row)->getValue());
+                                                $diem['ngay6'] = trim($worksheet->getCellByColumnAndRow(13, $row)->getValue());
+                                                $hovachulot = trim($worksheet->getCellByColumnAndRow(4, $row)->getValue());
+                                                $ten = trim($worksheet->getCellByColumnAndRow(5,$row)->getValue());
+                                                $hovaten = $hovachulot.' '.$ten;
+                                                $lop = trim($worksheet->getCellByColumnAndRow(14, $row)->getValue());
+                                                if($this->mctdaukhoa->checkchinhtridaukhoa($bienlaiso) == true){
+                                                            $this->mctdaukhoa->updatechinhtridaukhoa($bienlaiso,json_encode($diem));
+                                                            $soluongcapnhat++;
+                                                }
+                                                else{
+                                                            $this->mctdaukhoa->addchinhtridaukhoa($masv,$bienlaiso,$hovaten,$ngaysinh,$nganh,json_encode($diem),$lop);
+                                                            $soluongthemmoi++;
+                                                } 
+                                    }
+                        }
+                        if($soluongcapnhat && $soluongthemmoi = 0){
+                                    $data['error'] = 'Thêm mới thất bại';
+                        }
+                        else{
+                                    $data['slcn']  =   $soluongcapnhat;
+                                    $data['sltm'] = $soluongthemmoi;    
+                        }
+                        
             }
-        }
-        $this->load->view("home/main_layout",$data);
+            $this->load->view("home/main_layout",$data);
+    }
+    public function timdiemctdk(){
+            if(!$this->my_auth->is_CanBo()) {redirect("canbo/login");}
+            $data['cb_id'] = $this->cb->macb;
+            $data['cb_name'] = $this->cb->tencb;
+            $data['task_name']   = "Tìm kiếm điểm chính trị đầu khóa"; 
+            $data['sub_views']  =   'v_tk_diemctdk';
+            $data['dslopct'] = $this->mctdaukhoa->laydslopchinhtri();
+            $this->load->view('home/main_layout',$data);          
+    }
+    public function timdiemctdktheoma(){
+            if(!$this->my_auth->is_CanBo()) {redirect("canbo/login");}
+            $data['cb_id'] = $this->cb->macb;
+            $data['cb_name'] = $this->cb->tencb;
+            $data['task_name']   = "Tìm kiếm điểm chính trị đầu khóa"; 
+            $data['sub_views']  =   'v_tk_diemctdk_theoma';
+            if($this->input->get('searchmasv') != ''){
+                        $masv = addslashes(trim($this->input->get('txtmasv')));
+                        $data['dstheoma'] = $this->mctdaukhoa->timdiemchinhtritheomasv($masv);
+                        $data['masv'] = $masv;
+                        unset($this->input->get['searchmasv']);    
+            }
+            $this->load->view('home/main_layout',$data);
+    }
+    public function timdiemctdktheolop(){
+            if(!$this->my_auth->is_CanBo()) {redirect("canbo/login");}
+            $data['cb_id'] = $this->cb->macb;
+            $data['cb_name'] = $this->cb->tencb;
+            $data['task_name']   = "Tìm kiếm điểm chính trị đầu khóa"; 
+            $data['sub_views']  =   'v_tk_diemctdk_theolop';
+            if($this->input->get('search',true)!=''){
+                        $malop = $this->input->get('malop',true);
+                        $data['danhsach'] = $this->mctdaukhoa->timdsdiemchinhtritheolop($malop);
+                        $data['malop'] = $malop;
+            }
+            $this->load->view('home/main_layout',$data);
+    }
+    public function tkdiemctdaukhoa(){
+            if(!$this->my_auth->is_CanBo()) {redirect("canbo/login");}
+            $data['cb_id'] = $this->cb->macb;
+            $data['cb_name'] = $this->cb->tencb;
+            $data['task_name']   = "Thống kê điểm chính trị đầu khóa"; 
+            $data['sub_views']  =   'v_thongke_diemctdk';
+            $data['max']= $this->mctdaukhoa->all_count_table_chinhtri();
+            $data['min'] = 20;
+            $cf['base_url']      = base_url('canbo/tkdiemctdaukhoa/');
+            $cf['total_rows']    = $data['max'];
+            $cf['per_page']      = $data['min'];
+            $cf['num_link']      = 2;
+            $cf['uri_segment']   = 3;
+            $this->pagination->initialize($cf);
+            $data['page_link'] = $this->pagination->create_links();
+            $result = $this->mctdaukhoa->thongkediemctdk($data['min'], $this->uri->segment($cf['uri_segment']));
+            foreach ($result as $k => $v) {
+                        $kq[] =array(
+                                'MaSV' => $v['MaSV'],
+                                'HoTen' => $v['HoTen'],
+                                'NgaySinh' => $v['NgaySinh'],
+                                'Nganh' => $v['Nganh'],
+                                'Lop' => $v['Lop'],
+                                $diem[]= array(),
+                                $diem = json_decode($v['Diem'],true),
+                                $inter_var_diem = $diem['ngay1'].$diem['ngay2'].$diem['ngay3'].$diem['ngay4'].$diem['ngay5'].$diem['ngay6'],
+                                'Diem' =>strlen($inter_var_diem),
+                                'Dat' => (strlen($inter_var_diem)>=4 && strlen($inter_var_diem)<=6) ? 'Đạt' : 'Không Đạt',         
+                        );
+            }
+            $data['kqtk'] = $kq;
+            $this->load->view('home/main_layout',$data);
+    }
+    public function thongKeDsCtDk(){
+            if(!$this->my_auth->is_CanBo()) {redirect("canbo/login");}
+            $data['sub_views']  =   "bc_tk_ctdk";
+            $result = $this->mctdaukhoa->laythongkediemctdk();
+            foreach ($result as $k => $v) {
+                        $kq[] =array(
+                                'MaSV' => $v['MaSV'],
+                                'HoTen' => $v['HoTen'],
+                                'NgaySinh' => $v['NgaySinh'],
+                                'Nganh' => $v['Nganh'],
+                                'Lop' => $v['Lop'],
+                                $diem[]= array(),
+                                $diem = json_decode($v['Diem'],true),
+                                $inter_var_diem = $diem['ngay1'].$diem['ngay2'].$diem['ngay3'].$diem['ngay4'].$diem['ngay5'].$diem['ngay6'],
+                                'Diem' =>strlen($inter_var_diem),
+                                'Dat' => (strlen($inter_var_diem)>=4 && strlen($inter_var_diem)<=6) ? 'Đạt' : 'Không Đạt',         
+                        );
+            }
+            $data['kqtk'] = $kq;
+            $this->load->view('home/maugiay/'.$data['sub_views'],$data);
     }
      /*************************************************************************************
-                                        Khac
-    }
-    }
+                                        Khac |
     *************************************************************************************/
+    /**
+     * Thong tin tuyen dung
+     * 
+     **/
+    public function thongtintuyendung(){
+            if(!$this->my_auth->is_Canbo())     {redirect("canbo/login");}
+            $data['cb_id'] = $this->cb->macb;
+            $data['cb_name'] = $this->cb->tencb;
+            $data['task_name']   = "Thông tin tuyển dụng"; 
+            $data['sub_views']  =   'v_thongtintuyendung';
+            $data['max']= $this->mtuyendung->all_count_table_thongtin();
+            $data['min'] = 15;
+            $cf['base_url']      = base_url('canbo/thongtintuyendung/');
+            $cf['total_rows']    = $data['max'];
+            $cf['per_page']      = $data['min'];
+            $cf['num_link']      = 2;
+            $cf['uri_segment']   = 3;
+            $this->pagination->initialize($cf);
+            $data['page_link'] = $this->pagination->create_links();
+            $dstd = $this->mtuyendung->laydanhsachtintuyendung($data['min'], $this->uri->segment($cf['uri_segment']));
+            foreach ($dstd as $k => $v) {
+                        $inter_var_ds[] =  array(
+                                    'MaSo' => $v['MaSo'],
+                                    'TieuDe' => $v['TieuDe'],
+                                    'NoiDung' => $v['NoiDung'],
+                                    'NgayDangTin' => $v['NgayDangTin'],
+                                    $ten = $this->mcanbo->laytencanbo($v['NguoiDangTin']),
+                                    'TenCb' => $ten[0]['TenCB'],
+                        );
+            }
+            $data['ds'] = $inter_var_ds;
+            $this->load->view('home/main_layout',$data);
+    }
+    public function xemtintuyendung($matin){
+            if(!$this->my_auth->is_Canbo()) {redirect("canbo/login");}
+            $data['cb_id'] = $this->cb->macb;
+            $data['cb_name'] = $this->cb->tencb;
+            $data['task_name']   = "Xem tin tuyển dụng"; 
+            $data['sub_views']  =   'v_xemtintuyendung';
+            $matin = $this->uri->segment(3,0);
+            $dstd = $this->mtuyendung->xemtintuyendung($matin);
+            if($dstd == ''){
+                        $data['error'] = 'Không tìm thấy tin phù hợp' ;
+            }
+            else{
+                        foreach ($dstd as $k => $v) {
+                                    $inter_var_ds[] =  array(
+                                                'MaSo' => $v['MaSo'],
+                                                'TieuDe' => $v['TieuDe'],
+                                                'NoiDung' => $v['NoiDung'],
+                                                'NgayDangTin' => $v['NgayDangTin'],
+                                                $ten = $this->mcanbo->laytencanbo($v['NguoiDangTin']),
+                                                'TenCb' => $ten[0]['TenCB'],
+                                    );
+                        }
+                        $data['nd'] = $inter_var_ds;
+                        $data['dst'] = $this->mtuyendung->laydanhsachtintuyendung();
+            }
+            
+            $this->load->view('home/main_layout',$data);
+    }
+    public function themtintuyendung(){
+            if(!$this->my_auth->is_Canbo())     {redirect("canbo/login");}
+            $data['cb_id'] = $this->cb->macb;
+            $data['cb_name'] = $this->cb->tencb;
+            $data['task_name']   = "Thêm tin tuyển dụng"; 
+            $data['sub_views']  =   'v_themtintuyendung';
+            if($this->input->post('themtin',true)!=''){
+                        $this->mtuyendung->themtintuyendung($this->input->post('tieude'),$this->input->post('txtnd'),$this->my_auth->setDate(),$data['cb_id']);
+                        $this->session->set_flashdata('success_mgs','Đăng tin thành công!');
+                        redirect('canbo/thongtintuyendung');
+            }
+            $this->load->view('home/main_layout',$data);
+    }
+    public function xoatintuyendung($id){
+            if(!$this->my_auth->is_Canbo())     {redirect("canbo/login");}
+            $data['cb_id'] = $this->cb->macb;
+            $data['cb_name'] = $this->cb->tencb;
+            if($id)
+                     return $this->mtuyendung->xoatintuyendung($id);
+            return false;
+            
+            $this->load->view('home/main_layout',$data);
+
+    }
+    public function testmodal(){
+            if(!$this->my_auth->is_Canbo())     {redirect("canbo/login");}
+            $data['cb_id'] = $this->cb->macb;
+            $data['cb_name'] = $this->cb->tencb;
+            $data['sub_views'] = 'v_testmodal';
+            $this->load->view('home/main_layout',$data);
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * Phan hoi sinh vien
      * 
@@ -1590,4 +1785,3 @@ class CanBo extends CI_Controller
         $this->load->view('home/main_layout',$data);  
     }
 }
-

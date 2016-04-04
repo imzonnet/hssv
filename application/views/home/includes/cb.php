@@ -12,8 +12,8 @@
                 <h3 class="nav-header">Chính trị đầu khóa</h3>
                 <ul class="nav nav-list">
                     <li><a href="<?php echo base_url(); ?>canbo/themdiemctdk"><i class="icon-chevron-right"></i>Tạo danh sách điểm học CTĐK</a></li>
-                    <li><a href="<?php echo base_url(); ?>canbo/tksvnoitru"><i class="icon-chevron-right"></i>Tìm kiếm điểm học CTĐK</a></li>
-                    <li><a href="<?php echo base_url(); ?>canbo/thongkesvnt"><i class="icon-chevron-right"></i>Thống kê điểm học CTĐK</a></li>
+                    <li><a href="<?php echo base_url(); ?>canbo/timdiemctdk"><i class="icon-chevron-right"></i>Tìm kiếm điểm học CTĐK</a></li>
+                    <li><a href="<?php echo base_url(); ?>canbo/tkdiemctdaukhoa"><i class="icon-chevron-right"></i>Thống kê điểm học CTĐK</a></li>
                 </ul>
             </div><!--end .widget-->
             <div class="widget">
@@ -44,6 +44,7 @@
                 <h3 class="nav-header">Khác</h3>
                 <ul class="nav nav-list">
                     <li><a href="<?php echo base_url(); ?>canbo/phanhoisinhvien"><i class="icon-chevron-right"></i>Xem thông tin phản hồi</a></li>
+                    <li><a href="<?php echo base_url(); ?>canbo/thongtintuyendung"><i class="icon-chevron-right"></i>Thông tin tuyển dụng</a></li>
                 </ul>
             </div><!--end .widget-->
             <?php

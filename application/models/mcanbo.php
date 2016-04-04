@@ -71,4 +71,14 @@ class MCanbo extends CI_Model
         $this->db->where('MaCB',$macb);
         $this->db->update($this->tb,$data);
     }
+    /**
+    * Lay ten can bo
+    */
+    public function laytencanbo($macanbo){
+        $this->db->select('TenCB');
+        $this->db->where('MaCB',$macanbo);
+        $rs = $this->db->get('canbo');
+        if($rs->num_rows()>0) { return $rs->result_array(); }
+        return false;
+    }
 }
