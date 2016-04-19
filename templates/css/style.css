@@ -59,7 +59,8 @@
 
 .widget {
     position: relative;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
     background-color: #fff;
     border: 1px solid #ddd;
     -webkit-border-radius: 4px;
@@ -156,4 +157,8 @@ table.ngoaitru tr td { font-size: 13px;}
 .highlight_text{
     font-size: 18px;  
     color:#00AEEB;
+}
+
+#main-content {
+    padding-bottom: 15px;
 }

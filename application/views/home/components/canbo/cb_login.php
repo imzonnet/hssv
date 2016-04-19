@@ -1,6 +1,6 @@
 <div class="container-inner well">
 <script type="text/javascript">
-$(document).ready(function(){
+jQuery(document).ready(function($){
     $("#submit").click(function(){
         var users = $("#user").val();
         var passs = $("#pass").val();
@@ -39,7 +39,7 @@ $(document).ready(function(){
 
 <!--form login-->
     <form action="<?php echo base_url(); ?>canbo/login" class="form-signin" method="post">
-        <h2 class="form-signin-heading">Đăng nhập</h3>
+        <h2 class="form-signin-heading">Đăng nhập</h2>
         <div class="input-prepend">
             <span class="add-on"><i class="icon-user"></i></span>
             <input type="text" name="user" id="user" class="input-block-level" placeholder="Mã cán bộ" />
