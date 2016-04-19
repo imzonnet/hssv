@@ -15,6 +15,6 @@
 
 <?php } ?>
 <a href="<?php echo base_url('sinhvien/dangtinphanhoi'); ?>" class="btn btn-primary">Thêm phản hồi</a>	
-	<div class="pagination">
-		    <?php echo $page_link; ?>
-	</div>
+<div class="pagination">
+	    <?php echo $page_link; ?>
+</div>

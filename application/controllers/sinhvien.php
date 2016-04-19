@@ -8,7 +8,7 @@ class SinhVien extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(array('msinhvien','mgiayxn','mhocky','maddress','mngoaitru','mrenluyen','mnoitru'));
+        $this->load->model(array('msinhvien','mgiayxn','mhocky','maddress','mngoaitru','mrenluyen','mnoitru','mtuyendung','mcanbo'));
         if($this->my_auth->is_Login()) 
         {
             $this->sv_id = $this->session->userdata('u_id');
@@ -760,7 +760,7 @@ class SinhVien extends CI_Controller
         }
     }
 /*************************************************************************************
-                                
+                                Khac
 *************************************************************************************/
 /**
  * Phan hoi - dong gop y kien
@@ -862,4 +862,58 @@ class SinhVien extends CI_Controller
         $data['page_link'] = $this->pagination->create_links();
         $this->load->view('home/sv_layout',$data);
     }
+    public function xemcohoivieclam(){
+            $data['sv_id'] = $this->sv_id;
+            $data['sv_name']= $this->sv->hoten;
+            $data['sub_views']='v_xemcohoivieclam';
+            $data['task_name']='Xem cơ hội việc làm';        
+            $data['max']= $this->mtuyendung->all_count_table_thongtin();
+            $data['min'] = 15;
+            $cf['base_url']      = base_url('sinhvien/xemcohoivieclam');
+            $cf['total_rows']    = $data['max'];
+            $cf['per_page']      = $data['min'];
+            $cf['num_link']      = 2;
+            $cf['uri_segment']   = 3;
+            $this->pagination->initialize($cf);
+            $data['page_link'] = $this->pagination->create_links();
+            $dstd = $this->mtuyendung->laydanhsachtintuyendung($data['min'], $this->uri->segment($cf['uri_segment']));
+            foreach ($dstd as $k => $v) {
+                        $inter_var_ds[] =  array(
+                                    'MaSo' => $v['MaSo'],
+                                    'TieuDe' => $v['TieuDe'],
+                                    'NoiDung' => $v['NoiDung'],
+                                    'NgayDangTin' => $v['NgayDangTin'],
+                                    $ten = $this->mcanbo->laytencanbo($v['NguoiDangTin']),
+                                    'TenCb' => $ten[0]['TenCB'],
+                        );
+            }
+            $data['ds'] = $inter_var_ds;
+            $this->load->view('home/sv_layout',$data);
+    }
+   public function xemtinvieclam(){
+            $data['sv_id'] = $this->sv_id;
+            $data['sv_name']= $this->sv->hoten;
+            $data['sub_views']='v_xemtinvieclam';
+            $data['task_name']='Xem cơ hội việc làm';
+            $matin = $this->uri->segment(3,0);
+            $dstd = $this->mtuyendung->xemtintuyendung($matin);
+            if($dstd == ''){
+                        $data['error'] = 'Không tìm thấy tin phù hợp' ;
+            }
+            else{
+                        foreach ($dstd as $k => $v) {
+                                    $inter_var_ds[] =  array(
+                                                'MaSo' => $v['MaSo'],
+                                                'TieuDe' => $v['TieuDe'],
+                                                'NoiDung' => $v['NoiDung'],
+                                                'NgayDangTin' => $v['NgayDangTin'],
+                                                $ten = $this->mcanbo->laytencanbo($v['NguoiDangTin']),
+                                                'TenCb' => $ten[0]['TenCB'],
+                                    );
+                        }
+                        $data['nd'] = $inter_var_ds;
+                        $data['dst'] = $this->mtuyendung->laydanhsachtintuyendung();
+            }
+            $this->load->view('home/sv_layout',$data);
+   }
 }//end class
