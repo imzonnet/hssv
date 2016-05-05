@@ -9,7 +9,7 @@
 			return $rs->num_rows();
 		}
 		public function laydanhsachtintuyendung($limit = false,$offset =0){
-			$sql="select * from thongtintuyendung order by NgayDangTin desc ";
+			$sql="select * from thongtintuyendung order by MaSo desc ";
 			$offset = $offset > 0 ? $offset : 0;
 			if($limit) $sql .= "limit $offset,$limit";
 			$rs = $this->db->query($sql);
