@@ -1603,27 +1603,45 @@ class CanBo extends CI_Controller
             $data['cb_name'] = $this->cb->tencb;
             $data['task_name']   = "Thông tin tuyển dụng"; 
             $data['sub_views']  =   'v_thongtintuyendung';
-            $data['max']= $this->mtuyendung->all_count_table_thongtin();
-            $data['min'] = 15;
-            $cf['base_url']      = base_url('canbo/thongtintuyendung/');
-            $cf['total_rows']    = $data['max'];
-            $cf['per_page']      = $data['min'];
-            $cf['num_link']      = 2;
-            $cf['uri_segment']   = 3;
-            $this->pagination->initialize($cf);
-            $data['page_link'] = $this->pagination->create_links();
-            $dstd = $this->mtuyendung->laydanhsachtintuyendung($data['min'], $this->uri->segment($cf['uri_segment']));
-            foreach ($dstd as $k => $v) {
-                        $inter_var_ds[] =  array(
-                                    'MaSo' => $v['MaSo'],
-                                    'TieuDe' => $v['TieuDe'],
-                                    'NoiDung' => $v['NoiDung'],
-                                    'NgayDangTin' => $v['NgayDangTin'],
-                                    $ten = $this->mcanbo->laytencanbo($v['NguoiDangTin']),
-                                    'TenCb' => $ten[0]['TenCB'],
-                        );
+            if($this->input->post('tuyendung_edit_submit',true)!=''){
+                var_dump($this->input->post('tieude'));
+                echo $this->input->post("tieude");
             }
-            $data['ds'] = $inter_var_ds;
+            else{
+                $data['max']= $this->mtuyendung->all_count_table_thongtin();
+                $data['min'] = 15;
+                $cf['base_url']      = base_url('canbo/thongtintuyendung/');
+                $cf['total_rows']    = $data['max'];
+                $cf['per_page']      = $data['min'];
+                $cf['num_link']      = 2;
+                $cf['uri_segment']   = 3;
+                $this->pagination->initialize($cf);
+                $data['page_link'] = $this->pagination->create_links();
+                $dstd = $this->mtuyendung->laydanhsachtintuyendung($data['min'], $this->uri->segment($cf['uri_segment']));
+                foreach ($dstd as $k => $v) {
+                            $inter_var_ds[] =  array(
+                                        'MaSo' => $v['MaSo'],
+                                        'TieuDe' => $v['TieuDe'],
+                                        'NoiDung' => $v['NoiDung'],
+                                        'NgayDangTin' => $v['NgayDangTin'],
+                                        $ten = $this->mcanbo->laytencanbo($v['NguoiDangTin']),
+                                        'TenCb' => $ten[0]['TenCB'],
+                            );
+                }
+                $data['ds'] = $inter_var_ds;
+            }
+            
+            $this->load->view('home/main_layout',$data);
+    }
+    public function tuyendungedit(){
+            if(!$this->my_auth->is_Canbo()) {redirect("canbo/login");}
+            $data['cb_id'] = $this->cb->macb;
+            $data['cb_name'] = $this->cb->tencb;
+            $data['task_name']   = "Xem tin tuyển dụng"; 
+            $data['sub_views']  =   'v_test_modal';
+            if($this->input->post('tuyendung_edit_submit',true) !=''){
+                echo $this->input->post('tieude');
+            }
             $this->load->view('home/main_layout',$data);
     }
     public function xemtintuyendung($matin){
@@ -1678,11 +1696,11 @@ class CanBo extends CI_Controller
             $this->load->view('home/main_layout',$data);
 
     }
-    public function testmodal(){
-            if(!$this->my_auth->is_Canbo())     {redirect("canbo/login");}
+    public function suatintuyendung(){
+             if(!$this->my_auth->is_Canbo())     {redirect("canbo/login");}
             $data['cb_id'] = $this->cb->macb;
             $data['cb_name'] = $this->cb->tencb;
-            $data['sub_views'] = 'v_testmodal';
+            $this->mtuyendung->suatintuyendung($this->input->post('id'),$this->input->post('tieude'),$this->input->post('noidung'),$this->my_auth->setDate(),$data['cb_id']);
             $this->load->view('home/main_layout',$data);
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

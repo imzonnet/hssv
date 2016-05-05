@@ -36,5 +36,16 @@
 			$this->db->delete('thongtintuyendung',array('MaSo'=>$matin));
 			return $this->db->affected_rows() > 1 ? true:false;
 		}
+		
+		public function suatintuyendung($maso,$tieude,$noidung,$ngaycapnhat,$macanbo){
+			$data = array(
+			               'TieuDe' => $tieude,
+			               'NoiDung' => $noidung,
+			               'NgayDangTin' => $ngaycapnhat,
+			               'NguoiDangTin' =>$macanbo
+			            );
+			$this->db->where('MaSo', $maso);
+			$this->db->update('thongtintuyendung', $data); 
+		}
 	}
 ?>
