@@ -38,14 +38,18 @@ if ($this->session->flashdata('success_mgs') != '') {
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h3>Chỉnh sửa tin:<?php echo $v['MaSo']; ?></h3>
                         </div>
-                        <div class="modal-body">
-                            <p>Tiêu đề</p>
+                        <div class="modal-body" style="text-align: left;">
                             <input type="hidden" name="MaSo" value="<?php echo $v['MaSo']; ?>">
-                            <input type="text" name="TieuDe" value="<?php echo $v['TieuDe']; ?>">
                             <div class="control-group">
-                                <p class="control-label">Nội Dung</p>
+                                <p class="control-label">Tiêu đề</p>
                                 <div class="controls">
-                                    <textarea name="NoiDung" class="form-control"> <?php echo $v['NoiDung']; ?></textarea>
+                                    <input type="text" style="width: 100%;" name="TieuDe" value="<?php echo $v['TieuDe']; ?>">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <p class="control-label">Nội dung</p>
+                                <div class="controls">
+                                    <textarea style="width: 100%;" name="NoiDung" class="form-control"> <?php echo $v['NoiDung']; ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +67,6 @@ if ($this->session->flashdata('success_mgs') != '') {
                     <i class="icon-trash"></i>
                 </button>
             </td>
-            <td id="rs"></td>
         </tr>
     <?php } ?>
     </tbody>
