@@ -1,9 +1,9 @@
 <?php
 	if(isset($error)) echo $error;
 	else{?>
-		<h4><?php echo $nd[0]['TieuDe']; ?></h4>
-		<p><?php echo $nd[0]['NoiDung']; ?></p>
-		<p><?php echo 'Người gởi: '.$nd[0]['TenCb'].'  Ngày đăng: '.$nd[0]['NgayDangTin']; ?></p>
+		<h4><?php echo $nd['TieuDe']; ?></h4>
+		<p><?php echo $nd['NoiDung']; ?></p>
+		<p><?php echo 'Người gởi: '.$nd['TenCb'].'  Ngày đăng: '.$nd['NgayDangTin']; ?></p>
 		<hr>
 		<?php
 			for($i = 1; $i<=20; $i++){?>

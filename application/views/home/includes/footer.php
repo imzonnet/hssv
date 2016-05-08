@@ -3,7 +3,7 @@
     <div id="footer" class="well well-small">
         <div class="container">
             <p class="muted credit">
-                Copyright &copy; 2013 <a href="http://dct.udn.vn"> Trường Cao Đẳng Công Nghệ Đà Nẵng</a><br /> 
+                Copyright &copy; <?php echo date('Y'); ?> <a href="http://dct.udn.vn"> Trường Cao Đẳng Công Nghệ Đà Nẵng</a><br />
                 48 Cao Thắng - Hải Châu - Đà Nẵng<br />
             </p>
         </div>

@@ -6,7 +6,6 @@ class Main extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        
     }
     
     public function index() 
@@ -16,8 +15,10 @@ class Main extends CI_Controller
     
     public function site()
     {
+        $this->load->model('mtuyendung');
         $data['sub_views'] = 'home_page';
-        $this->load->view("home/sub_layout",$data);   
+        $data['thongtintuyendung'] = $this->mtuyendung->laydanhsachtintuyendung(5);
+        $this->load->view("home/sub_layout",$data);
     }
     
     public function form()
@@ -34,6 +35,15 @@ class Main extends CI_Controller
     public function contact()
     {
         $data['sub_views'] = 'contact';
+        $this->load->view("home/sub_layout",$data);
+    }
+    public function tuyendung($id) {
+        $this->load->model(array('mtuyendung', 'mcanbo' ));
+        $data['sub_views'] = 'home/xemtintuyendung';
+        $dstd = $this->mtuyendung->xemtintuyendung($id);
+        $cb = $this->mcanbo->laytencanbo($dstd->NguoiDangTin);
+        $dstd->TenCB = $cb[0]['TenCB'];
+        $data['data'] = $dstd;
         $this->load->view("home/sub_layout",$data);
     }
 }

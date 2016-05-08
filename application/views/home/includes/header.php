@@ -35,7 +35,7 @@
                   <li class="<?php echo active_link('main'); ?>"><a href="<?php echo base_url("main"); ?>"><i class="icon-home"></i>Trang Chủ</a></li>
                   <li class="<?php echo active_link('canbo'); ?>"><a href="<?php echo base_url("canbo"); ?>"><i class="icon-briefcase"></i>Cán Bộ</a></li>
                   <li class="<?php echo active_link('sinhvien'); ?>"><a href="<?php echo base_url("sinhvien"); ?>"><i class="icon-user"></i>Sinh Viên</a></li>
-                  <li class="<?php echo active_link('contact'); ?>"><a href="<?php echo base_url("contact"); ?>"><i class="icon-envelope"></i>Liên Hệ</a></li>
+<!--                  <li class="--><?php //echo active_link('contact'); ?><!--"><a href="--><?php //echo base_url("contact"); ?><!--"><i class="icon-envelope"></i>Liên Hệ</a></li>-->
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

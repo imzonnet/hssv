@@ -1810,16 +1810,14 @@ class CanBo extends CI_Controller
         if ($dstd == '') {
             $data['error'] = 'Không tìm thấy tin phù hợp';
         } else {
-            foreach ($dstd as $k => $v) {
-                $inter_var_ds[] = array(
-                    'MaSo' => $v['MaSo'],
-                    'TieuDe' => $v['TieuDe'],
-                    'NoiDung' => $v['NoiDung'],
-                    'NgayDangTin' => $v['NgayDangTin'],
-                    $ten = $this->mcanbo->laytencanbo($v['NguoiDangTin']),
-                    'TenCb' => $ten[0]['TenCB'],
-                );
-            }
+            $ten = $this->mcanbo->laytencanbo($dstd->NguoiDangTin);
+            $inter_var_ds = array(
+                'MaSo' => $dstd->MaSo,
+                'TieuDe' => $dstd->TieuDe,
+                'NoiDung' => $dstd->NoiDung,
+                'NgayDangTin' => $dstd->NgayDangTin,
+                'TenCb' => $ten[0]['TenCB'],
+            );
             $data['nd'] = $inter_var_ds;
             $data['dst'] = $this->mtuyendung->laydanhsachtintuyendung();
         }
