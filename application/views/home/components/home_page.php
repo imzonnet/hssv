@@ -1,4 +1,15 @@
-<div class="span8 well">
+<div class="span3">
+    <div class="widget">
+        <h3 class="nav-header">Thông tin tuyển dụng</h3>
+        <ul class="nav nav-list">
+            <?php foreach($thongtintuyendung as $item) : ?>
+                <li><a href="<?php echo base_url('tuyen-dung/'.$item['MaSo']); ?>"><i class="icon-chevron-right"></i><?php echo $item['TieuDe']; ?></a></li>
+            <?php endforeach; ?>
+        </ul>
+    </div><!--end .widget-->
+</div>
+
+<div class="span9 well">
     <h3>Hệ thống quản lý học sinh sinh viên</h3>
 
     <p>
@@ -24,15 +35,4 @@
         Thực hiện tổ chức quản lý học sinh sinh viên ngoại trú theo quy chế quản lý HS-SV ngoại trú
 
     </p>
-</div>
-
-<div class="span4">
-    <div class="widget">
-        <h3 class="nav-header">Thông tin tuyển dụng</h3>
-        <ul class="nav nav-list">
-            <?php foreach($thongtintuyendung as $item) : ?>
-            <li><a href="<?php echo base_url('tuyen-dung/'.$item['MaSo']); ?>"><i class="icon-chevron-right"></i><?php echo $item['TieuDe']; ?></a></li>
-            <?php endforeach; ?>
-        </ul>
-    </div><!--end .widget-->
 </div>
