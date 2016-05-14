@@ -2016,15 +2016,20 @@ class CanBo extends CI_Controller
                     for ($row = 13; $row <= $highestRow; ++$row) {
                         $stt = trim($worksheet->getCellByColumnAndRow(3, $row)->getValue());
                         if( empty($stt) ) break;
-                        
+                        $stc = trim($worksheet->getCellByColumnAndRow(6, $row)->getValue());
+                        $dtb = trim($worksheet->getCellByColumnAndRow(7, $row)->getValue());
+                        $drl = trim($worksheet->getCellByColumnAndRow(8, $row)->getValue());
                         $svnt[] = array(
                             'MaSV' => trim($worksheet->getCellByColumnAndRow(1, $row)->getValue()),
                             'TenSV' => trim($worksheet->getCellByColumnAndRow(2, $row)->getValue()) .' '.trim($worksheet->getCellByColumnAndRow(3, $row)->getValue()),
                             'NgaySinh' => trim($worksheet->getCellByColumnAndRow(4, $row)->getValue()),
                             'Lop' => trim($worksheet->getCellByColumnAndRow(5, $row)->getValue()),
-                            'STC' => trim($worksheet->getCellByColumnAndRow(6, $row)->getValue()),
-                            'DTB' => trim($worksheet->getCellByColumnAndRow(7, $row)->getValue()),
-                            'DRL' => trim($worksheet->getCellByColumnAndRow(8, $row)->getValue())
+                            'STC' => $stc,
+                            'DTB' => $dtb,
+                            'DRL' => $drl,
+                            'XepLoai' => xep_loai($stc, $dtb, $drl),
+                            'MucHB' => muc_hoc_bong($stc, $dtb, $drl),
+                            'TongTien' => muc_hoc_bong($stc, $dtb, $drl) * 5,
                         );
                     }
                     break;
@@ -2043,34 +2048,23 @@ class CanBo extends CI_Controller
                 $objPHPExcel = PHPExcel_IOFactory::load($furl);
                 foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
                     $highestRow = $worksheet->getHighestRow() - 6; // e.g. 10
-                    $highestColumn = $worksheet->getHighestColumn(); // e.g 'F'
-
-                    //$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); so cot
-
-                    $nrColumns = ord($highestColumn) - 64;
-
-                    $data['namhoc'] = $worksheet->getCellByColumnAndRow(3, 4)->getValue();
-                    $data['malop'] = $worksheet->getCellByColumnAndRow(5, 4)->getValue();
-                    $data['mahk'] = $this->mhocky->getMHK();
-                    for ($row = 8; $row <= $highestRow; ++$row) {
-                        $masv = trim($worksheet->getCellByColumnAndRow(3, $row)->getValue());
-                        $map = $this->maddress->getMP(addslashes(trim($worksheet->getCellByColumnAndRow(6, $row)->getValue())));
-                        $x = explode('/', trim($worksheet->getCellByColumnAndRow(9, $row)->getValue()));
-                        $str = count($x) > 2 ? $x[2] . '-' . $x[1] . '-' . $x[0] : 0;
-                        $ngayden = $this->my_auth->cvDdate($str);
-                        if ($this->mngoaitru->checkAdd($masv, $ngayden)) $class = 'success';
+                    $mahk = $this->mhocky->getMHK();
+                    for ($row = 13; $row <= $highestRow; ++$row) {
+                        $stt = trim($worksheet->getCellByColumnAndRow(3, $row)->getValue());
+                        if( empty($stt) ) break;
+                        $stc = trim($worksheet->getCellByColumnAndRow(6, $row)->getValue());
+                        $dtb = trim($worksheet->getCellByColumnAndRow(7, $row)->getValue());
+                        $masv = trim($worksheet->getCellByColumnAndRow(1, $row)->getValue());
+                        if ( !$this->mhocbong->checkAdd($masv, $mahk) ) $class = 'success';
                         else $class = 'error';
                         if ($class == 'success') {
-                            $arr = array(
+                            $arg = array(
+                                'MaHK' => $mahk,
                                 'MaSV' => $masv,
-                                'TenChuTro' => addslashes(trim($worksheet->getCellByColumnAndRow(4, $row)->getValue())),
-                                'DienThoai' => addslashes(trim($worksheet->getCellByColumnAndRow(8, $row)->getValue())),
-                                'DiaChi' => addslashes(trim($worksheet->getCellByColumnAndRow(5, $row)->getValue())),
-                                'MaPhuong' => $map['maphuong'],
-                                'NgayDen' => $ngayden,
-                                'MaHK' => $data['mahk']
+                                'SoTC' => $stc,
+                                'DiemTK' => $dtb,
                             );
-                            $this->mngoaitru->add($arr);
+                            $this->mhocbong->add($arg);
                             $dem++;
                         }
                     }
@@ -2083,7 +2077,7 @@ class CanBo extends CI_Controller
             }
             $data['dem'] = $dem;
             $data['ds_sv'] = $svnt;
-            $data['sub_views'] = "nt_them_ok";
+            $data['sub_views'] = "hb_them_ok";
         }
         $this->load->view("home/main_layout", $data);
     }

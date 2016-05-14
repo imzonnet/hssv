@@ -4,7 +4,7 @@ include_once("includes/cb.php");
 ?>
 
     <div id="primary" class="span9 widget">
-        <h3 class="nav-header">.:::. <?php echo isset($task_name) ? $task_name : "Home"; ?></h3>
+        <h3 class="nav-header">.:::. <?php echo isset($task_name) ? $task_name : "Trang Chính"; ?></h3>
 
         <div id="main-content" class="container-fluid">
 

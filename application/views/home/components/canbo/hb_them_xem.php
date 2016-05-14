@@ -1,8 +1,10 @@
-<h4 class="text-center"><?php echo $tieude; ?><p>
-    <?php if($ok>0): ?>
+<h4 class="text-center"><?php echo $tieude; ?></h4>
+<?php if($ok>0): ?>
+    <p>
         <span class="alert-success">Có <b><?php echo $ok; ?></b> sinh viên được cấp học bổng.<br /></span>
-    <?php endif; ?>
-</p>
+    </p>
+<?php endif; ?>
+
 <form action="canbo/themdshb" method="post">
     <table class="table table-bordered table-striped">
         <tr>
@@ -14,6 +16,9 @@
             <th>Số TC</th>
             <th>Điểm TB</th>
             <th>Điểm RL</th>
+            <th>Xếp Loại</th>
+            <th>Mức HB</th>
+            <th>Tổng Tiền</th>
         </tr>
     <?php
         $i = 1;
@@ -28,6 +33,9 @@
                 <td><?php echo $v['STC']; ?></td>
                 <td><?php echo $v['DTB']; ?></td>
                 <td><?php echo $v['DRL']; ?></td>
+                <td><?php echo $v['XepLoai']; ?></td>
+                <td><?php echo number_format($v['MucHB']); ?></td>
+                <td><?php echo number_format($v['TongTien']); ?></td>
             </tr>
     <?php
             ++$i;
