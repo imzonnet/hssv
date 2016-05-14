@@ -11,7 +11,10 @@ class CanBo extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model(array('mcanbo', 'mgiayxn', 'msinhvien', 'maddress', 'mngoaitru', 'mrenluyen', 'mlopsh', 'mktx', 'mnoitru', 'mctdaukhoa', 'mtuyendung'));
+        $this->load->model(array(
+            'mcanbo', 'mgiayxn', 'msinhvien', 'maddress', 'mngoaitru', 'mhocbong',
+            'mrenluyen', 'mlopsh', 'mktx', 'mnoitru', 'mctdaukhoa', 'mtuyendung'
+        ));
 
         if ($this->my_auth->is_Login()) {
             $this->cb_id = $this->session->userdata('u_id');
@@ -1495,38 +1498,27 @@ class CanBo extends CI_Controller
         if (!$this->my_auth->is_CanBo()) {
             redirect("canbo/login");
         }
+        /** info account **/
         $data['cb_id'] = $this->cb->macb;
         $data['cb_name'] = $this->cb->tencb;
-        $data['task_name'] = "Thêm danh sách điểm rèn luyện";
-        $data['sub_views'] = "ct_them";
-        $this->load->view("home/main_layout", $data);
-    }
-
-    public function xemdsctdk()
-    {
-        if (!$this->my_auth->is_CanBo()) {
-            redirect("canbo/login");
-        }
-        $data['cb_id'] = $this->cb->macb;
-        $data['cb_name'] = $this->cb->tencb;
-        $data['task_name'] = "Thêm danh sách điểm rèn luyện";
-        $data['sub_views'] = "ct_them_xem";
+        $ngayxn = $this->my_auth->setDate();
+        $data['task_name'] = "Thêm danh sách điểm chính trị";
+        /** Main Task **/
+        $data['mahk'] = $this->mhocky->getMHK();//get hoc ky hien tai
         $config['upload_path'] = './upload/chinhtri/';
         $config['allowed_types'] = 'xls|xlsx';
         $CI = get_instance();
         $CI->load->library('upload', $config);
-        $ctdk = array();
+        $CI->load->library("excel");
+        $data['sub_views'] = "ct_them";
         if ($this->input->post('upload') != "") {
             if (!$CI->upload->do_upload("fex")) {
                 $data['error'] = $CI->upload->display_errors();
             } else {
                 $file = $CI->upload->data();
                 $url = 'upload/chinhtri/' . $file['file_name'];
-                $this->session->set_flashdata('surl', $url);
-                $this->load->library("excel");
-                if ($this->session->flashdata('surl') != null) {
-                    $objPHPExcel = PHPExcel_IOFactory::load($this->session->flashdata('surl'));
-                }
+                $ok = 0;
+                $no = 0;
                 $objPHPExcel = PHPExcel_IOFactory::load($url);
                 foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
                     $worksheetTitle = $worksheet->getTitle();
@@ -1544,8 +1536,10 @@ class CanBo extends CI_Controller
                         $recordEnd = $recordStart + $rowOnPage;
                     }
                     for ($row = $recordStart; $row <= $recordEnd; ++$row) {
+                        $stt = trim($worksheet->getCellByColumnAndRow(0, $row)->getValue());
+                        if( empty($stt) ) continue;
                         $ctdk[] = array(
-                            'stt' => trim($worksheet->getCellByColumnAndRow(0, $row)->getValue()),
+                            'stt' => $stt ,
                             'masv' => trim($worksheet->getCellByColumnAndRow(2, $row)->getValue()),
                             'bienlaiso' => trim($worksheet->getCellByColumnAndRow(3, $row)->getValue()),
                             'hovachulot' => trim($worksheet->getCellByColumnAndRow(4, $row)->getValue()),
@@ -1556,32 +1550,22 @@ class CanBo extends CI_Controller
                         );
                     }
                 }
+                $data['file'] = $url;
                 $data['ds'] = $ctdk;
+                $data['ok'] = $ok;
+                $data['no'] = $no;
+                $data['sub_views'] = "ct_them_xem";
             }
-        }
-        $this->load->view("home/main_layout", $data);
-    }
-
-    public function addctdaukhoa()
-    {
-        if (!$this->my_auth->is_CanBo()) {
-            redirect("canbo/login");
-        }
-        $data['cb_id'] = $this->cb->macb;
-        $data['cb_name'] = $this->cb->tencb;
-        $data['task_name'] = "Thêm danh sách điểm rèn luyện";
-        $data['sub_views'] = "ct_them_add";
-        $config['upload_path'] = './upload/chinhtri/';
-        $config['allowed_types'] = 'xls|xlsx';
-        $CI = get_instance();
-        $CI->load->library('upload', $config);
-        $ctdk = array();
-        if ($this->input->post('done') != "") {
-            $this->load->library("excel");
-            if ($this->session->flashdata('surl') != null) {
-                $objPHPExcel = PHPExcel_IOFactory::load($this->session->flashdata('surl'));
+        } else if ($this->input->post('done') != "") {
+            $url = $this->input->post('file');
+            if (!file_exists($url)) {
+                $err['error'] = 404;
+                $er['url'] = $this->cb_url . '/themdiemctdk';
+                $this->load->view('home/error', $er);
+                return false;
             }
-            $objPHPExcel = PHPExcel_IOFactory::load($this->session->flashdata('surl'));
+            $dem = 0;
+            $objPHPExcel = PHPExcel_IOFactory::load($url);
             foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
                 $highestRow = $worksheet->getHighestRow(); // e.g. 10
                 $highestColumn = $worksheet->getHighestColumn(); // e.g 'F'
@@ -1610,22 +1594,20 @@ class CanBo extends CI_Controller
                         $this->mctdaukhoa->updatechinhtridaukhoa($bienlaiso, json_encode($diem));
                         $soluongcapnhat++;
                     } else {
-                        $this->mctdaukhoa->addchinhtridaukhoa($masv, $bienlaiso, $hovaten, $ngaysinh, $nganh, json_encode($diem), $lop);
+                        $this->mctdaukhoa->addchinhtridaukhoa($masv, $bienlaiso, json_encode($diem), $lop);
                         $soluongthemmoi++;
                     }
                 }
             }
-            if ($soluongcapnhat && $soluongthemmoi = 0) {
-                $data['error'] = 'Thêm mới thất bại';
-            } else {
-                $data['slcn'] = $soluongcapnhat;
-                $data['sltm'] = $soluongthemmoi;
-            }
-
+            $data['sub_views'] = "ct_them_done";
+            $data['dem'] = $dem;
         }
         $this->load->view("home/main_layout", $data);
     }
 
+    /**
+     *Tim diem Chinh Tri
+     */
     public function timdiemctdk()
     {
         if (!$this->my_auth->is_CanBo()) {
@@ -1693,19 +1675,23 @@ class CanBo extends CI_Controller
         $this->pagination->initialize($cf);
         $data['page_link'] = $this->pagination->create_links();
         $result = $this->mctdaukhoa->thongkediemctdk($data['min'], $this->uri->segment($cf['uri_segment']));
+        $kq = array();
         foreach ($result as $k => $v) {
-            $kq[] = array(
-                'MaSV' => $v['MaSV'],
-                'HoTen' => $v['HoTen'],
-                'NgaySinh' => $v['NgaySinh'],
-                'Nganh' => $v['Nganh'],
-                'Lop' => $v['Lop'],
-                $diem[] = array(),
-                $diem = json_decode($v['Diem'], true),
-                $inter_var_diem = $diem['ngay1'] . $diem['ngay2'] . $diem['ngay3'] . $diem['ngay4'] . $diem['ngay5'] . $diem['ngay6'],
-                'Diem' => strlen($inter_var_diem),
-                'Dat' => (strlen($inter_var_diem) >= 4 && strlen($inter_var_diem) <= 6) ? 'Đạt' : 'Không Đạt',
-            );
+            $sv = $this->msinhvien->setInfo($v['MaSV']);
+            if( $sv ) {
+                $kq[] = array(
+                    'MaSV' => $v['MaSV'],
+                    'HoTen' => $sv->hoten,
+                    'NgaySinh' => $sv->ngaysinh,
+                    'Nganh' => $sv->tennganh,
+                    'Lop' => $sv->malop,
+                    $diem[] = array(),
+                    $diem = json_decode($v['Diem'], true),
+                    $inter_var_diem = $diem['ngay1'] . $diem['ngay2'] . $diem['ngay3'] . $diem['ngay4'] . $diem['ngay5'] . $diem['ngay6'],
+                    'Diem' => strlen($inter_var_diem),
+                    'Dat' => (strlen($inter_var_diem) >= 4 && strlen($inter_var_diem) <= 6) ? 'Đạt' : 'Không Đạt',
+                );
+            }
         }
         $data['kqtk'] = $kq;
         $this->load->view('home/main_layout', $data);
@@ -1990,5 +1976,115 @@ class CanBo extends CI_Controller
         $data['danhsachchude'] = $this->mnoitru->chudedcnoiden($data['min'], $this->uri->segment($cf['uri_segment']));
         $data['page_link'] = $this->pagination->create_links();
         $this->load->view('home/main_layout', $data);
+    }
+
+    /**
+     * Them danh sach hoc bong
+     */
+    public function themdshb()
+    {
+        if (!$this->my_auth->is_CanBo()) {
+            redirect("canbo/login");
+        }
+        /** info account **/
+        $data['cb_id'] = $this->cb_id;
+        $data['cb_name'] = $this->cb->tencb;
+        $data['task_name'] = "Thêm danh sách học bổng";
+        /** Main Task **/
+        $data['sub_views'] = "hb_them";
+        $config['upload_path'] = './upload/hocbong/';
+        $config['allowed_types'] = 'xls|xlsx';
+        $CI = get_instance();
+        $CI->load->library('upload', $config);
+
+        $svnt = array();
+        if ($this->input->post('upload') != "") {
+            if (!$CI->upload->do_upload("fex")) {
+                $data['error'] = $CI->upload->display_errors();
+            } else {
+                $file = $CI->upload->data();
+                $url = 'upload/hocbong/' . $file['file_name'];
+                $this->load->library("excel");
+                $ok = 0;
+                $no = 0;
+                $objPHPExcel = PHPExcel_IOFactory::load($url);
+                foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+                    $highestRow = $worksheet->getHighestRow() - 6; // e.g. 10
+                    $data['mahk'] = $this->mhocky->getMHK();
+                    $data['tieude'] =  trim($worksheet->getCellByColumnAndRow(0, 7)->getValue());
+                    $data['tieude'] .=  '<br />' . trim($worksheet->getCellByColumnAndRow(0, 8)->getValue());
+                    for ($row = 13; $row <= $highestRow; ++$row) {
+                        $stt = trim($worksheet->getCellByColumnAndRow(3, $row)->getValue());
+                        if( empty($stt) ) break;
+                        
+                        $svnt[] = array(
+                            'MaSV' => trim($worksheet->getCellByColumnAndRow(1, $row)->getValue()),
+                            'TenSV' => trim($worksheet->getCellByColumnAndRow(2, $row)->getValue()) .' '.trim($worksheet->getCellByColumnAndRow(3, $row)->getValue()),
+                            'NgaySinh' => trim($worksheet->getCellByColumnAndRow(4, $row)->getValue()),
+                            'Lop' => trim($worksheet->getCellByColumnAndRow(5, $row)->getValue()),
+                            'STC' => trim($worksheet->getCellByColumnAndRow(6, $row)->getValue()),
+                            'DTB' => trim($worksheet->getCellByColumnAndRow(7, $row)->getValue()),
+                            'DRL' => trim($worksheet->getCellByColumnAndRow(8, $row)->getValue())
+                        );
+                    }
+                    break;
+                }
+                $data['ok'] = $ok;
+                $data['no'] = $no;
+                $data['file'] = $url;
+                $data['ds_sv'] = $svnt;
+                $data['sub_views'] = "hb_them_xem";
+            }
+        } elseif ($this->input->post('done') != "") {
+            $furl = $this->input->post('file');
+            $dem = 0;
+            if (file_exists($furl)) {
+                $this->load->library("excel");
+                $objPHPExcel = PHPExcel_IOFactory::load($furl);
+                foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+                    $highestRow = $worksheet->getHighestRow() - 6; // e.g. 10
+                    $highestColumn = $worksheet->getHighestColumn(); // e.g 'F'
+
+                    //$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); so cot
+
+                    $nrColumns = ord($highestColumn) - 64;
+
+                    $data['namhoc'] = $worksheet->getCellByColumnAndRow(3, 4)->getValue();
+                    $data['malop'] = $worksheet->getCellByColumnAndRow(5, 4)->getValue();
+                    $data['mahk'] = $this->mhocky->getMHK();
+                    for ($row = 8; $row <= $highestRow; ++$row) {
+                        $masv = trim($worksheet->getCellByColumnAndRow(3, $row)->getValue());
+                        $map = $this->maddress->getMP(addslashes(trim($worksheet->getCellByColumnAndRow(6, $row)->getValue())));
+                        $x = explode('/', trim($worksheet->getCellByColumnAndRow(9, $row)->getValue()));
+                        $str = count($x) > 2 ? $x[2] . '-' . $x[1] . '-' . $x[0] : 0;
+                        $ngayden = $this->my_auth->cvDdate($str);
+                        if ($this->mngoaitru->checkAdd($masv, $ngayden)) $class = 'success';
+                        else $class = 'error';
+                        if ($class == 'success') {
+                            $arr = array(
+                                'MaSV' => $masv,
+                                'TenChuTro' => addslashes(trim($worksheet->getCellByColumnAndRow(4, $row)->getValue())),
+                                'DienThoai' => addslashes(trim($worksheet->getCellByColumnAndRow(8, $row)->getValue())),
+                                'DiaChi' => addslashes(trim($worksheet->getCellByColumnAndRow(5, $row)->getValue())),
+                                'MaPhuong' => $map['maphuong'],
+                                'NgayDen' => $ngayden,
+                                'MaHK' => $data['mahk']
+                            );
+                            $this->mngoaitru->add($arr);
+                            $dem++;
+                        }
+                    }
+                    break;
+                }
+            } else {
+                $er['error'] = 404;
+                $er['url'] = $this->cb_url . '/themsvnt';
+                $this->load->view('home/error', $er);
+            }
+            $data['dem'] = $dem;
+            $data['ds_sv'] = $svnt;
+            $data['sub_views'] = "nt_them_ok";
+        }
+        $this->load->view("home/main_layout", $data);
     }
 }

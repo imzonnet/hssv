@@ -3,8 +3,8 @@
 ob_start();
 $db = "localhost";
 $name = "root";
-$pass = "zacky";
-$dbname = "it_db";
+$pass = "";
+$dbname = "ci_hssv";
 
 $con = mysql_connect($db,$name,$pass);
 mysql_select_db($dbname,$con);
@@ -29,7 +29,7 @@ for($i = 5; $i<=79; $i++ ) {
 }
 */
 
-$fp = fopen('t1.txt','r') or exit('k tim thay file');
+$fp = fopen('t4.txt','r') or exit('k tim thay file');
 $ms = 10;
 while(!feof($fp))
 {
@@ -39,7 +39,7 @@ while(!feof($fp))
     $ten = trim($a[2]);
     $ns = trim($a[3]);
     $dc = trim($a[4]);
-    /**$sql = "INSERT INTO `sinhvien` VALUES (
+    $sql = "INSERT INTO `sinhvien` VALUES (
             '$msv', 
             'e10adc3949ba59abbe56e057f20f883e', 
             '$ten', 
@@ -49,12 +49,13 @@ while(!feof($fp))
             'Nguyễn Tuấn', 'Nông dân', 
             'Nguyễn Thị Mai', 'Nông dân', 
             '1', 
-            '2011-09-10', null, 
-            '2011', 
-            '11T3', '1')";**/
+            '2014-09-10', null, 
+            '2014', 
+            '14T1', '1')";
     //$sql ="UPDATE sinhvien set HoTen='$ten' WHERE MaSV='$msv'";
-    $sql = "INSERT INTO HocPhi VALUES('$msv','113','2500000','2500000')";
-    var_dump($a);
+    $sql = "INSERT INTO HocPhi VALUES('$msv','115','2500000','2500000')";
+    //var_dump($a);
+	echo $sql .'<br/ >';
     $rs = mysql_query($sql);
     $ms++;
 }

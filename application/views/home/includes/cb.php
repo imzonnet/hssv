@@ -63,6 +63,13 @@
                 </ul>
             </div><!--end .widget-->
             <div class="widget">
+                <h3 class="nav-header">Quản lý học bổng</h3>
+                <ul class="nav nav-list">
+                    <li><a href="<?php echo base_url(); ?>canbo/themdshb"><i class="icon-chevron-right"></i>Thêm danh sách học bổng</a></li>
+                    <li><a href="<?php echo base_url(); ?>canbo/timkiemdrl"><i class="icon-chevron-right"></i>Tìm kiếm điểm rèn luyện</a></li>
+                </ul>
+            </div><!--end .widget-->
+            <div class="widget">
                 <h3 class="nav-header">Thông tin tuyển dụng</h3>
                 <ul class="nav nav-list">
                     <li><a href="<?php echo base_url(); ?>canbo/thongtintuyendung"><i class="icon-chevron-right"></i>Thông tin tuyển dụng</a></li>

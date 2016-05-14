@@ -27,3 +27,7 @@ function get_sv() {
         $CI->mktx->test();
  
 }
+
+function diemTB() {
+
+}

@@ -1,6 +1,5 @@
 <?php if(!$ds) redirect("canbo/themdiemctdk"); ?>
 <h4 class="text-center">DANH SÁCH SINH VIÊN CHÍNH TRỊ ĐẦU KHÓA</h4>
-<form action="canbo/addctdaukhoa" method="post">
     <table class="table table-bordered table-striped ngoaitru">
         <tr>
             <th>STT</th>
@@ -29,6 +28,8 @@
         }
     ?>
     </table>
+<form action="canbo/themdiemctdk" method="post">
+    <input type="hidden" name="file" value="<?php echo $file; ?>" />
     <a href='canbo/themdiemctdk' class="btn btn-inverse">Hủy Bỏ</a>
     <button type="submit" name="done" class="btn btn-primary" value="ok">Xác Nhận</button>
 </form>
