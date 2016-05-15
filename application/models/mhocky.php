@@ -19,7 +19,7 @@ class MHocKy extends CI_Model
     {
         $sql = "SELECT * FROM hocky ORDER BY id DESC";
         $rs = $this->db->query($sql);
-        return $a = $rs->result_array();
+        return $rs->result_array();
     }
     
     public function htmlMHK()

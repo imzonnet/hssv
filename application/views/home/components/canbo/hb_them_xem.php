@@ -24,7 +24,7 @@
         $i = 1;
         foreach($ds_sv as $k =>$v) {
     ?>
-            <tr>
+            <tr class="<?php echo $v['class']; ?>">
                 <td><?php echo $i; ?></td>
                 <td><?php echo $v['MaSV']; ?></td>
                 <td><?php echo $v['TenSV']; ?></td>

@@ -458,8 +458,7 @@ class CanBo extends CI_Controller
             $data['tc'] = $tc;
             $data['nd'] = $nd;
             $data['min'] = 20;
-            $config['base_url'] = site_url(base_url());
-            $cf['base_url'] = site_url('canbo/tksvnoitru/' . $tc . '/' . $nd);
+            $cf['base_url'] = base_url('canbo/tksvnoitru/' . $tc . '/' . $nd);
             $cf['per_page'] = $data['min'];
             $cf['num_link'] = 2;
             $cf['uri_segment'] = 6;
@@ -501,7 +500,7 @@ class CanBo extends CI_Controller
             $data['max'] = count($this->mnoitru->timKiemLopNoiTru($malop)); //count rows posts
             $data['min'] = 20;
             //$config['base_url'] = site_url($base_url);
-            $cf['base_url'] = site_url('canbo/tklopnt/' . $malop);
+            $cf['base_url'] = base_url('canbo/tklopnt/' . $malop);
             $cf['total_rows'] = $data['max'];
             $cf['per_page'] = $data['min'];
             $cf['num_link'] = 2;
@@ -590,6 +589,7 @@ class CanBo extends CI_Controller
                     $data['mahk'] = $this->mhocky->getMHK();
                     for ($row = 8; $row <= $highestRow; ++$row) {
                         $masv = trim($worksheet->getCellByColumnAndRow(3, $row)->getValue());
+                        if( empty($masv) ) continue;
                         $map = $this->maddress->getMP(addslashes(trim($worksheet->getCellByColumnAndRow(6, $row)->getValue())));
                         $x = explode('/', trim($worksheet->getCellByColumnAndRow(9, $row)->getValue()));
                         $str = count($x) > 2 ? $x[2] . '-' . $x[1] . '-' . $x[0] : 0;
@@ -728,7 +728,7 @@ class CanBo extends CI_Controller
             $data['max'] = count($this->mngoaitru->timKiemSV($tc, $mahk, $nd)); //count rows posts
             $data['min'] = 20;
             //$config['base_url'] = site_url($base_url);
-            $cf['base_url'] = site_url('canbo/tksvnt/' . $tc . '/' . $mahk . '/' . $nd);
+            $cf['base_url'] = base_url('canbo/tksvnt/' . $tc . '/' . $mahk . '/' . $nd);
             $cf['total_rows'] = $data['max'];
             $cf['per_page'] = $data['min'];
             $cf['num_link'] = 2;
@@ -794,7 +794,7 @@ class CanBo extends CI_Controller
             $data['max'] = count($this->mngoaitru->timKiemLop($malop, $mahk)); //count rows posts
             $data['min'] = 20;
             //$config['base_url'] = site_url($base_url);
-            $cf['base_url'] = site_url('canbo/tklopnt/' . $malop . '/' . $mahk);
+            $cf['base_url'] = base_url('canbo/tklopnt/' . $malop . '/' . $mahk);
             $cf['total_rows'] = $data['max'];
             $cf['per_page'] = $data['min'];
             $cf['num_link'] = 2;
@@ -859,7 +859,7 @@ class CanBo extends CI_Controller
             $max = count($this->mngoaitru->timKiemDC($quan, $phuong)); //count rows posts
             $min = 20;
             //$config['base_url'] = site_url($base_url);
-            $cf['base_url'] = site_url('canbo/tkdcnt/' . $quan . '/' . $phuong);
+            $cf['base_url'] = base_url('canbo/tkdcnt/' . $quan . '/' . $phuong);
             $cf['total_rows'] = $max;
             $cf['per_page'] = $min;
             $cf['num_link'] = 2;
@@ -1372,7 +1372,7 @@ class CanBo extends CI_Controller
             $max = count($this->mrenluyen->dsDRL($malop, $mahk)); //count rows posts
             $min = 20;
             //$config['base_url'] = site_url($base_url);
-            $cf['base_url'] = site_url('canbo/ketquadrllsh/' . $malop . '/' . $mahk);
+            $cf['base_url'] = base_url('canbo/ketquadrllsh/' . $malop . '/' . $mahk);
             $cf['total_rows'] = $max;
             $cf['per_page'] = $min;
             $cf['num_link'] = 2;
@@ -2010,17 +2010,20 @@ class CanBo extends CI_Controller
                 $objPHPExcel = PHPExcel_IOFactory::load($url);
                 foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
                     $highestRow = $worksheet->getHighestRow() - 6; // e.g. 10
-                    $data['mahk'] = $this->mhocky->getMHK();
+                    $data['mahk'] = $mahk = $this->mhocky->getMHK();
                     $data['tieude'] =  trim($worksheet->getCellByColumnAndRow(0, 7)->getValue());
                     $data['tieude'] .=  '<br />' . trim($worksheet->getCellByColumnAndRow(0, 8)->getValue());
                     for ($row = 13; $row <= $highestRow; ++$row) {
                         $stt = trim($worksheet->getCellByColumnAndRow(3, $row)->getValue());
                         if( empty($stt) ) break;
+                        $masv = trim($worksheet->getCellByColumnAndRow(1, $row)->getValue());
                         $stc = trim($worksheet->getCellByColumnAndRow(6, $row)->getValue());
                         $dtb = trim($worksheet->getCellByColumnAndRow(7, $row)->getValue());
                         $drl = trim($worksheet->getCellByColumnAndRow(8, $row)->getValue());
+                        if ( !$this->mhocbong->checkAdd($masv, $mahk) ) $class = 'success';
+                        else $class = 'error';
                         $svnt[] = array(
-                            'MaSV' => trim($worksheet->getCellByColumnAndRow(1, $row)->getValue()),
+                            'MaSV' => $masv,
                             'TenSV' => trim($worksheet->getCellByColumnAndRow(2, $row)->getValue()) .' '.trim($worksheet->getCellByColumnAndRow(3, $row)->getValue()),
                             'NgaySinh' => trim($worksheet->getCellByColumnAndRow(4, $row)->getValue()),
                             'Lop' => trim($worksheet->getCellByColumnAndRow(5, $row)->getValue()),
@@ -2030,6 +2033,7 @@ class CanBo extends CI_Controller
                             'XepLoai' => xep_loai($stc, $dtb, $drl),
                             'MucHB' => muc_hoc_bong($stc, $dtb, $drl),
                             'TongTien' => muc_hoc_bong($stc, $dtb, $drl) * 5,
+                            'class' => $class
                         );
                     }
                     break;
@@ -2079,6 +2083,59 @@ class CanBo extends CI_Controller
             $data['ds_sv'] = $svnt;
             $data['sub_views'] = "hb_them_ok";
         }
+        $this->load->view("home/main_layout", $data);
+    }
+    /**
+     * Tim kiem diem ren luyen
+     */
+    public function xemdshb()
+    {
+        if (!$this->my_auth->is_CanBo()) {
+            redirect("canbo/login");
+        }
+        $data['cb_id'] = $this->cb_id;
+        $data['cb_name'] = $this->cb->tencb;
+        $data['sub_views'] = "hb_timkiem";
+        $data['task_name'] = "Tra cứu danh sách học bổng";
+        $data['ds_hk'] = $this->mhocky->listHK();
+        $this->load->view("home/main_layout", $data);
+    }
+
+    public function danhsachhb($mahk = "")
+    {
+        if (!$this->my_auth->is_CanBo()) {
+            redirect("canbo/login");
+        }
+        $data['cb_id'] = $this->cb_id;
+        $data['cb_name'] = $this->cb->tencb;
+        $data['task_name'] = "Danh sách học bổng";
+        $data['ds_hk'] = $this->mhocky->listHK();
+        if ($this->input->post('search') != "") {
+            $mahk = $this->input->post('mahk');
+        }
+
+        if ($mahk != "") {
+            $data['sub_views'] = "hb_timkiem_kq";
+            $data['mahk'] = $mahk;
+            $max = count($this->mhocbong->danhSach($mahk)); //count rows posts
+            $min = 20;
+            //$config['base_url'] = site_url($base_url);
+            $cf['base_url'] = base_url('canbo/danhsachhb/' . $mahk);
+            $cf['total_rows'] = $max;
+            $cf['per_page'] = $min;
+            $cf['num_link'] = 2;
+            $cf['uri_segment'] = 4;
+            $this->pagination->initialize($cf);
+            $data['kqtk'] = $this->mhocbong->danhSach($mahk, $min, $this->uri->segment($cf['uri_segment']));
+            $data['page_link'] = $this->pagination->create_links();
+            if (!$data['kqtk']) {
+                $data['error'] = '300';
+                $data['url'] = $this->cb_url . '/xemdshb';
+                $this->load->view('home/error', $data);
+                return false;
+            }
+        } else
+            $data['sub_views'] = "hb_timkiem";
         $this->load->view("home/main_layout", $data);
     }
 }
