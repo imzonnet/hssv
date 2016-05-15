@@ -722,6 +722,7 @@ class CanBo extends CI_Controller
             } else {
                 $data['sub_views'] = "nt_tk_tsv";
             }
+
             $data['tc'] = $tc;
             $data['nd'] = $nd;
             $data['mahk'] = $mahk;
@@ -736,7 +737,6 @@ class CanBo extends CI_Controller
             $this->pagination->initialize($cf);
             $data['kqtk'] = $this->mngoaitru->timKiemSV($tc, $mahk, $nd, $data['min'], $this->uri->segment($cf['uri_segment']));
             $data['page_link'] = $this->pagination->create_links();
-
             if (!$data['kqtk']) {
                 $data['error'] = '300';
                 $data['url'] = $this->cb_url . '/timkiemsvnt';
@@ -748,10 +748,71 @@ class CanBo extends CI_Controller
         }
         $this->load->view("home/main_layout", $data);
     }
-
-    /**
-     * Thong ke theo thong tin sinh vien
+    /*
+    Sua thong tin ngoai tru cua mot ma ngoai tru
      */
+    public function suaTTNT(){
+        if (!$this->my_auth->is_CanBo()) {
+            redirect("canbo/login");
+        }
+        $data['cb_id'] = $this->cb_id;
+        $data['cb_name'] = $this->cb->tencb;
+        $data['sub_views'] = "nt_suathongtin";
+        $data['task_name'] = "Chỉnh sửa thông tin ngoại trú";
+        $mant = $this->uri->segment(3);
+        if($mant != false){
+            if($this->input->post("update_info") != ""){
+                $arr = $this->input->post();
+                $info = array(
+                    'mant' => $arr['mant'],
+                    'TenChuTro' =>  $arr['tenchutro'],
+                    'DienThoai' =>  $arr['dienthoai'],
+                    'DiaChi' =>  $arr['diachi'],
+                    'MaPhuong'  =>  $arr['phuong'],
+                    'MaHK'   =>  $arr['mahk'],
+                    'NgayDen'    =>  $arr['ngayden'],
+                    'NgayDi'  =>  $arr['ngaydi']
+                );
+                $this->mngoaitru->update($info['mant'],$info);
+                $this->session->set_flashdata('success_mgs', 'Cập nhật thành công');
+            }
+            if($this->input->post("delete_info") !=""){
+                $mant = $this->input->post('mant');
+                $this->mngoaitru->deleted($mant);
+                $this->session->set_flashdata('deleted_mgs', 'Xóa ngoại trú thành công');
+            }
+            $kqtk = $this->mngoaitru->getMaNT($mant);
+            $data['kqtv'] = array(
+                'MaNT' =>$kqtk[0]['MaNT'] , 
+                'TenChuTro' =>$kqtk[0]['TenChuTro'] , 
+                'DiaChi' =>$this->maddress->getAddress($kqtk[0]['MaPhuong']) ,
+                'DienThoai' =>$kqtk[0]['DienThoai'] ,
+                'MaHK' => $kqtk[0]['MaHK'],
+                'NgayDen' =>$kqtk[0]['NgayDen'] ,
+                'NgayDi'=>$kqtk[0]['NgayDi'],
+            );
+            $phuong = $this->maddress->dsPhuong(0,$kqtk[0]['MaPhuong']);
+            $quan   = $this->maddress->dsQuan(0,$phuong[0]['maquan']);
+            $tinh   = $this->maddress->dsTinh($quan[0]['matinh']);
+            $data['tinh']   = $this->maddress->htmlTinh(0,$tinh[0]['matinh']);
+            $data['quan']   = $this->maddress->htmlQuan($tinh[0]['matinh'],0,$quan['0']['maquan']);
+            $data['phuong'] = $this->maddress->htmlPhuong($quan[0]['maquan'],0,$phuong['0']['maphuong']);
+            $data['diachi'] = $phuong[0]['tenphuong'] .' - '.$quan[0]['tenquan'].' - '.$tinh[0]['tentinh'];
+            $data['error'] = false;
+        }
+        else{
+            $data['error'] = true;
+        }
+        $this->load->view("home/main_layout", $data);
+    }
+    /*
+    xoa mot ma ngoai tru
+     */
+    public function xoaNT(){
+        $mant = $this->uri->segment(3);
+        $this->mngoaitru->delete($mant);
+        echo "<div class='alert alert-success' role='alert'><strong>Xóa thành công</strong></div>";
+    }
 
     public function thongKeSVNT($tc, $mahk, $nd)
     {
@@ -1446,6 +1507,13 @@ class CanBo extends CI_Controller
         $this->load->view('home/maugiay/tk_renluyen', $data);
     }
 
+    /*
+    xoa 1 diem ren luyen cua 1 sinh vien
+     */
+    public function xoaDRl(){
+        $this->mrenluyen->delete($this->input->post('MaSV'),$this->input->post('MaHK'));
+        echo "<div class='alert alert-success' role='alert'><strong>Xóa thành công</strong></div>";
+    }
     /**
      * Doi mat khau
      */
@@ -1738,7 +1806,6 @@ class CanBo extends CI_Controller
         $data['task_name'] = "Thông tin tuyển dụng";
         $data['sub_views'] = 'v_thongtintuyendung';
         if ($this->input->post('tuyendung_edit_submit', true) != '') {
-            var_dump($this->input->post('tieude'));
             echo $this->input->post("tieude");
         } else {
             $data['max'] = $this->mtuyendung->all_count_table_thongtin();

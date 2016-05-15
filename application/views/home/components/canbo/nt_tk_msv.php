@@ -18,14 +18,18 @@
     </tr>
 </table>
 
+<div class='mesage_show'></div>
 <table class="table table-bordered table-striped ngoaitru table-hover">
     <tr>
         <th>STT</th>
+        <th>Mã ngoại trú</th>
         <th>Tên Chủ Trọ</th>
         <th>Số Điện Thoại</th>
         <th>Địa Chỉ</th>
         <th>Ngày Đến</th>
         <th>Ngày Đi</th>
+        <th>Sửa</th>
+        <th>Xóa</th>
     </tr>
     <?php
     $i = $this->uri->segment(6)+1;
@@ -33,11 +37,14 @@
     ?>
         <tr>
             <td><?php echo $i; ?></td>
+            <td><p class="ma_nt"><?php echo $kq['MaNT']; ?></p></td>
             <td><?php echo $kq['TenChuTro']; ?></td>
             <td><?php echo $kq['DienThoai']; ?></td>
             <td><?php echo $kq['DiaChi'].'-'.$kq['TenPhuong'].'-'.$kq['TenQuan']; ?></td>
-            <td> <?php echo date('d-m-Y',strtotime($kq['NgayDen'])); ?></td>
-            <td> <?php echo strtotime($kq['NgayDi']) != 0 ? date('d-m-Y',strtotime($kq['NgayDi'])) : ""; ?></td>
+            <td><?php echo date('d-m-Y',strtotime($kq['NgayDen'])); ?></td>
+            <td><?php echo strtotime($kq['NgayDi']) != 0 ? date('d-m-Y',strtotime($kq['NgayDi'])) : ""; ?></td>
+            <td><a href="<?php echo base_url('canbo').'/suaTTNT/'.$kq['MaNT'];?>">Sửa</a></td>
+            <td><a id="<?php echo $kq['MaNT'] ?>" class="btn btn-primary xoa">Xóa</a>
         </tr>
     <?php 
         $i++;
@@ -53,6 +60,7 @@
 </p>
 
 <script>
+
 function mocuaso(website,rong,cao) {
     var windowprops='width=100,height=100,scrollbars=yes,s tatus=yes,resizable=no'
     var heightspeed = 15;
@@ -71,5 +79,20 @@ function mocuaso(website,rong,cao) {
     }else
         window.open(website,'mywindow');
 }
-
+$( document ).ready(function() {
+    $( "a.xoa" ).click(function() {
+        var check = window.confirm("Bạn muốn xóa chứ?");
+        if(check == true){
+            var id =$(this).attr("id");
+            $.ajax({
+                    type: 'GET',
+                    url: '<?php echo site_url(); ?>canbo/xoaNT/'+id,
+                    success: function(data) {
+                        $('.mesage_show').html(data);
+                        window.setTimeout(function(){location.reload()},1000)
+                    }
+                });    
+        }
+    });
+});
 </script>
