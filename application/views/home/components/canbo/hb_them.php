@@ -16,7 +16,7 @@
 </form>
 <div class="box">
     Vui lòng kiểm tra file trước khi upload!<br />
-    <a href="upload/bieumau/ngoaitru.xls" >Download File Danh Sách Học Bổng mẫu</a>
+    <a href="upload/bieumau/hoc-bong.xlsx" >Download File Danh Sách Học Bổng mẫu</a>
 </div>
 <script>
 $(document).ready(function(){
