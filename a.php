@@ -29,7 +29,7 @@ for($i = 5; $i<=79; $i++ ) {
 }
 */
 
-$fp = fopen('t4.txt','r') or exit('k tim thay file');
+$fp = fopen('t42.txt','r') or exit('k tim thay file');
 $ms = 10;
 while(!feof($fp))
 {
@@ -53,7 +53,7 @@ while(!feof($fp))
             '2014', 
             '14T1', '1')";
     //$sql ="UPDATE sinhvien set HoTen='$ten' WHERE MaSV='$msv'";
-    $sql = "INSERT INTO HocPhi VALUES('$msv','115','2500000','2500000')";
+    $sql = "INSERT INTO HocPhi VALUES('$msv','215','2500000','2500000')";
     //var_dump($a);
 	echo $sql .'<br/ >';
     $rs = mysql_query($sql);

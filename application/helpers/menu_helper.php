@@ -28,6 +28,26 @@ function get_sv() {
  
 }
 
-function diemTB() {
+function xep_loai($stc, $dtb, $drl) {
+    if( $stc >= 10 && $dtb >= 9 && $drl == 1)
+        return 'Xuất sắc';
+    else if( $stc >= 10 && $dtb >= 8 && $drl == 0.8)
+        return 'Giỏi';
+    else if( $stc >= 10 && $dtb >= 7 && $drl == 0.6)
+        return 'Khá';
+}
 
+function muc_hoc_bong($stc, $dtb, $drl) {
+    if( $stc >= 14 && $dtb >= 9 && $drl == 1)
+        return 640000;
+    else if( $stc >= 10 && $dtb >= 9 && $drl == 1)
+        return 320000;
+    else if( $stc >= 14 && $dtb >= 8 && $drl == 0.8)
+        return 580000;
+    else if( $stc >= 10 && $dtb >= 8 && $drl == 0.8)
+        return 290000;
+    else if( $stc >= 14 && $dtb >= 7 && $drl == 0.8)
+        return 520000;
+    else if( $stc >= 10 && $dtb >= 7 && $drl == 0.8)
+        return 260000;
 }

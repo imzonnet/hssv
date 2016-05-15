@@ -33,7 +33,7 @@ else{?>
 	            <td><?php echo $v['MaSV']; ?></td>
 	            <td><?php echo $v['HoTen']; ?></td>
 	            <td><?php echo $v['NgaySinh']; ?></td>
-	            <td><?php echo $v['Nganh']; ?></td>
+	            <td><?php echo $v['TenNganh']; ?></td>
                 	<?php 
                 		$a[] = array ();
 			$a = json_decode ($v['Diem'],true);
