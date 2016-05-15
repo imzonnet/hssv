@@ -27,7 +27,7 @@
             <select name="malop">
                 <?php
                     foreach($dslopct as $k => $v){
-                        echo '<option value="'.$v['Lop'].'">'.$v['Lop'].'</option>';
+                        echo '<option value="'.$v['LopCT'].'">'.$v['LopCT'].'</option>';
                     }
                 ?>
             </select>

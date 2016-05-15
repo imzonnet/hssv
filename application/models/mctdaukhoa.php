@@ -31,7 +31,7 @@ class mctdaukhoa extends CI_Model{
 	}
 	public function laydslopchinhtri(){
 		$this->db->distinct();
-		$this->db->select('Lop');
+		$this->db->select('LopCT');
 		$rs = $this->db->get($this->tb);
 		if($rs->num_rows()>0){
 			return $rs->result_array();
@@ -39,16 +39,18 @@ class mctdaukhoa extends CI_Model{
 		return false;
 	}
 	public function timdsdiemchinhtritheolop($malop){
-		$this->db->where('Lop',$malop);
-		$rs = $this->db->get($this->tb);
+		$rs = $this->db->query("SELECT sv.MaSV, sv.HoTen, sv.NgaySinh, dct.LopCT, dct.Diem, dct.BienLaiSo, ng.TenNganh
+					FROM sinhvien AS sv , diemchinhtri AS dct, nganh AS ng ,lop
+					WHERE sv.MaSV = dct.MaSV AND sv.MaLop = lop.MaLop AND lop.MaNganh = ng.MaNganh AND dct.LopCT = '{$malop}'");
 		if($rs->num_rows()>0)
 			return $rs->result_array();
 		else
 			return false;
 	}
 	public function timdiemchinhtritheomasv($masv){
-		$this->db->where('MaSV',$masv);
-		$rs = $this->db->get($this->tb);
+		$rs = $this->db->query("SELECT sv.MaSV, sv.HoTen, sv.NgaySinh, dct.LopCT, dct.Diem, dct.BienLaiSo, ng.TenNganh
+					FROM sinhvien AS sv , diemchinhtri AS dct, nganh AS ng ,lop
+					WHERE sv.MaSV = dct.MaSV AND sv.MaLop = lop.MaLop AND lop.MaNganh = ng.MaNganh AND dct.MaSV = '{$masv}'");
 		if($rs->num_rows()>0)
 			return $rs->result_array();
 		else
