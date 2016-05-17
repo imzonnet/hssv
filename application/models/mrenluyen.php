@@ -105,5 +105,13 @@ class MRenLuyen extends CI_Model
         $rs = $this->db->query($sql);
         return $rs->result_array();
     }
+    public function delete($masv,$mahk){
+        $data =  array(
+            'MaSV' => $masv , 
+            'MaHK' => $mahk
+        );
+        $this->db->where($data);
+        $this->db->delete($this->tb);
+    }
 }
 

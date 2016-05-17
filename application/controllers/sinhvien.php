@@ -539,10 +539,7 @@ class SinhVien extends CI_Controller
         $data['quan']   = $this->maddress->htmlQuan($tinh[0]['matinh'],0,$quan['0']['maquan']);
         $data['phuong'] = $this->maddress->htmlPhuong($quan[0]['maquan'],0,$phuong['0']['maphuong']);
         $data['diachi'] = $phuong[0]['tenphuong'] .' - '.$quan[0]['tenquan'].' - '.$tinh[0]['tentinh'];
-        //var_dump($phuong,$quan,$tinh);
-        
         $this->load->view('home/sv_layout',$data);
-        
     }
 
     /**

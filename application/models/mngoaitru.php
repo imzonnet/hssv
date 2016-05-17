@@ -158,7 +158,16 @@ class MNgoaiTru extends CI_Model
         return $rs->row_array();
     }
     /**
-     * Kiem tra thong tin mant
+     * lay thong tin cua mot MaNT
      */
+    public function getMaNT($mant){
+        $this->db->where('MaNT',$mant);
+        $rs = $this->db->get($this->tb);
+        if($rs -> num_rows()>0)
+            return $rs->result_array();
+        else
+            return false;
+
+    }
 
 }
