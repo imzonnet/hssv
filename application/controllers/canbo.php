@@ -1043,6 +1043,7 @@ class CanBo extends CI_Controller
                 $capnhatsoluong = $this->mktx->updateSlSvOPhong($_POST['maphong'], $trangthai = 'tang');
                 if ($status == true && $capnhatsoluong == true) {
                     $data['mesage_susscess'] = "Xác nhận thành công";
+                    $data['id'] = $_POST['id'];
                     $this->load->view('home/main_layout', $data);
                 } else {
                     $data['mesage_error'] = "Xác nhận không thành công, vui lòng thử lại";
@@ -1050,6 +1051,30 @@ class CanBo extends CI_Controller
                 }
             }
         }
+    }
+    // In bien lai dang ky phong //
+    public function inBienLaiDKP($id){
+        if (!$this->my_auth->is_CanBo()) {
+            redirect("canbo/login");
+        }
+        $kqtk = $this->mktx->getthongtin($id);
+        $tencb = $this->mcanbo->laytencanbo($kqtk[0]['NguoiXN']);
+        $tencb = $tencb[0]['TenCB'];
+        $ttsv = $this->msinhvien->getInfo($kqtk[0]['MaSV']);
+        $diachi = $this->maddress->getAddress($ttsv['MaPhuong']);
+        $data = array(
+            'ngaynop' => $this->my_auth->setDate(),
+            'bienlaiso' => $id,
+            'tensv' => $ttsv['HoTen'],
+            'diachi' => $diachi['diachi'],
+            'masv' => $kqtk[0]['MaSV'],
+            'phongdk' => $kqtk[0]['MaPhong'],
+            'hocky' => $kqtk[0]['MaHK'],
+            'tencb' => $tencb,
+            'sub_views' => 'ktx_inbienlai_dkp'
+        );
+        $this->load->view('home/maugiay/' . $data['sub_views'], $data);
+        
     }
 
     // load form tu choi

@@ -14,7 +14,7 @@ class Mktx extends CI_Model{
 
 	public function thongtinsv($id){
 
-	    	$this->db->select("MaSV,HoTen,NgaySinh,CMND,MaLop,KhoaHoc");
+	    $this->db->select("MaSV,HoTen,NgaySinh,CMND,MaLop,KhoaHoc");
 		$this->db->where("MaSV",$id);
 		$query=$this->db->get("sinhvien");
 		return $query->result_array();
@@ -188,6 +188,16 @@ class Mktx extends CI_Model{
 	 	$this->db->where('Id',$id);
 	 	$this->db->update('sinhvien_phong',$data);
 	 }
+	// lay thong tin cua mot madk phong
+	public function getthongtin($id){
+		$this->db->where('Id',$id);
+		$query = $this->db->get('sinhvien_phong');
+		if($query->num_rows>0){
+	 		return $query->result_array();
+	 	}
+	 	else
+	 		return false;
+	}
 
 	/***********************************************************************
 		Sinh viên
