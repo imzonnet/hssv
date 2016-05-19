@@ -1006,7 +1006,62 @@ class CanBo extends CI_Controller
 
         $this->load->view("home/main_layout", $data);
     }
-
+    // tim kiem sinh vien ky tuc xa
+    public function timkiemsvnhanh(){
+        if (!$this->my_auth->is_CanBo()) {
+            redirect("canbo/login");
+        }
+        $data['cb_id'] = $this->cb_id;
+        $data['cb_name'] = $this->cb->tencb;
+        $data['sub_views'] = "v_timkiemsvnhanh";
+        $data['task_name'] = "Tìm kiếm nhanh sinh viên";
+        $data['dsphong'] = $this->mktx->getMaphong();
+        $this->load->view("home/main_layout", $data);
+    }
+    // tim sinh vien ktx theo masv
+    public function timkiemsvtheoma(){
+        if (!$this->my_auth->is_CanBo()) {
+            redirect("canbo/login");
+        }
+        $data['cb_id'] = $this->cb->macb;
+        $data['cb_name'] = $this->cb->tencb;
+        $data['task_name'] = "Tìm kiếm điểm chính trị đầu khóa";
+        $data['sub_views'] = 'v_ktx_svtheoma';
+        if ($this->input->get('tknhanhmasv') != '') {
+            $masv = addslashes(trim($this->input->get('txtmasv')));
+            $data['kqtk'] = $this->mktx->find_data_MaSV($masv);
+            $status = $data['kqtk'][0]['GhiChu'];
+            $arr = explode(":", $data['kqtk'][0]['GhiChu']);
+            if($arr[0] == "chochuyen"){
+                $data['status'] = $arr[0];
+                $data['maphongchuyen'] = $arr[1];
+            }
+            if($data['kqtk']==false){
+                $data['mg_errror'] = false;
+            }
+            var_dump($data['kqtk']);
+            unset($this->input->get['tknhanhmasv']);
+        }
+        $this->load->view('home/main_layout', $data);
+    }
+    // chuyen phong cho sinh vien
+    public function svdkchuyenphong(){
+        if (!$this->my_auth->is_CanBo()) {
+            redirect("canbo/login");
+        }
+        $data['cb_id'] = $this->cb_id;
+        $data['cb_name'] = $this->cb->tencb;
+        $data['sub_views'] = "v_svdkchuyenphong";
+        $data['masv'] = $this->uri->segment(3);
+        $data['maphong'] = $this->uri->segment(4); 
+        $data['ngaydk'] = $this->uri->segment(5);
+        $data['chuyenphong'] = $this->uri->segment(6);
+        $data['id'] = $this->uri->segment(7);
+        $data['mahk'] = $this->uri->segment(8);
+        $data['macb'] = $this->uri->segment(9);
+        $data['task_name'] = "Sinh viên đăng ký chuyển phòng";
+        $this->load->view("home/main_layout", $data);
+    }
     // sinh viên đăng ký phòng
     public function svDkPhong()
     {
@@ -1193,7 +1248,7 @@ class CanBo extends CI_Controller
         $data['danhsach'] = $this->mktx->layDsSvDkChuyenPhong();
         $this->load->view("home/main_layout", $data);
     }
-
+    
     public function xnsvchuyenphong()
     {
         if (!$this->my_auth->is_CanBo()) {

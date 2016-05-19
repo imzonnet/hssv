@@ -19,7 +19,7 @@ class Mktx extends CI_Model{
 		$query=$this->db->get("sinhvien");
 		return $query->result_array();
 	}
-	    
+	
 	// Xác nhận sinh viên đăng ký phòng
 	public function XnDkPhong($cb_id,$id,$ghichu){
 	    	$ngayxn = $this->my_auth->setDate();
@@ -95,7 +95,29 @@ class Mktx extends CI_Model{
 		}
 		return $data;
 	}
-
+	// tim sinh vien o ktx theo masv
+	public function find_data_MaSV($masv){
+		$data = array(
+			'MaSV' => $masv,
+			'TrangThai' =>'daxn',
+			'TrangThai' =>'chuaxn'
+		);
+		$sql = "select * from sinhvien_phong where MaSV=$masv and TrangThai = 'daxn' or MaSV=$masv and TrangThai='chuaxn'";
+		$query= $this->db->query($sql);
+	    if($query->num_rows()>0){
+	    	return $query->result_array();	
+	    }
+	    else
+	    	return false;
+	}
+	public function getMaphong(){
+		$this->db->select('MaPhong');
+		$query = $this->db->get('ktx_phong');
+		if($query->num_rows()>0)
+			return $query->result_array();
+		else
+			return false;
+	}
 	// lấy thông tin cac sinh viên trong một phòng
 	public function getDsSvOMotPhong($maphong){
 		$this->db->select("sinhvien.MaSV,HoTen,NgaySinh,GioiTinh,MaLop,KhoaHoc, NgayDK");
@@ -189,7 +211,7 @@ class Mktx extends CI_Model{
 	 	$this->db->update('sinhvien_phong',$data);
 	 }
 	// lay thong tin cua mot madk phong
-	public function getthongtin($id){
+	public function ds($id){
 		$this->db->where('Id',$id);
 		$query = $this->db->get('sinhvien_phong');
 		if($query->num_rows>0){

@@ -35,8 +35,8 @@
             <div class="widget">
                 <h3 class="nav-header">Quản lý đăng ký phòng KTX</h3>
                 <ul class="nav nav-list">
+                    <li><a href="<?php echo base_url(); ?>canbo/timkiemsvnhanh"><i class="icon-chevron-right"></i>Tìm kiếm nhanh</a></li> 
                     <li><a href="<?php echo base_url(); ?>canbo/tinhtrangphongktx"><i class="icon-chevron-right"></i>Tình trạng phòng ký túc xá</a></li>
-                    <!--<li><a href="<?php echo base_url(); ?>canbo/dschoduyet"><i class="icon-chevron-right"></i>Chờ duyệt</a></li> -->
                     <li><a href="<?php echo base_url(); ?>canbo/dsdkchuyenphong"><i class="icon-chevron-right"></i>Danh sách đăng ký chuyển phòng</a></li>
                 </ul>
             </div><!--end .widget-->
