@@ -1027,20 +1027,50 @@ class CanBo extends CI_Controller
         $data['cb_name'] = $this->cb->tencb;
         $data['task_name'] = "Tìm kiếm điểm chính trị đầu khóa";
         $data['sub_views'] = 'v_ktx_svtheoma';
-        if ($this->input->get('tknhanhmasv') != '') {
+        if ($this->input->get('tknhanhmasv') != "") {
             $masv = addslashes(trim($this->input->get('txtmasv')));
-            $data['kqtk'] = $this->mktx->find_data_MaSV($masv);
-            $status = $data['kqtk'][0]['GhiChu'];
-            $arr = explode(":", $data['kqtk'][0]['GhiChu']);
-            if($arr[0] == "chochuyen"){
-                $data['status'] = $arr[0];
-                $data['maphongchuyen'] = $arr[1];
-            }
-            if($data['kqtk']==false){
+            $kqtk = $this->mktx->find_data_MaSV($masv);
+            if($kqtk == false){
                 $data['mg_errror'] = false;
             }
-            var_dump($data['kqtk']);
-            unset($this->input->get['tknhanhmasv']);
+            else{
+                if($kqtk[0]['TrangThai']=="chuaxn"){
+                    $data['kqtk'] = $kqtk;
+                    $data['status']= 1;
+                }
+                else{
+                    $arr = explode(":", $kqtk[0]['GhiChu']);
+                    if($arr[0] == ""){
+                        $data['kqtk']= $kqtk;
+                        $data['status'] = 0;
+                    }
+                    else{
+                        $data['status'] = -1;
+                        $data['kqtk'] = $kqtk;
+                        $data['maphongchuyen'] = $arr[1];
+                    }
+
+                    
+                }    
+            }
+            
+            // $status = $kqtk[0]['GhiChu'];
+            // if($status === null && $kqtk[0]['TrangThai'] != "chuaxn"){
+            //     $data['kqtk'] = $kqtk;
+            //     $data['checkstt'] = false;
+            // }
+            // else{
+            //     $arr = explode(":", $kqtk[0]['GhiChu']);
+            //     if($arr[0] == "chochuyen"){
+            //         $data['status'] = $arr[0];
+            //         $data['maphongchuyen'] = $arr[1];
+            //     }
+            //     if($data['kqtk']==false){
+            //         
+            //     }
+            //     unset($this->input->get['tknhanhmasv']);    
+            // }
+            
         }
         $this->load->view('home/main_layout', $data);
     }
