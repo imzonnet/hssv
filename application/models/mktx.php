@@ -110,6 +110,15 @@ class Mktx extends CI_Model{
 	    else
 	    	return false;
 	}
+	// tim sinh vien o ktx theo ma phong
+	public function find_data_maphong($maphong){
+		$sql="select * from sinhvien_phong where MaPhong=$maphong and TrangThai = 'daxn' or MaPhong=$maphong and TrangThai='chuaxn'";
+		$query = $this->db->query($sql);
+		if($query->num_rows()>0)
+			return $query->result_array();
+		else
+			return false;
+	}
 	public function getMaphong(){
 		$this->db->select('MaPhong');
 		$query = $this->db->get('ktx_phong');

@@ -1025,7 +1025,7 @@ class CanBo extends CI_Controller
         }
         $data['cb_id'] = $this->cb->macb;
         $data['cb_name'] = $this->cb->tencb;
-        $data['task_name'] = "Tìm kiếm điểm chính trị đầu khóa";
+        $data['task_name'] = "Thông tin tìm kiếm theo mã sinh viên";
         $data['sub_views'] = 'v_ktx_svtheoma';
         if ($this->input->get('tknhanhmasv') != "") {
             $masv = addslashes(trim($this->input->get('txtmasv')));
@@ -1053,26 +1053,29 @@ class CanBo extends CI_Controller
                     
                 }    
             }
-            
-            // $status = $kqtk[0]['GhiChu'];
-            // if($status === null && $kqtk[0]['TrangThai'] != "chuaxn"){
-            //     $data['kqtk'] = $kqtk;
-            //     $data['checkstt'] = false;
-            // }
-            // else{
-            //     $arr = explode(":", $kqtk[0]['GhiChu']);
-            //     if($arr[0] == "chochuyen"){
-            //         $data['status'] = $arr[0];
-            //         $data['maphongchuyen'] = $arr[1];
-            //     }
-            //     if($data['kqtk']==false){
-            //         
-            //     }
-            //     unset($this->input->get['tknhanhmasv']);    
-            // }
-            
         }
         $this->load->view('home/main_layout', $data);
+    }
+    // tim kiem sinh vien theo phong
+    public function timkiemsvtheophong(){
+        if (!$this->my_auth->is_CanBo()) {
+            redirect("canbo/login");
+        }
+        $data['cb_id'] = $this->cb->macb;
+        $data['cb_name'] = $this->cb->tencb;
+        $data['task_name'] = "Thông tin tìm kiếm theo phòng sinh hoạt";
+        $data['sub_views'] = 'v_ktx_svtheophong';
+        if ($this->input->get('tknhanhphong') != "") {
+            $data['maphong'] = $this->input->get('maphong');
+            $kqtk = $this->mktx->find_data_maphong($this->input->get('maphong'));
+            if($kqtk != false){
+                $data['kqtk'] = $kqtk;
+                $data['mg_error'] = false;
+            }
+            else
+                $data['mg_error'] = true;
+        }
+        $this->load->view("home/main_layout", $data);
     }
     // chuyen phong cho sinh vien
     public function svdkchuyenphong(){

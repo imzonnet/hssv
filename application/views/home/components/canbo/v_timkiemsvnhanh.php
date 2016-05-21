@@ -24,7 +24,7 @@
         </label>
         <div class="controls">
             <p>
-            <select name="malop">
+            <select name="maphong">
                 <?php
                     foreach($dsphong as $k => $v){
                         echo '<option value="'.$v['MaPhong'].'">'.$v['MaPhong'].'</option>';
@@ -36,7 +36,7 @@
     </div>
     <div class="control-group">
         <div class="controls">
-            <input type="submit" name="search" value="Tìm kiếm" class="btn btn-primary" />
+            <input type="submit" name="tknhanhphong" value="Tìm kiếm" class="btn btn-primary" />
         </div>
     </div>
 </form>

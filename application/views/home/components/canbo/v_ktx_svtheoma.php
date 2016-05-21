@@ -22,9 +22,9 @@
 			<td><?php echo $kqtk[0]['NgayDK']; ?></td>
 			<td>
 				<?php 
-				if($status == 0){ ?>
-					<a class="btn btn-danger" href="<?php echo base_url().'canbo/timkiemsvnhanh'; ?>">Trở lại</a>
-				<?php }
+				if($status == 0){
+					echo "Đã xác nhận";
+				}
 				else{
 					if($status == 1){ ?>
 						<a class="btn btn-primary" href="<?php echo base_url('canbo/svDkPhong/'.$kqtk[0]['Id'].'/'.$kqtk[0]['MaPhong'].'/'.$kqtk[0]['MaSV']);?>">Xác nhận</a>	
@@ -40,4 +40,5 @@
 			</td>
 		</tr>
 	</table>
+	<a class="btn btn-danger" href="<?php echo base_url().'canbo/timkiemsvnhanh'; ?>">Trở lại</a>
 	<?php } ?>
