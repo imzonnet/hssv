@@ -12,7 +12,7 @@
     </div>
 </form>
 <div class="box">
-    Vui lòng kiểm tra file trước khi upload!<br />s
+    Vui lòng kiểm tra file trước khi upload!<br />
     <a href="upload/bieumau/chinhtri-CT08.xlsx" >Download File Chính Trị Đầu Khóa mẫu</a>
 </div>
 <script>

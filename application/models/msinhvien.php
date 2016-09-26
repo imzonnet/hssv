@@ -125,6 +125,9 @@ class MSinhVien extends CI_Model
         //echo $sql;
         $qr = $this->db->query($sql);
         $rs = $qr->row_array();
+        if( !isset($rs['tongtien']) || !isset($rs['tiendanop']) ) {
+            return -1;
+        }
         $tt = $rs['tongtien']-$rs['tiendanop'];
         if($rs['tiendanop']==0) return -1;
         if($tt==0) return 1;

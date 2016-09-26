@@ -7,7 +7,7 @@
         <th>Ngày Đến</th>
         <th>Ngày Đi</th>
         <th>Học Kỳ</th>
-        <th>Task</th>
+        <th>Cập Nhật</th>
     </tr>
     <?php
     //var_dump($ds_nt);
