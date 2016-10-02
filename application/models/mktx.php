@@ -11,6 +11,16 @@ class Mktx extends CI_Model{
 	        	else
 	        		return false;
 	}
+	public function getThongTin($id){
+		$this->db->from('sinhvien_phong');
+		$this->db->where('Id',$id);
+		$query=$this->db->get();
+		if($query->num_rows()>0){
+			return $query->result_array();
+		} else{
+			return false;
+		}
+	}
 
 	public function thongtinsv($id){
 
@@ -43,11 +53,10 @@ class Mktx extends CI_Model{
 	}
 
 	public function layMaHk(){
-		$sql="SELECT max(id),MaHK FROM hocky";
-		$query=$this->db->query($sql);
-		foreach($query->result_array() as $key =>$v){
-			return $v['MaHK'];
-		}
+		$sql = "SELECT * FROM hocky ORDER BY id DESC LIMIT 0,1";
+		$rs = $this->db->query($sql);
+		$a = $rs->row_array();
+		return $a['MaHK'];
 	}
 	// Cập nhật số lượng hiện đang ở
 	public function updateSlSvOPhong($maphong,$trangthai){
@@ -135,7 +144,7 @@ class Mktx extends CI_Model{
 		$this->db->where('sinhvien_phong.MaPhong',$maphong);
 		$this->db->where('sinhvien_phong.TrangThai','daxn');
 		$query =$this->db->get();
-		return $query ->result_array();
+		return $query->result_array();
 	}
 	// xem danh sách sinh viên đang đăng ký 1 phòng
 	public function getDsSvDkMotPhong($number,$offset,$maphong){
@@ -286,8 +295,8 @@ class Mktx extends CI_Model{
 		else
 			return $rs;		
 	}
-	// lấy MaPhong đăng ký lần cuối của sv
 
+	// lấy MaPhong đăng ký lần cuối của sv
 	public function svMaPhongLanCuoi($id){
 		$this->db->select('MaPhong');
 		$this->db->from('sinhvien_phong');

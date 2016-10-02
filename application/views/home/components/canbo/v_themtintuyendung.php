@@ -3,6 +3,6 @@
 	<input type="text" name="tieude">
 	<label>Nội Dung</label>
 	<textarea name="txtnd" style="min-width:825px;min-height:150px"></textarea>
-	<input type="submit" class="btn btn-primary" value="Đồng ý" name="themtin">
+	<input type="submit" class="btn btn-primary" value="Đăng tin" name="themtin">
 	<button class="btn btn-danger" onclick="history.go(-1);">Trở lại</button>
 </form>

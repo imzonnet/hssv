@@ -39,7 +39,6 @@
             <div class="widget">
                 <h3 class="nav-header">Thông Tin Khác</h3>
                 <ul class="nav nav-list">
-                    <li><a href="<?php echo base_url(); ?>sinhvien/xemhocbong"><i class="icon-chevron-right"></i>Xem thông tin học bổng</a></li>
                     <li><a href="<?php echo base_url(); ?>sinhvien/xemcohoivieclam"><i class="icon-chevron-right"></i>Xem cơ hội việc làm</a></li>
                 </ul>
             </div><!--end .widget-->

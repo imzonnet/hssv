@@ -74,7 +74,7 @@ class MCanbo extends CI_Model
     /**
     * Lay ten can bo
     */
-    public function laytencanbo($macanbo){
+    public function layTenCanBo($macanbo){
         $this->db->select('TenCB');
         $this->db->where('MaCB',$macanbo);
         $rs = $this->db->get('canbo');

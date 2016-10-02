@@ -1145,8 +1145,8 @@ class CanBo extends CI_Controller
         if (!$this->my_auth->is_CanBo()) {
             redirect("canbo/login");
         }
-        $kqtk = $this->mktx->getthongtin($id);
-        $tencb = $this->mcanbo->laytencanbo($kqtk[0]['NguoiXN']);
+        $kqtk = $this->mktx->getThongTin($id);
+        $tencb = $this->mcanbo->layTenCanBo($kqtk[0]['NguoiXN']);
         $tencb = $tencb[0]['TenCB'];
         $ttsv = $this->msinhvien->getInfo($kqtk[0]['MaSV']);
         $diachi = $this->maddress->getAddress($ttsv['MaPhuong']);
