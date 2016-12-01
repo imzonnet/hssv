@@ -66,7 +66,7 @@ class My_Auth extends CI_Session
             redirect(base_url().'admincp/accounts');
         }
     }
-    
+
     public function setDate($type = NULL)
     {
         return $type != NULL ? date('Y-m-d') : date('Y-m-d H:i:s');

@@ -40,26 +40,21 @@
                     <li><a href="<?php echo base_url(); ?>canbo/dsdkchuyenphong"><i class="icon-chevron-right"></i>Danh sách đăng ký chuyển phòng</a></li>
                 </ul>
             </div><!--end .widget-->
-            <?php
-            if($this->my_auth->is_GiaoVien()){
-            ?>
+
             <div class="widget">
                 <h3 class="nav-header">Quản lý lớp</h3>
                 <ul class="nav nav-list">
                     <li><a href="<?php echo base_url(); ?>canbo/dssinhvien"><i class="icon-chevron-right"></i>Xem danh sách sinh viên</a></li>
-                    <li><a href="<?php echo base_url(); ?>canbo/diemrenluyensinhvien"><i class="icon-chevron-right"></i>Xem điểm rèn luyện</a></li>
-                    <!--<li><a href="<?php echo base_url(); ?>canbo/thongkedrl"><i class="icon-chevron-right"></i>Thống kế điểm rèn luyện</a></li>-->
+                    <?php if($this->my_auth->is_GiaoVien()) : ?>
+                        <li><a href="<?php echo base_url(); ?>canbo/diemrenluyensinhvien"><i class="icon-chevron-right"></i>Xem điểm rèn luyện</a></li>
+                    <?php endif; ?>
                 </ul>
             </div><!--end .widget-->
-            <?php
-            }   
-            ?>
             <div class="widget">
                 <h3 class="nav-header">Quản lý điểm rèn luyện</h3>
                 <ul class="nav nav-list">
                     <li><a href="<?php echo base_url(); ?>canbo/themdrl"><i class="icon-chevron-right"></i>Tạo danh sách điểm rèn luyện</a></li>
                     <li><a href="<?php echo base_url(); ?>canbo/timkiemdrl"><i class="icon-chevron-right"></i>Tìm kiếm điểm rèn luyện</a></li>
-                    <!--<li><a href="<?php echo base_url(); ?>canbo/thongkedrl"><i class="icon-chevron-right"></i>Thống kế điểm rèn luyện</a></li>-->
                 </ul>
             </div><!--end .widget-->
             <div class="widget">

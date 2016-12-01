@@ -18,9 +18,8 @@ class CanBo extends CI_Controller
 
         if ($this->my_auth->is_Login()) {
             $this->cb_id = $this->session->userdata('u_id');
-            if ($this->mcanbo->setInfo($this->cb_id)) {
-                $this->cb = $this->mcanbo->setInfo($this->cb_id);
-            } else {
+            $this->cb = $this->mcanbo->setInfo($this->cb_id);
+            if (!$this->cb) {
                 $this->session->sess_destroy();
                 redirect("canbo/login");
             }
@@ -1263,7 +1262,7 @@ class CanBo extends CI_Controller
         $data['cb_id'] = $this->cb_id;
         $data['cb_name'] = $this->cb->tencb;
         $data['sub_views'] = "v_svtinhtrangphong";
-        $data['task_name'] = "Danh sách sinh viên đăng ký phòng: " . $maphong;
+        $data['task_name'] = "Danh sách sinh viên đăng ký phòng: ";
         $this->load->view("home/main_layout", $data);
         $masv = $this->uri->segment(3);
     }
@@ -1342,13 +1341,38 @@ class CanBo extends CI_Controller
             $malop = $btg[0]['MaLop'];
             $data['task_name'] = 'Danh sách sinh viên lớp: ' . $malop;
             $cf['base_url'] = base_url('canbo/dssinhvien');
-            $cf['per_page'] = 20;
+            $cf['per_page'] = 40;
             $cf['num_link'] = 2;
             $cf['uri_segment'] = 3;
             $cf['total_rows'] = $this->mlopsh->count_all_record_table('sinhvien', 'MaLop', $malop);
             $data['dssinhvien'] = $this->mlopsh->getAllDataTable('sinhvien', 'MaLop', $malop, '', '', $cf['per_page'], $this->uri->segment($cf['uri_segment']));
             $this->pagination->initialize($cf);
             $data['page_link'] = $this->pagination->create_links();
+            $this->load->view("home/main_layout", $data);
+        }else if($data['cb_regency'] == 'canbo') {
+            $data['lopsh'] = $this->mlopsh->dsLopSH();
+            $data['task_name'] = 'Danh sách lớp';
+            $malop = $this->input->get('malop');
+            if(!empty($malop)) {
+                $query_string = $_GET;
+                if (isset($query_string['page']))
+                {
+                    unset($query_string['page']);
+                }
+
+                $cf['base_url'] = base_url('canbo/dssinhvien');
+                $cf['per_page'] = 40;
+                $cf['num_link'] = 2;
+                $cf['uri_segment'] = 3;
+
+                $cf['suffix'] = '?' . http_build_query($_GET);
+
+                $cf['total_rows'] = $this->mlopsh->count_all_record_table('sinhvien', 'MaLop', $malop);
+                $data['dssinhvien'] = $this->mlopsh->getAllDataTable('sinhvien', 'MaLop', $malop, '', '', $cf['per_page'], $this->uri->segment($cf['uri_segment']));
+                $this->pagination->initialize($cf);
+                $data['page_link'] = $this->pagination->create_links();
+            }
+
             $this->load->view("home/main_layout", $data);
         } else {
             show_404();
