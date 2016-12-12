@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 14, 2016 at 07:44 AM
--- Server version: 10.1.10-MariaDB
--- PHP Version: 5.6.15
+-- Generation Time: Dec 04, 2016 at 07:41 AM
+-- Server version: 5.6.11
+-- PHP Version: 5.5.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,11 +14,13 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `ci_hssv`
 --
+CREATE DATABASE IF NOT EXISTS `ci_hssv` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `ci_hssv`;
 
 -- --------------------------------------------------------
 
@@ -26,13 +28,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `canbo`
 --
 
-CREATE TABLE `canbo` (
+CREATE TABLE IF NOT EXISTS `canbo` (
   `MaCB` varchar(5) NOT NULL,
   `TenCB` varchar(255) NOT NULL,
   `MatKhau` varchar(32) NOT NULL,
   `Email` varchar(100) DEFAULT NULL,
   `Phone` varchar(12) DEFAULT NULL,
-  `ChucVu` varchar(12) DEFAULT 'canbo'
+  `ChucVu` varchar(12) DEFAULT 'canbo',
+  PRIMARY KEY (`MaCB`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -40,7 +43,7 @@ CREATE TABLE `canbo` (
 --
 
 INSERT INTO `canbo` (`MaCB`, `TenCB`, `MatKhau`, `Email`, `Phone`, `ChucVu`) VALUES
-('10001', 'Nguyễn Đức Anh', '4297f44b13955235245b2497399d7a93', 'vnzacky39@hotmail.côm', '01665154502', 'giaovien'),
+('10001', 'Nguyễn Đức Anh', 'b895a20b2af9fc6847fcf7f82aad6b8d', 'vnzacky39@hotmail.côm', '01665154502', 'giaovien'),
 ('10002', 'Nguyễn Thị Minh', 'e10adc3949ba59abbe56e057f20f883e', 'msminhminhnguyen@gmail.com', '0974466237', 'giaovien'),
 ('10003', 'Nguyễn Minh Đức', 'e10adc3949ba59abbe56e057f20f883e', 'ducminh@gmail.com', '0987987987', 'canbo'),
 ('10004', 'Lê Anh Tuấn', 'e10adc3949ba59abbe56e057f20f883e', 'anhtuanle@yahoo.com', NULL, 'canbo'),
@@ -52,16 +55,20 @@ INSERT INTO `canbo` (`MaCB`, `TenCB`, `MatKhau`, `Email`, `Phone`, `ChucVu`) VAL
 -- Table structure for table `chitietgiayxacnhan`
 --
 
-CREATE TABLE `chitietgiayxacnhan` (
-  `MaXN` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `chitietgiayxacnhan` (
+  `MaXN` int(11) NOT NULL AUTO_INCREMENT,
   `MaSV` varchar(12) NOT NULL,
   `MaHK` int(11) NOT NULL,
   `DiaChiNhan` varchar(50) NOT NULL,
   `NhanXet` varchar(255) DEFAULT NULL,
   `NgayXN` date NOT NULL,
   `MaLG` int(11) NOT NULL,
-  `SoLanCap` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `SoLanCap` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`MaXN`,`MaSV`,`MaHK`,`MaLG`),
+  KEY `MaSV` (`MaSV`),
+  KEY `MaLG` (`MaLG`),
+  KEY `MaHK` (`MaHK`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
 -- Dumping data for table `chitietgiayxacnhan`
@@ -82,13 +89,16 @@ INSERT INTO `chitietgiayxacnhan` (`MaXN`, `MaSV`, `MaHK`, `DiaChiNhan`, `NhanXet
 -- Table structure for table `chitietyeucau`
 --
 
-CREATE TABLE `chitietyeucau` (
+CREATE TABLE IF NOT EXISTS `chitietyeucau` (
   `MaYC` int(11) NOT NULL,
   `MaLG` int(11) NOT NULL,
   `MaHK` int(11) NOT NULL,
   `TrangThai` int(1) NOT NULL DEFAULT '0',
   `NgayXN` datetime DEFAULT NULL,
-  `GhiChu` varchar(255) DEFAULT NULL
+  `GhiChu` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`MaYC`,`MaLG`,`MaHK`),
+  KEY `MaLG` (`MaLG`),
+  KEY `MaHK` (`MaHK`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -205,11 +215,12 @@ INSERT INTO `chitietyeucau` (`MaYC`, `MaLG`, `MaHK`, `TrangThai`, `NgayXN`, `Ghi
 -- Table structure for table `diemchinhtri`
 --
 
-CREATE TABLE `diemchinhtri` (
+CREATE TABLE IF NOT EXISTS `diemchinhtri` (
   `MaSV` varchar(12) NOT NULL,
   `BienLaiSo` int(255) NOT NULL,
   `Diem` varchar(255) NOT NULL,
-  `LopCT` varchar(12) NOT NULL
+  `LopCT` varchar(12) NOT NULL,
+  PRIMARY KEY (`BienLaiSo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -217,7 +228,6 @@ CREATE TABLE `diemchinhtri` (
 --
 
 INSERT INTO `diemchinhtri` (`MaSV`, `BienLaiSo`, `Diem`, `LopCT`) VALUES
-('', 0, '{"ngay1":"","ngay2":"","ngay3":"","ngay4":"","ngay5":"","ngay6":""}', ''),
 ('111250532129', 659, '{"ngay1":"x","ngay2":"x","ngay3":"x","ngay4":"x","ngay5":"x","ngay6":"x"}', 'CT08'),
 ('111250532128', 660, '{"ngay1":"x","ngay2":"x","ngay3":"x","ngay4":"x","ngay5":"x","ngay6":"x"}', 'CT08'),
 ('111250532241', 661, '{"ngay1":"x","ngay2":"x","ngay3":"x","ngay4":"x","ngay5":"x","ngay6":"x"}', 'CT08'),
@@ -329,10 +339,11 @@ INSERT INTO `diemchinhtri` (`MaSV`, `BienLaiSo`, `Diem`, `LopCT`) VALUES
 -- Table structure for table `doituong`
 --
 
-CREATE TABLE `doituong` (
-  `MaDT` int(11) NOT NULL,
-  `TenDT` varchar(355) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `doituong` (
+  `MaDT` int(11) NOT NULL AUTO_INCREMENT,
+  `TenDT` varchar(355) NOT NULL,
+  PRIMARY KEY (`MaDT`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `doituong`
@@ -365,10 +376,12 @@ INSERT INTO `doituong` (`MaDT`, `TenDT`) VALUES
 -- Table structure for table `giayxacnhan`
 --
 
-CREATE TABLE `giayxacnhan` (
-  `MaXN` int(11) NOT NULL,
-  `MaYC` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `giayxacnhan` (
+  `MaXN` int(11) NOT NULL AUTO_INCREMENT,
+  `MaYC` int(11) NOT NULL,
+  PRIMARY KEY (`MaXN`,`MaYC`),
+  UNIQUE KEY `MaYC` (`MaYC`) USING BTREE
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
 --
 -- Dumping data for table `giayxacnhan`
@@ -376,27 +389,27 @@ CREATE TABLE `giayxacnhan` (
 
 INSERT INTO `giayxacnhan` (`MaXN`, `MaYC`) VALUES
 (1, 5),
-(2, 20),
-(5, 16),
 (6, 7),
-(7, 26),
-(8, 25),
+(5, 16),
+(2, 20),
 (9, 23),
+(8, 25),
+(7, 26),
 (10, 27),
 (11, 29),
 (12, 36),
 (13, 40),
 (14, 41),
-(15, 55),
 (16, 54),
+(15, 55),
 (17, 58),
 (18, 59),
 (19, 60),
 (20, 61),
 (21, 62),
 (22, 64),
-(24, 69),
 (25, 66),
+(24, 69),
 (26, 70),
 (27, 72);
 
@@ -406,10 +419,11 @@ INSERT INTO `giayxacnhan` (`MaXN`, `MaYC`) VALUES
 -- Table structure for table `hedaotao`
 --
 
-CREATE TABLE `hedaotao` (
-  `MaDaoTao` int(11) NOT NULL,
-  `TenHDT` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `hedaotao` (
+  `MaDaoTao` int(11) NOT NULL AUTO_INCREMENT,
+  `TenHDT` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`MaDaoTao`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `hedaotao`
@@ -426,13 +440,57 @@ INSERT INTO `hedaotao` (`MaDaoTao`, `TenHDT`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `hocbong`
+--
+
+CREATE TABLE IF NOT EXISTS `hocbong` (
+  `MaHB` int(12) NOT NULL AUTO_INCREMENT,
+  `MaSV` varchar(12) NOT NULL,
+  `MaHK` int(11) NOT NULL,
+  `DiemTK` double(10,2) NOT NULL,
+  `SoTC` int(11) NOT NULL,
+  PRIMARY KEY (`MaHB`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
+
+--
+-- Dumping data for table `hocbong`
+--
+
+INSERT INTO `hocbong` (`MaHB`, `MaSV`, `MaHK`, `DiemTK`, `SoTC`) VALUES
+(1, '141250532201', 215, 8.16, 19),
+(2, '141250532202', 215, 8.47, 25),
+(3, '141250532206', 215, 9.03, 25),
+(4, '141250532207', 215, 8.33, 23),
+(5, '141250532208', 215, 8.15, 25),
+(6, '141250532209', 215, 8.55, 21),
+(7, '141250532210', 215, 8.60, 23),
+(8, '141250532211', 215, 9.20, 22),
+(9, '141250532212', 215, 9.15, 25),
+(10, '141250532163', 215, 9.03, 26),
+(11, '141250532165', 215, 8.77, 27),
+(12, '141250532166', 215, 8.66, 27),
+(13, '141250532171', 215, 8.51, 26),
+(14, '141250532173', 215, 8.50, 25),
+(15, '141250532174', 215, 8.31, 35),
+(16, '141250532175', 215, 8.27, 29),
+(17, '141250532178', 215, 8.22, 28),
+(18, '141250532179', 215, 8.13, 34),
+(19, '141250532180', 215, 8.07, 22),
+(20, '141250532181', 215, 8.06, 25),
+(21, '141250532182', 215, 8.00, 33);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `hocky`
 --
 
-CREATE TABLE `hocky` (
-  `id` int(11) NOT NULL,
-  `MaHK` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `hocky` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `MaHK` int(11) NOT NULL,
+  PRIMARY KEY (`id`,`MaHK`),
+  KEY `MaHK` (`MaHK`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `hocky`
@@ -440,10 +498,14 @@ CREATE TABLE `hocky` (
 
 INSERT INTO `hocky` (`id`, `MaHK`) VALUES
 (1, 112),
-(2, 212),
-(3, 312),
 (4, 113),
-(5, 114);
+(6, 114),
+(8, 115),
+(2, 212),
+(5, 213),
+(7, 214),
+(9, 215),
+(3, 312);
 
 -- --------------------------------------------------------
 
@@ -451,11 +513,13 @@ INSERT INTO `hocky` (`id`, `MaHK`) VALUES
 -- Table structure for table `hocphi`
 --
 
-CREATE TABLE `hocphi` (
+CREATE TABLE IF NOT EXISTS `hocphi` (
   `MaSV` varchar(12) NOT NULL,
   `MaHK` int(11) NOT NULL,
   `TongTien` int(11) NOT NULL,
-  `TienDaNop` int(11) NOT NULL DEFAULT '0'
+  `TienDaNop` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`MaSV`,`MaHK`),
+  KEY `MaHK` (`MaHK`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -633,7 +697,118 @@ INSERT INTO `hocphi` (`MaSV`, `MaHK`, `TongTien`, `TienDaNop`) VALUES
 ('111250532391', 113, 2500000, 2500000),
 ('111250532393', 113, 2500000, 2500000),
 ('111250532394', 113, 2500000, 2500000),
-('111250532395', 113, 2500000, 2500000);
+('111250532395', 113, 2500000, 2500000),
+('141250532101', 215, 2500000, 2500000),
+('141250532102', 215, 2500000, 2500000),
+('141250532105', 215, 2500000, 2500000),
+('141250532106', 215, 2500000, 2500000),
+('141250532107', 215, 2500000, 2500000),
+('141250532109', 215, 2500000, 2500000),
+('141250532110', 215, 2500000, 2500000),
+('141250532111', 215, 2500000, 2500000),
+('141250532112', 215, 2500000, 2500000),
+('141250532117', 215, 2500000, 2500000),
+('141250532118', 215, 2500000, 2500000),
+('141250532121', 215, 2500000, 2500000),
+('141250532122', 215, 2500000, 2500000),
+('141250532124', 215, 2500000, 2500000),
+('141250532125', 215, 2500000, 2500000),
+('141250532127', 215, 2500000, 2500000),
+('141250532128', 215, 2500000, 2500000),
+('141250532129', 215, 2500000, 2500000),
+('141250532131', 215, 2500000, 2500000),
+('141250532133', 215, 2500000, 2500000),
+('141250532134', 215, 2500000, 2500000),
+('141250532136', 215, 2500000, 2500000),
+('141250532137', 215, 2500000, 2500000),
+('141250532139', 215, 2500000, 2500000),
+('141250532141', 215, 2500000, 2500000),
+('141250532143', 215, 2500000, 2500000),
+('141250532144', 215, 2500000, 2500000),
+('141250532145', 215, 2500000, 2500000),
+('141250532146', 215, 2500000, 2500000),
+('141250532147', 215, 2500000, 2500000),
+('141250532148', 215, 2500000, 2500000),
+('141250532149', 215, 2500000, 2500000),
+('141250532150', 215, 2500000, 2500000),
+('141250532152', 215, 2500000, 2500000),
+('141250532153', 215, 2500000, 2500000),
+('141250532154', 215, 2500000, 2500000),
+('141250532161', 215, 2500000, 2500000),
+('141250532162', 215, 2500000, 2500000),
+('141250532163', 215, 2500000, 2500000),
+('141250532165', 215, 2500000, 2500000),
+('141250532166', 215, 2500000, 2500000),
+('141250532171', 215, 2500000, 2500000),
+('141250532173', 215, 2500000, 2500000),
+('141250532174', 215, 2500000, 2500000),
+('141250532175', 215, 2500000, 2500000),
+('141250532178', 215, 2500000, 2500000),
+('141250532179', 215, 2500000, 2500000),
+('141250532180', 215, 2500000, 2500000),
+('141250532181', 215, 2500000, 2500000),
+('141250532182', 215, 2500000, 2500000),
+('141250532183', 215, 2500000, 2500000),
+('141250532184', 215, 2500000, 2500000),
+('141250532201', 215, 2500000, 2500000),
+('141250532202', 215, 2500000, 2500000),
+('141250532206', 215, 2500000, 2500000),
+('141250532207', 215, 2500000, 2500000),
+('141250532208', 215, 2500000, 2500000),
+('141250532209', 215, 2500000, 2500000),
+('141250532210', 215, 2500000, 2500000),
+('141250532211', 215, 2500000, 2500000),
+('141250532212', 215, 2500000, 2500000),
+('141250532213', 215, 2500000, 2500000),
+('141250532214', 215, 2500000, 2500000),
+('141250532216', 215, 2500000, 2500000),
+('141250532218', 215, 2500000, 2500000),
+('141250532220', 215, 2500000, 2500000),
+('141250532221', 215, 2500000, 2500000),
+('141250532222', 215, 2500000, 2500000),
+('141250532223', 215, 2500000, 2500000),
+('141250532224', 215, 2500000, 2500000),
+('141250532225', 215, 2500000, 2500000),
+('141250532229', 215, 2500000, 2500000),
+('141250532230', 215, 2500000, 2500000),
+('141250532231', 215, 2500000, 2500000),
+('141250532232', 215, 2500000, 2500000),
+('141250532233', 215, 2500000, 2500000),
+('141250532235', 215, 2500000, 2500000),
+('141250532236', 215, 2500000, 2500000),
+('141250532237', 215, 2500000, 2500000),
+('141250532238', 215, 2500000, 2500000),
+('141250532239', 215, 2500000, 2500000),
+('141250532240', 215, 2500000, 2500000),
+('141250532241', 215, 2500000, 2500000),
+('141250532244', 215, 2500000, 2500000),
+('141250532245', 215, 2500000, 2500000),
+('141250532246', 215, 2500000, 2500000),
+('141250532247', 215, 2500000, 2500000),
+('141250532249', 215, 2500000, 2500000),
+('141250532250', 215, 2500000, 2500000),
+('141250532251', 215, 2500000, 2500000),
+('141250532253', 215, 2500000, 2500000),
+('141250532254', 215, 2500000, 2500000),
+('141250532255', 215, 2500000, 2500000),
+('141250532258', 215, 2500000, 2500000),
+('141250532259', 215, 2500000, 2500000),
+('141250532260', 215, 2500000, 2500000),
+('141250532262', 215, 2500000, 2500000),
+('141250532263', 215, 2500000, 2500000),
+('141250532265', 215, 2500000, 2500000),
+('141250532266', 215, 2500000, 2500000),
+('141250532269', 215, 2500000, 2500000),
+('141250532271', 215, 2500000, 2500000),
+('141250532272', 215, 2500000, 2500000),
+('141250532273', 215, 2500000, 2500000),
+('141250532274', 215, 2500000, 2500000),
+('141250532276', 215, 2500000, 2500000),
+('141250532279', 215, 2500000, 2500000),
+('141250532280', 215, 2500000, 2500000),
+('141250532282', 215, 2500000, 2500000),
+('141250532284', 215, 2500000, 2500000),
+('141250532285', 215, 2500000, 2500000);
 
 -- --------------------------------------------------------
 
@@ -641,9 +816,11 @@ INSERT INTO `hocphi` (`MaSV`, `MaHK`, `TongTien`, `TienDaNop`) VALUES
 -- Table structure for table `khoa`
 --
 
-CREATE TABLE `khoa` (
+CREATE TABLE IF NOT EXISTS `khoa` (
   `MaKhoa` varchar(5) NOT NULL,
-  `TenKhoa` varchar(50) DEFAULT NULL
+  `TenKhoa` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`MaKhoa`),
+  UNIQUE KEY `MaKhoa` (`MaKhoa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -662,11 +839,12 @@ INSERT INTO `khoa` (`MaKhoa`, `TenKhoa`) VALUES
 -- Table structure for table `ktx_phong`
 --
 
-CREATE TABLE `ktx_phong` (
+CREATE TABLE IF NOT EXISTS `ktx_phong` (
   `MaPhong` varchar(3) NOT NULL,
   `SoLuong` int(11) NOT NULL,
   `HienDangO` int(2) DEFAULT '0',
-  `LoaiPhong` int(11) DEFAULT '1'
+  `LoaiPhong` int(11) DEFAULT '1',
+  PRIMARY KEY (`MaPhong`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -674,19 +852,19 @@ CREATE TABLE `ktx_phong` (
 --
 
 INSERT INTO `ktx_phong` (`MaPhong`, `SoLuong`, `HienDangO`, `LoaiPhong`) VALUES
-('101', 8, 2, 1),
+('101', 8, 1, 1),
 ('102', 8, 0, 1),
-('103', 8, 0, 0),
+('103', 8, 1, 0),
 ('104', 8, 0, 0),
-('105', 8, 0, 1),
-('201', 8, 0, 1),
-('202', 8, 0, 1),
-('203', 8, 7, 0),
+('105', 8, 7, 1),
+('201', 8, 1, 1),
+('202', 8, 1, 1),
+('203', 8, 6, 0),
 ('204', 8, 0, 0),
 ('205', 8, 0, 1),
 ('301', 8, 0, 1),
 ('302', 8, 0, 1),
-('303', 8, 0, 1),
+('303', 8, 1, 1),
 ('304', 8, 0, 1),
 ('305', 8, 0, 1),
 ('401', 8, 0, 1),
@@ -706,10 +884,11 @@ INSERT INTO `ktx_phong` (`MaPhong`, `SoLuong`, `HienDangO`, `LoaiPhong`) VALUES
 -- Table structure for table `loaigiay`
 --
 
-CREATE TABLE `loaigiay` (
-  `MaLG` int(11) NOT NULL,
-  `TenLG` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `loaigiay` (
+  `MaLG` int(11) NOT NULL AUTO_INCREMENT,
+  `TenLG` varchar(150) NOT NULL,
+  PRIMARY KEY (`MaLG`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `loaigiay`
@@ -726,11 +905,16 @@ INSERT INTO `loaigiay` (`MaLG`, `TenLG`) VALUES
 -- Table structure for table `lop`
 --
 
-CREATE TABLE `lop` (
+CREATE TABLE IF NOT EXISTS `lop` (
   `MaLop` varchar(5) NOT NULL,
   `MaNganh` varchar(3) NOT NULL,
   `MaDaoTao` int(11) NOT NULL,
-  `MaCB` varchar(5) DEFAULT NULL
+  `MaCB` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`MaLop`),
+  UNIQUE KEY `ILop` (`MaLop`),
+  UNIQUE KEY `MaCB` (`MaCB`),
+  KEY `LopNganh` (`MaNganh`),
+  KEY `LopDT` (`MaDaoTao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -748,7 +932,8 @@ INSERT INTO `lop` (`MaLop`, `MaNganh`, `MaDaoTao`, `MaCB`) VALUES
 ('11XD1', 'C76', 3, NULL),
 ('12T1', 'C74', 3, NULL),
 ('12T2', 'C74', 3, NULL),
-('14T1', 'C74', 3, '10001');
+('14T1', 'C74', 3, '10001'),
+('14T2', 'C74', 3, '10002');
 
 -- --------------------------------------------------------
 
@@ -756,10 +941,12 @@ INSERT INTO `lop` (`MaLop`, `MaNganh`, `MaDaoTao`, `MaCB`) VALUES
 -- Table structure for table `nganh`
 --
 
-CREATE TABLE `nganh` (
+CREATE TABLE IF NOT EXISTS `nganh` (
   `MaNganh` varchar(3) NOT NULL,
   `TenNganh` varchar(50) NOT NULL,
-  `MaKhoa` varchar(5) NOT NULL
+  `MaKhoa` varchar(5) NOT NULL,
+  PRIMARY KEY (`MaNganh`),
+  KEY `MaKhoa` (`MaKhoa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -782,10 +969,11 @@ INSERT INTO `nganh` (`MaNganh`, `TenNganh`, `MaKhoa`) VALUES
 -- Table structure for table `nghenghiep`
 --
 
-CREATE TABLE `nghenghiep` (
-  `MaNghe` int(11) NOT NULL,
-  `TenNghe` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `nghenghiep` (
+  `MaNghe` int(11) NOT NULL AUTO_INCREMENT,
+  `TenNghe` varchar(50) NOT NULL,
+  PRIMARY KEY (`MaNghe`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `nghenghiep`
@@ -806,8 +994,8 @@ INSERT INTO `nghenghiep` (`MaNghe`, `TenNghe`) VALUES
 -- Table structure for table `ngoaitru`
 --
 
-CREATE TABLE `ngoaitru` (
-  `MaNT` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `ngoaitru` (
+  `MaNT` int(11) NOT NULL AUTO_INCREMENT,
   `MaSV` varchar(12) NOT NULL,
   `TenChuTro` varchar(100) DEFAULT NULL,
   `DiaChi` varchar(50) DEFAULT NULL,
@@ -816,8 +1004,12 @@ CREATE TABLE `ngoaitru` (
   `MaHK` int(11) NOT NULL,
   `NgayDen` date DEFAULT NULL,
   `NgayDi` date DEFAULT NULL,
-  `NgayXN` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `NgayXN` date DEFAULT NULL,
+  PRIMARY KEY (`MaNT`),
+  UNIQUE KEY `MaSV` (`MaSV`,`NgayDen`),
+  KEY `ngoaitru_ibfk_2` (`MaPhuong`),
+  KEY `ngoaitru_ibfk_3` (`MaHK`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=263 ;
 
 --
 -- Dumping data for table `ngoaitru`
@@ -955,12 +1147,14 @@ INSERT INTO `ngoaitru` (`MaNT`, `MaSV`, `TenChuTro`, `DiaChi`, `DienThoai`, `MaP
 -- Table structure for table `phuong`
 --
 
-CREATE TABLE `phuong` (
+CREATE TABLE IF NOT EXISTS `phuong` (
   `MaPhuong` varchar(5) NOT NULL,
   `TenPhuong` varchar(100) NOT NULL,
   `Cap` varchar(30) NOT NULL,
   `ToaDo` varchar(30) NOT NULL,
-  `MaQuan` varchar(5) NOT NULL
+  `MaQuan` varchar(5) NOT NULL,
+  PRIMARY KEY (`MaPhuong`),
+  KEY `PhuongQuan` (`MaQuan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1741,7 +1935,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('02275', 'Sơn Phú', 'Xã', '22 23 00N, 105 28 17E', '072'),
 ('02281', 'Năng Khả', 'Xã', '22 21 10N, 105 19 49E', '072'),
 ('02284', 'Thanh Tương', 'Xã', '22 17 53N, 105 21 59E', '072'),
-('02287', 'Vĩnh Lộc', 'Thị Trấn', '22 09 09N, 105 16 01E', '073'),
+('02287', 'Vĩnh Lộc', 'Thị Trấn', '22 09 09N, 105 16 01E', '073');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('02290', 'Bình An', 'Xã', '22 26 31N, 105 09 27E', '073'),
 ('02293', 'Hồng Quang', 'Xã', '22 23 24N, 105 06 26E', '073'),
 ('02296', 'Thổ Bình', 'Xã', '22 22 55N, 105 11 40E', '073'),
@@ -1796,8 +1991,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('02443', 'Chiêu Yên', 'Xã', '21 59 09N, 105 09 40E', '075'),
 ('02446', 'Trung Trực', 'Xã', '21 57 22N, 105 16 50E', '075'),
 ('02449', 'Xuân Vân', 'Xã', '21 57 11N, 105 13 53E', '075'),
-('02452', 'Phúc Ninh', 'Xã', '21 56 24N, 105 11 05E', '075');
-INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
+('02452', 'Phúc Ninh', 'Xã', '21 56 24N, 105 11 05E', '075'),
 ('02455', 'Hùng Lợi', 'Xã', '21 54 10N, 105 28 47E', '075'),
 ('02458', 'Trung Sơn', 'Xã', '21 54 20N, 105 24 47E', '075'),
 ('02461', 'Tân Tiến', 'Xã', '21 53 37N, 105 17 24E', '075'),
@@ -2538,7 +2732,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('04540', 'Âu Lâu', 'Xã', '21 41 31N, 104 50 31E', '132'),
 ('04543', 'Giới Phiên', 'Xã', '21 41 43N, 104 53 25E', '132'),
 ('04546', 'Hợp Minh', 'Xã', '21 41 02N, 104 51 52E', '132'),
-('04549', 'Văn Tiến', 'Xã', '21 40 39N, 104 56 11E', '132'),
+('04549', 'Văn Tiến', 'Xã', '21 40 39N, 104 56 11E', '132');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('04552', 'Phúc Lộc', 'Xã', '21 40 25N, 104 54 46E', '132'),
 ('04555', 'Văn Lãng', 'Xã', '21 40 06N, 104 57 43E', '141'),
 ('04558', 'Văn Phú', 'Xã', '21 41 27N, 104 55 00E', '132'),
@@ -2642,8 +2837,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('04852', 'Đồng Chum', 'Xã', '20 57 10N, 104 58 44E', '150'),
 ('04855', 'Tân Minh', 'Xã', '20 55 14N, 105 08 41E', '150'),
 ('04858', 'Đoàn Kết', 'Xã', '20 55 01N, 105 04 32E', '150'),
-('04861', 'Đồng Ruộng', 'Xã', '20 54 17N, 105 00 14E', '150');
-INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
+('04861', 'Đồng Ruộng', 'Xã', '20 54 17N, 105 00 14E', '150'),
 ('04864', 'Hào Lý', 'Xã', '20 55 31N, 105 15 51E', '150'),
 ('04867', 'Tu Lý', 'Xã', '20 53 34N, 105 14 56E', '150'),
 ('04870', 'Trung Thành', 'Xã', '20 52 27N, 105 06 10E', '150'),
@@ -3319,7 +3513,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('06877', 'Đông Ngũ', 'Xã', '21 20 42N, 107 27 23E', '199'),
 ('06880', 'Yên Than', 'Xã', '21 21 22N, 107 21 42E', '199'),
 ('06883', 'Đông Hải', 'Xã', '21 19 42N, 107 31 15E', '199'),
-('06886', 'Hải Lạng', 'Xã', '21 17 00N, 107 22 45E', '199'),
+('06886', 'Hải Lạng', 'Xã', '21 17 00N, 107 22 45E', '199');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('06889', 'Tiên Lãng', 'Xã', '21 18 24N, 107 26 17E', '199'),
 ('06892', 'Đồng Rui', 'Xã', '21 13 25N, 107 24 16E', '199'),
 ('06895', 'Đầm Hà', 'Thị Trấn', '21 21 05N, 107 35 45E', '200'),
@@ -3476,8 +3671,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('07345', 'Song Vân', 'Xã', '21 22 41N, 106 03 09E', '216'),
 ('07348', 'Ngọc Châu', 'Xã', '21 22 39N, 106 05 01E', '216'),
 ('07351', 'Ngọc Vân', 'Xã', '21 21 31N, 106 02 27E', '216'),
-('07354', 'Việt Lập', 'Xã', '21 21 16N, 106 08 59E', '216');
-INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
+('07354', 'Việt Lập', 'Xã', '21 21 16N, 106 08 59E', '216'),
 ('07357', 'Liên Chung', 'Xã', '21 21 36N, 106 10 14E', '216'),
 ('07360', 'Ngọc Thiện', 'Xã', '21 20 53N, 106 04 38E', '216'),
 ('07363', 'Ngọc Lý', 'Xã', '21 20 29N, 106 06 42E', '216'),
@@ -4106,7 +4300,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('09211', 'Hòa Tiến', 'Xã', '21 12 46N, 105 55 08E', '258'),
 ('09214', 'Hòa Long', 'Xã', '21 12 50N, 106 03 45E', '256'),
 ('09217', 'Đông Tiến', 'Xã', '21 12 48N, 105 58 11E', '258'),
-('09220', 'Yên Phụ', 'Xã', '21 11 54N, 105 55 31E', '258'),
+('09220', 'Yên Phụ', 'Xã', '21 11 54N, 105 55 31E', '258');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('09223', 'Trung Nghĩa', 'Xã', '21 11 10N, 105 58 06E', '258'),
 ('09226', 'Vạn An', 'Xã', '21 11 49N, 106 02 50E', '256'),
 ('09229', 'Đông Phong', 'Xã', '21 11 26N, 106 01 04E', '258'),
@@ -4315,8 +4510,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('09829', 'Song Phượng', 'Xã', '21 04 35N, 105 40 00E', '273'),
 ('09832', 'Trạm Trôi', 'Thị Trấn', '21 04 07N, 105 42 26E', '274'),
 ('09835', 'Đức Thượng', 'Xã', '21 04 33N, 105 41 11E', '274'),
-('09838', 'Minh Khai', 'Xã', '21 04 04N, 105 40 15E', '274');
-INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
+('09838', 'Minh Khai', 'Xã', '21 04 04N, 105 40 15E', '274'),
 ('09841', 'Dương Liễu', 'Xã', '21 03 39N, 105 39 57E', '274'),
 ('09844', 'Di Trạch', 'Xã', '21 02 46N, 105 43 06E', '274'),
 ('09847', 'Đức Giang', 'Xã', '21 03 46N, 105 41 57E', '274'),
@@ -4886,7 +5080,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('11521', 'Mỹ Đồng', 'Xã', '20 56 26N, 106 37 47E', '311'),
 ('11524', 'Đông Sơn', 'Xã', '20 56 29N, 106 39 15E', '311'),
 ('11527', 'Hoà Bình', 'Xã', '20 56 37N, 106 40 43E', '311'),
-('11530', 'Trung Hà', 'Xã', '20 55 26N, 106 42 17E', '311'),
+('11530', 'Trung Hà', 'Xã', '20 55 26N, 106 42 17E', '311');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('11533', 'An Lư', 'Xã', '20 54 45N, 106 41 54E', '311'),
 ('11536', 'Thuỷ Triều', 'Xã', '20 54 20N, 106 42 57E', '311'),
 ('11539', 'Ngũ Lão', 'Xã', '20 56 20N, 106 43 28E', '311'),
@@ -5147,8 +5342,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('12304', 'Chính Nghĩa', 'Xã', '20 45 27N, 106 03 35E', '331'),
 ('12307', 'Nhân La', 'Xã', '20 45 41N, 106 04 44E', '331'),
 ('12310', 'Phú Thịnh', 'Xã', '20 44 38N, 105 58 53E', '331'),
-('12313', 'Mai Động', 'Xã', '20 43 14N, 105 58 14E', '331');
-INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
+('12313', 'Mai Động', 'Xã', '20 43 14N, 105 58 14E', '331'),
 ('12316', 'Đức Hợp', 'Xã', '20 43 24N, 105 59 21E', '331'),
 ('12319', 'Hùng An', 'Xã', '20 43 37N, 106 00 40E', '331'),
 ('12322', 'Ngọc Thanh', 'Xã', '20 43 15N, 106 01 48E', '331'),
@@ -5671,7 +5865,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('13867', 'Yên Phúc', 'Xã', '20 17 20N, 106 07 36E', '360'),
 ('13870', 'Yên Cường', 'Xã', '20 17 06N, 106 05 31E', '360'),
 ('13873', 'Yên Lộc', 'Xã', '20 17 07N, 106 06 42E', '360'),
-('13876', 'Yên Bằng', 'Xã', '20 16 06N, 106 00 03E', '360'),
+('13876', 'Yên Bằng', 'Xã', '20 16 06N, 106 00 03E', '360');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('13879', 'Yên Đồng', 'Xã', '20 15 23N, 106 03 43E', '360'),
 ('13882', 'Yên Khang', 'Xã', '20 15 58N, 106 01 52E', '360'),
 ('13885', 'Yên Nhân', 'Xã', '20 15 41N, 106 05 27E', '360'),
@@ -5980,8 +6175,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('14791', 'Đông Cương', 'Xã', '19 50 34N, 105 45 44E', '380'),
 ('14794', 'Đông Hương', 'Xã', '19 48 40N, 105 47 30E', '380'),
 ('14797', 'Đông Hải', 'Xã', '19 48 29N, 105 48 19E', '380'),
-('14800', 'Quảng Hưng', 'Xã', '19 47 09N, 105 49 05E', '380');
-INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
+('14800', 'Quảng Hưng', 'Xã', '19 47 09N, 105 49 05E', '380'),
 ('14803', 'Quảng Thắng', 'Xã', '19 46 54N, 105 45 47E', '380'),
 ('14806', 'Quảng Thành', 'Xã', '19 46 24N, 105 47 40E', '380'),
 ('14809', 'Bắc Sơn', 'Phường', '20 06 36N, 105 52 01E', '381'),
@@ -6456,7 +6650,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('16216', 'Thanh Phong', 'Xã', '19 39 22N, 105 15 55E', '402'),
 ('16219', 'Thanh Lâm', 'Xã', '19 38 44N, 105 19 07E', '402'),
 ('16222', 'Thanh Sơn', 'Xã', '19 43 00N, 105 14 59E', '402'),
-('16225', 'Thượng Ninh', 'Xã', '19 43 32N, 105 26 22E', '402'),
+('16225', 'Thượng Ninh', 'Xã', '19 43 32N, 105 26 22E', '402');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('16228', 'Bến Sung', 'Thị Trấn', '19 38 30N, 105 35 09E', '403'),
 ('16231', 'Cán Khê', 'Xã', '19 46 41N, 105 29 08E', '403'),
 ('16234', 'Xuân Du', 'Xã', '19 46 02N, 105 32 52E', '403'),
@@ -6814,8 +7009,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('17281', 'Nghĩa Bình', 'Xã', '19 09 46N, 105 23 32E', '423'),
 ('17284', 'Nghĩa Đồng', 'Xã', '19 10 29N, 105 20 50E', '423'),
 ('17287', 'Đồng Văn', 'Xã', '19 07 50N, 105 06 44E', '423'),
-('17290', 'Nghĩa Thái', 'Xã', '19 09 25N, 105 18 55E', '423');
-INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
+('17290', 'Nghĩa Thái', 'Xã', '19 09 25N, 105 18 55E', '423'),
 ('17293', 'Nghĩa Hợp', 'Xã', '19 08 14N, 105 20 16E', '423'),
 ('17296', 'Nghĩa Hoàn', 'Xã', '19 08 28N, 105 16 23E', '423'),
 ('17299', 'Nghĩa Phúc', 'Xã', '19 06 47N, 105 12 25E', '423'),
@@ -7243,7 +7437,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('18538', 'Hương Đô', 'Xã', '18 08 18N, 105 44 21E', '444'),
 ('18541', 'Hương Vĩnh', 'Xã', '18 06 44N, 105 37 18E', '444'),
 ('18544', 'Hương Xuân', 'Xã', '18 08 35N, 105 40 50E', '444'),
-('18547', 'Phúc Trạch', 'Xã', '18 07 32N, 105 46 11E', '444'),
+('18547', 'Phúc Trạch', 'Xã', '18 07 32N, 105 46 11E', '444');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('18550', 'Hương Trà', 'Xã', '18 07 27N, 105 42 38E', '444'),
 ('18553', 'Hương Trạch', 'Xã', '18 05 19N, 105 50 45E', '444'),
 ('18556', 'Hương Lâm', 'Xã', '18 03 29N, 105 39 27E', '444'),
@@ -7651,8 +7846,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('19753', 'Thuận Lộc', 'Phường', '16 29 01N, 107 34 21E', '474'),
 ('19756', 'Phú Hiệp', 'Phường', '16 29 10N, 107 34 58E', '474'),
 ('19759', 'Phú Hậu', 'Phường', '16 29 41N, 107 34 58E', '474'),
-('19762', 'Thuận Hòa', 'Phường', '16 28 10N, 107 34 14E', '474');
-INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
+('19762', 'Thuận Hòa', 'Phường', '16 28 10N, 107 34 14E', '474'),
 ('19765', 'Thuận Thành', 'Phường', '16 28 16N, 107 34 34E', '474'),
 ('19768', 'Phú Hòa', 'Phường', '16 28 21N, 107 35 02E', '474'),
 ('19771', 'Phú Cát', 'Phường', '16 28 43N, 107 35 09E', '474'),
@@ -8025,7 +8219,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('20803', 'Bình Phục', 'Xã', '15 44 47N, 108 22 24E', '513'),
 ('20806', 'Bình Triều', 'Xã', '15 44 50N, 108 24 04E', '513'),
 ('20809', 'Bình Đào', 'Xã', '15 45 25N, 108 25 18E', '513'),
-('20812', 'Bình Minh', 'Xã', '15 45 44N, 108 25 48E', '513'),
+('20812', 'Bình Minh', 'Xã', '15 45 44N, 108 25 48E', '513');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('20815', 'Bình Lãnh', 'Xã', '15 37 25N, 108 14 49E', '513'),
 ('20818', 'Bình Trị', 'Xã', '15 38 10N, 108 16 43E', '513'),
 ('20821', 'Bình Định Bắc', 'Xã', '15 39 33N, 108 18 22E', '513'),
@@ -8492,8 +8687,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('22150', 'An Hiệp', 'Xã', '13 14 07N, 109 13 58E', '559'),
 ('22153', 'An Mỹ', 'Xã', '13 12 30N, 109 16 06E', '559'),
 ('22156', 'An Chấn', 'Xã', '13 11 01N, 109 16 31E', '559'),
-('22159', 'An Thọ', 'Xã', '13 10 40N, 109 11 52E', '559');
-INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
+('22159', 'An Thọ', 'Xã', '13 10 40N, 109 11 52E', '559'),
 ('22162', 'An Phú', 'Xã', '13 09 22N, 109 15 45E', '555'),
 ('22165', 'Củng Sơn', 'Thị Trấn', '13 03 30N, 108 57 35E', '560'),
 ('22168', 'Phước Tân', 'Xã', '13 18 44N, 108 52 10E', '560'),
@@ -8814,7 +9008,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('23080', 'Hồng Liêm', 'Xã', '11 08 53N, 108 14 26E', '597'),
 ('23083', 'Thuận Minh', 'Xã', '11 06 31N, 108 01 04E', '597'),
 ('23086', 'Hồng Sơn', 'Xã', '11 05 21N, 108 12 14E', '597'),
-('23089', 'Hàm Trí', 'Xã', '11 09 06N, 108 08 08E', '597'),
+('23089', 'Hàm Trí', 'Xã', '11 09 06N, 108 08 08E', '597');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('23092', 'Hàm Đức', 'Xã', '11 01 48N, 108 11 42E', '597'),
 ('23095', 'Hàm Liêm', 'Xã', '11 00 48N, 108 03 48E', '597'),
 ('23098', 'Hàm Chính', 'Xã', '11 01 23N, 108 06 11E', '597'),
@@ -9351,8 +9546,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('24508', 'Ea Yông', 'Xã', '12 42 13N, 108 16 51E', '654'),
 ('24511', 'Hòa An', 'Xã', '12 42 47N, 108 19 57E', '654'),
 ('24514', 'Ea Kuăng', 'Xã', '12 41 27N, 108 23 17E', '654'),
-('24517', 'Hoà Đông', 'Xã', '12 41 38N, 108 10 18E', '654');
-INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
+('24517', 'Hoà Đông', 'Xã', '12 41 38N, 108 10 18E', '654'),
 ('24520', 'Ea Hiu', 'Xã', '12 41 00N, 108 22 15E', '654'),
 ('24523', 'Hòa Tiến', 'Xã', '12 40 04N, 108 18 23E', '654'),
 ('24526', 'Tân Tiến', 'Xã', '12 38 46N, 108 19 49E', '654'),
@@ -9639,7 +9833,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('25264', 'Phú Riềng', 'Xã', '11 40 46N, 106 55 40E', '691'),
 ('25267', 'Phú Nghĩa', 'Xã', '11 56 17N, 106 58 44E', '691'),
 ('25270', 'Lộc Ninh', 'Thị Trấn', '11 50 44N, 106 35 21E', '692'),
-('25273', 'Lộc Hòa', 'Xã', '11 56 11N, 106 35 12E', '692'),
+('25273', 'Lộc Hòa', 'Xã', '11 56 11N, 106 35 12E', '692');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('25276', 'Lộc An', 'Xã', '11 56 09N, 106 39 08E', '692'),
 ('25279', 'Lộc Tấn', 'Xã', '11 55 17N, 106 31 44E', '692'),
 ('25280', 'Lộc Thạnh', 'Xã', '', '692'),
@@ -10198,8 +10393,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('26851', 'Phước Long A', 'Phường', '10 49 22N, 106 45 44E', '763'),
 ('26854', 'Trường Thạnh', 'Phường', '10 48 26N, 106 49 04E', '763'),
 ('26857', 'Long Phước', 'Phường', '10 48 17N, 106 51 20E', '763'),
-('26860', 'Long Trường', 'Phường', '10 47 39N, 106 49 13E', '763');
-INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
+('26860', 'Long Trường', 'Phường', '10 47 39N, 106 49 13E', '763'),
 ('26863', 'Phước Bình', 'Phường', '10 48 57N, 106 46 14E', '763'),
 ('26866', 'Phú Hữu', 'Phường', '10 47 55N, 106 48 02E', '763'),
 ('26869', '15', 'Phường', '10 51 13N, 106 40 08E', '764'),
@@ -10427,7 +10621,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('27523', 'Trung An', 'Xã', '11 00 54N, 106 35 30E', '783'),
 ('27526', 'Phước Thạnh', 'Xã', '11 01 05N, 106 25 40E', '783'),
 ('27529', 'Phước Hiệp', 'Xã', '10 58 59N, 106 26 50E', '783'),
-('27532', 'Tân An Hội', 'Xã', '10 58 04N, 106 28 39E', '783'),
+('27532', 'Tân An Hội', 'Xã', '10 58 04N, 106 28 39E', '783');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('27535', 'Phước Vĩnh An', 'Xã', '10 58 58N, 106 31 10E', '783'),
 ('27538', 'Thái Mỹ', 'Xã', '10 59 12N, 106 23 35E', '783'),
 ('27541', 'Tân Thạnh Tây', 'Xã', '10 59 20N, 106 33 26E', '783'),
@@ -11035,8 +11230,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('29329', 'Phong Thạnh', 'Xã', '9 50 32N, 106 08 05E', '845'),
 ('29332', 'Tam Ngãi', 'Xã', '9 54 19N, 106 01 32E', '845'),
 ('29335', 'Thông Hòa', 'Xã', '9 55 19N, 106 04 54E', '845'),
-('29338', 'Thạnh Phú', 'Xã', '9 55 59N, 106 06 23E', '845');
-INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
+('29338', 'Thạnh Phú', 'Xã', '9 55 59N, 106 06 23E', '845'),
 ('29341', 'Tiểu Cần', 'Thị Trấn', '9 48 41N, 106 11 46E', '846'),
 ('29344', 'Cầu Quan', 'Thị Trấn', '9 46 01N, 106 07 16E', '846'),
 ('29347', 'Phú Cần', 'Xã', '9 48 48N, 106 10 28E', '846'),
@@ -11208,7 +11402,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('29839', 'Tân Mỹ', 'Xã', '9 59 29N, 105 58 01E', '862'),
 ('29842', 'Hựu Thành', 'Xã', '9 58 39N, 106 02 57E', '862'),
 ('29845', 'Vĩnh Xuân', 'Xã', '9 57 23N, 106 00 12E', '862'),
-('29848', 'Thuận Thới', 'Xã', '9 57 14N, 106 02 30E', '862'),
+('29848', 'Thuận Thới', 'Xã', '9 57 14N, 106 02 30E', '862');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('29851', 'Phú Thành', 'Xã', '9 58 00N, 105 52 12E', '862'),
 ('29854', 'Thiện Mỹ', 'Xã', '9 57 38N, 105 56 56E', '862'),
 ('29857', 'Lục Sỹ Thành', 'Xã', '9 55 46N, 105 56 09E', '862'),
@@ -11883,8 +12078,7 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('31681', 'Trung Bình', 'Xã', '9 28 40N, 106 10 59E', '951'),
 ('31684', 'Mỹ Xuyên', 'Thị Trấn', '9 33 22N, 105 59 06E', '947'),
 ('31687', 'Tài Văn', 'Xã', '9 33 29N, 106 02 37E', '951'),
-('31690', 'Đại Tâm', 'Xã', '9 33 02N, 105 55 10E', '947');
-INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
+('31690', 'Đại Tâm', 'Xã', '9 33 02N, 105 55 10E', '947'),
 ('31693', 'Tham Đôn', 'Xã', '9 31 13N, 105 56 09E', '947'),
 ('31696', 'Viên An', 'Xã', '9 31 12N, 106 03 39E', '951'),
 ('31699', 'Thạnh Thới An', 'Xã', '9 29 43N, 106 00 58E', '951'),
@@ -12002,7 +12196,8 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('32023', 'An Xuyên', 'Xã', '9 13 52N, 105 11 07E', '964'),
 ('32025', 'Tân Thành', 'Phường', '', '964'),
 ('32026', 'Tân Thành', 'Xã', '9 11 48N, 105 12 45E', '964'),
-('32029', 'Tắc Vân', 'Xã', '9 10 16N, 105 15 49E', '964'),
+('32029', 'Tắc Vân', 'Xã', '9 10 16N, 105 15 49E', '964');
+INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 ('32032', 'Lý Văn Lâm', 'Xã', '9 08 42N, 105 07 42E', '964'),
 ('32035', 'Định Bình', 'Xã', '9 08 41N, 105 14 22E', '964'),
 ('32038', 'Hòa Thành', 'Xã', '9 09 00N, 105 11 23E', '964'),
@@ -12098,12 +12293,14 @@ INSERT INTO `phuong` (`MaPhuong`, `TenPhuong`, `Cap`, `ToaDo`, `MaQuan`) VALUES
 -- Table structure for table `quan`
 --
 
-CREATE TABLE `quan` (
+CREATE TABLE IF NOT EXISTS `quan` (
   `MaQuan` varchar(5) NOT NULL,
   `TenQuan` varchar(100) NOT NULL,
   `Cap` varchar(30) NOT NULL,
   `ToaDo` varchar(30) NOT NULL,
-  `MaTinh` varchar(5) NOT NULL
+  `MaTinh` varchar(5) NOT NULL,
+  PRIMARY KEY (`MaQuan`),
+  KEY `QuanTinh` (`MaTinh`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -12815,7 +13012,7 @@ INSERT INTO `quan` (`MaQuan`, `TenQuan`, `Cap`, `ToaDo`, `MaTinh`) VALUES
 -- Table structure for table `renluyen`
 --
 
-CREATE TABLE `renluyen` (
+CREATE TABLE IF NOT EXISTS `renluyen` (
   `MaSV` varchar(12) NOT NULL,
   `MaHK` int(11) NOT NULL,
   `MaLop` varchar(5) NOT NULL,
@@ -12823,7 +13020,10 @@ CREATE TABLE `renluyen` (
   `DiemCD` double NOT NULL,
   `XepLoai` varchar(30) NOT NULL DEFAULT 'T',
   `NgayXN` date NOT NULL,
-  `GhiChu` varchar(255) DEFAULT NULL
+  `GhiChu` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`MaSV`,`MaHK`),
+  KEY `MaLop` (`MaLop`),
+  KEY `MaHK` (`MaHK`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -12917,7 +13117,119 @@ INSERT INTO `renluyen` (`MaSV`, `MaHK`, `MaLop`, `Diem`, `DiemCD`, `XepLoai`, `N
 ('111250532237', 212, '11T1', 80, 0.8, 'Tốt', '2015-12-01', ''),
 ('111250532239', 212, '11T1', 80, 0.8, 'Tốt', '2015-12-01', ''),
 ('111250532243', 212, '11T1', 80, 0.8, 'Tốt', '2015-12-01', ''),
-('111250532248', 212, '11T1', 80, 0.8, 'Tốt', '2015-12-01', '');
+('111250532248', 212, '11T1', 80, 0.8, 'Tốt', '2015-12-01', ''),
+('141250532101', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532102', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532105', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532106', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532107', 215, '14T1', 70, 0.6, 'Khá', '2016-05-14', ''),
+('141250532109', 215, '14T1', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532110', 215, '14T1', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532111', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532112', 215, '14T1', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532117', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532118', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532121', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532122', 215, '14T1', 65, 0.6, 'Khá', '2016-05-14', ''),
+('141250532124', 215, '14T1', 70, 0.6, 'Khá', '2016-05-14', ''),
+('141250532125', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532127', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532128', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532129', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532131', 215, '14T1', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532133', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532134', 215, '14T1', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532136', 215, '14T1', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532137', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532139', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532141', 215, '14T1', 50, 0.4, 'Trung Bình', '2016-05-14', ''),
+('141250532143', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532144', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532145', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532146', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532147', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532148', 215, '14T1', 60, 0.4, 'Trung Bình', '2016-05-14', ''),
+('141250532149', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532150', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532152', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532153', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532154', 215, '14T1', 82, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532161', 215, '14T1', 70, 0.6, 'Khá', '2016-05-14', ''),
+('141250532162', 215, '14T1', 90, 1, 'Xuất sắc', '2016-05-14', ''),
+('141250532163', 115, '14T2', 90, 1, 'Xuất Sắc', '2016-05-14', NULL),
+('141250532163', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532165', 215, '14T1', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532166', 215, '14T1', 60, 0.4, 'Trung Bình', '2016-05-14', ''),
+('141250532171', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532173', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532174', 215, '14T1', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532175', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532178', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532179', 215, '14T1', 82, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532180', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532181', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532182', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532183', 215, '14T1', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532184', 215, '14T1', 70, 0.6, 'Khá', '2016-05-14', ''),
+('141250532201', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532202', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532206', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532207', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532208', 215, '14T2', 70, 0.6, 'Khá', '2016-05-14', ''),
+('141250532209', 215, '14T2', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532210', 215, '14T2', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532211', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532212', 215, '14T2', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532213', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532214', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532216', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532218', 215, '14T2', 65, 0.6, 'Khá', '2016-05-14', ''),
+('141250532220', 215, '14T2', 70, 0.6, 'Khá', '2016-05-14', ''),
+('141250532221', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532222', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532223', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532224', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532225', 215, '14T2', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532229', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532230', 215, '14T2', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532231', 215, '14T2', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532232', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532233', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532235', 215, '14T2', 50, 0.4, 'Trung Bình', '2016-05-14', ''),
+('141250532236', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532237', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532238', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532239', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532240', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532241', 215, '14T2', 60, 0.4, 'Trung Bình', '2016-05-14', ''),
+('141250532244', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532245', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532246', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532247', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532249', 215, '14T2', 82, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532250', 215, '14T2', 70, 0.6, 'Khá', '2016-05-14', ''),
+('141250532251', 215, '14T2', 90, 1, 'Xuất sắc', '2016-05-14', ''),
+('141250532253', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532254', 215, '14T2', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532255', 215, '14T2', 60, 0.4, 'Trung Bình', '2016-05-14', ''),
+('141250532258', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532259', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532260', 215, '14T2', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532262', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532263', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532265', 215, '14T2', 82, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532266', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532269', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532271', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532272', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532273', 215, '14T2', 70, 0.6, 'Khá', '2016-05-14', ''),
+('141250532274', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532276', 215, '14T2', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532279', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532280', 215, '14T2', 90, 1, 'Xuất sắc', '2016-05-14', ''),
+('141250532282', 215, '14T2', 80, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532284', 215, '14T2', 85, 0.8, 'Tốt', '2016-05-14', ''),
+('141250532285', 215, '14T2', 40, 0.2, 'Yếu', '2016-05-14', '');
 
 -- --------------------------------------------------------
 
@@ -12925,7 +13237,7 @@ INSERT INTO `renluyen` (`MaSV`, `MaHK`, `MaLop`, `Diem`, `DiemCD`, `XepLoai`, `N
 -- Table structure for table `sinhvien`
 --
 
-CREATE TABLE `sinhvien` (
+CREATE TABLE IF NOT EXISTS `sinhvien` (
   `MaSV` varchar(12) NOT NULL,
   `MatKhau` varchar(32) NOT NULL,
   `HoTen` varchar(100) NOT NULL,
@@ -12945,7 +13257,13 @@ CREATE TABLE `sinhvien` (
   `NgayKetThuc` date DEFAULT NULL,
   `KhoaHoc` int(11) NOT NULL,
   `MaLop` varchar(5) NOT NULL,
-  `TinhTrang` int(1) NOT NULL DEFAULT '1'
+  `TinhTrang` int(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`MaSV`),
+  KEY `MaPhuong` (`MaPhuong`),
+  KEY `MaDoiTuong` (`DoiTuong`),
+  KEY `MaLop` (`MaLop`),
+  KEY `MaNgheCha` (`MaNgheCha`),
+  KEY `MaNgheMe` (`MaNgheMe`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -13130,7 +13448,8 @@ INSERT INTO `sinhvien` (`MaSV`, `MatKhau`, `HoTen`, `NgaySinh`, `GioiTinh`, `CMN
 ('111250532323', 'e10adc3949ba59abbe56e057f20f883e', 'Bùi Tiến Dũng', '1993-10-10', 0, 1973121565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532324', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Công Dược', '1993-10-10', 0, 1973122565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532326', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Duyên', '1993-10-10', 0, 1973125565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
-('111250532330', 'e10adc3949ba59abbe56e057f20f883e', 'Phan Việt Hạnh', '1993-10-10', 0, 1973126565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
+('111250532330', 'e10adc3949ba59abbe56e057f20f883e', 'Phan Việt Hạnh', '1993-10-10', 0, 1973126565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1);
+INSERT INTO `sinhvien` (`MaSV`, `MatKhau`, `HoTen`, `NgaySinh`, `GioiTinh`, `CMND`, `NgayCap`, `NoiCap`, `DiaChi`, `MaPhuong`, `HoTenCha`, `MaNgheCha`, `HoTenMe`, `MaNgheMe`, `DoiTuong`, `NgayNhapHoc`, `NgayKetThuc`, `KhoaHoc`, `MaLop`, `TinhTrang`) VALUES
 ('111250532331', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Công Hảo', '1993-10-10', 1, 1973127565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '20212', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532333', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Quang Hậu', '1993-10-10', 0, 1973128565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532334', 'e10adc3949ba59abbe56e057f20f883e', 'Đặng Công Hiền', '1993-10-10', 0, 1973129565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
@@ -13145,8 +13464,7 @@ INSERT INTO `sinhvien` (`MaSV`, `MatKhau`, `HoTen`, `NgaySinh`, `GioiTinh`, `CMN
 ('111250532345', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Cảnh Khuê', '1993-10-10', 0, 1973138565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532348', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Chí Linh', '1993-10-10', 0, 1973139565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532350', 'e10adc3949ba59abbe56e057f20f883e', 'Thái Ngọc Long', '1993-10-10', 0, 1973140565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
-('111250532354', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Quang Minh', '1993-10-10', 0, 1973141565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1);
-INSERT INTO `sinhvien` (`MaSV`, `MatKhau`, `HoTen`, `NgaySinh`, `GioiTinh`, `CMND`, `NgayCap`, `NoiCap`, `DiaChi`, `MaPhuong`, `HoTenCha`, `MaNgheCha`, `HoTenMe`, `MaNgheMe`, `DoiTuong`, `NgayNhapHoc`, `NgayKetThuc`, `KhoaHoc`, `MaLop`, `TinhTrang`) VALUES
+('111250532354', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Quang Minh', '1993-10-10', 0, 1973141565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532355', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Thị Ái My', '1993-10-10', 0, 1973142565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532357', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Lê Nhật Nam', '1993-10-10', 0, 1973143565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532358', 'e10adc3949ba59abbe56e057f20f883e', 'Huỳnh Phúc Ngọc', '1993-10-10', 0, 1973144565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
@@ -13164,7 +13482,7 @@ INSERT INTO `sinhvien` (`MaSV`, `MatKhau`, `HoTen`, `NgaySinh`, `GioiTinh`, `CMN
 ('111250532380', 'e10adc3949ba59abbe56e057f20f883e', 'Hồ Đình Trung', '1993-10-10', 0, 1973156565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '20212', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532381', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Đức Trung', '1993-10-10', 0, 1973157565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532382', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Đắc Trung', '1993-10-10', 0, 1973158565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
-('111250532383', 'e10adc3949ba59abbe56e057f20f883e', 'Trương Phú Trung', '1993-10-10', 0, 1973159565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
+('111250532383', 'e10adc3949ba59abbe56e057f20f883e', 'Trương Phú Trung', '1997-05-20', 0, 1973159565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532384', 'e10adc3949ba59abbe56e057f20f883e', 'Đặng Trần Ngọc Tuấn', '1993-10-10', 0, 1973162565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532385', 'e10adc3949ba59abbe56e057f20f883e', 'Đinh Quốc Tuấn', '1993-10-10', 0, 1973163565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532388', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Văn Tuấn', '1993-10-10', 0, 1973164565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
@@ -13172,7 +13490,118 @@ INSERT INTO `sinhvien` (`MaSV`, `MatKhau`, `HoTen`, `NgaySinh`, `GioiTinh`, `CMN
 ('111250532391', 'e10adc3949ba59abbe56e057f20f883e', 'Hồ Văn Tửu', '1993-10-10', 0, 1973160565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532393', 'e10adc3949ba59abbe56e057f20f883e', 'Giang Nguyễn Quốc Việt', '1993-10-10', 0, 1973165565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
 ('111250532394', 'e10adc3949ba59abbe56e057f20f883e', 'Huỳnh Lê Bá Vinh', '1993-10-10', 0, 1973166565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
-('111250532395', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Xuân Vinh', '1993-10-10', 0, 1973167565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1);
+('111250532395', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Xuân Vinh', '1993-10-10', 0, 1973167565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2011-09-10', NULL, 2011, '11T3', 1),
+('141250532101', 'e10adc3949ba59abbe56e057f20f883e', 'Ngô Viết Nguyên An', '1997-05-20', 0, 1973110565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532102', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Trương An', '1997-05-20', 0, 1973111565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532105', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Tuấn Anh', '1997-05-20', 0, 1973112565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532106', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Thị Kim Anh', '1997-05-20', 0, 1973113565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532107', 'e10adc3949ba59abbe56e057f20f883e', 'Bùi Huy Bảo', '1997-05-20', 0, 1973114565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532109', 'e10adc3949ba59abbe56e057f20f883e', 'Lưu Trịnh Thành Châu', '1997-05-20', 0, 1973115565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532110', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Ngọc Cường', '1997-05-20', 0, 1973116565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532111', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Bình Đà', '1997-05-20', 0, 1973118565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532112', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Văn Đại', '1997-05-20', 0, 1973117565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532117', 'e10adc3949ba59abbe56e057f20f883e', 'Hồ Văn Được', '1997-05-20', 0, 1973119565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532118', 'e10adc3949ba59abbe56e057f20f883e', 'Đào Phước Hà', '1997-05-20', 0, 1973120565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532121', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Văn Hiếu', '1997-05-20', 0, 1973121565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532122', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Văn Hiếu', '1997-05-20', 0, 1973122565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532124', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Hữu Hòa', '1997-05-20', 0, 1973123565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532125', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Minh Hoàng', '1997-05-20', 0, 1973124565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532127', 'e10adc3949ba59abbe56e057f20f883e', 'Đinh Ngọc Huy', '1997-05-20', 0, 1973125565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532128', 'e10adc3949ba59abbe56e057f20f883e', 'Đoàn Quang Huy', '1997-05-20', 0, 1973126565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532129', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Hồ Thiện Huy', '1997-05-20', 0, 1973127565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532131', 'e10adc3949ba59abbe56e057f20f883e', 'Đặng Văn Khánh', '1997-05-20', 0, 1973128565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532133', 'e10adc3949ba59abbe56e057f20f883e', 'Hoàng Đức Lâm', '1997-05-20', 0, 1973129565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532134', 'e10adc3949ba59abbe56e057f20f883e', 'Hoàng Thị Liên', '1997-05-20', 0, 1973131565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532136', 'e10adc3949ba59abbe56e057f20f883e', 'Võ Đăng Lĩnh', '1997-05-20', 0, 1973130565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532137', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Thị Minh', '1997-05-20', 0, 1973135565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532139', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Thị Kim Ngân', '1997-05-20', 0, 1973136565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532141', 'e10adc3949ba59abbe56e057f20f883e', 'Đào Sĩ Đình Nguyên', '1997-05-20', 0, 1973137565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532143', 'e10adc3949ba59abbe56e057f20f883e', 'Hoàng Thị Thuý Oanh', '1997-05-20', 0, 1973138565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532144', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Huỳnh Tấn Phát', '1997-05-20', 0, 1973139565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532145', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Tấn Phát', '1997-05-20', 0, 1973140565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532146', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Minh Phương', '1997-05-20', 0, 1973141565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532147', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Bá Quý', '1997-05-20', 0, 1973142565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532148', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Đình Quý', '1997-05-20', 0, 1973143565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532149', 'e10adc3949ba59abbe56e057f20f883e', 'Võ Thanh Sang', '1997-05-20', 0, 1973144565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532150', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Trinh Sơn', '1997-05-20', 0, 1973145565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532152', 'e10adc3949ba59abbe56e057f20f883e', 'Lưu Thanh Tâm', '1997-05-20', 0, 1973146565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532153', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Đức Thắng', '1997-05-20', 0, 1973147565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532154', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Thế Thành', '1997-05-20', 0, 1973149565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532161', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Công Toàn', '1997-05-20', 0, 1973152565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532162', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Đình Toàn', '1997-05-20', 0, 1973153565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532163', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Thị Bích Trâm', '1997-05-20', 0, 1973154565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532165', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Thị Trinh', '1997-05-20', 0, 1973155565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532166', 'e10adc3949ba59abbe56e057f20f883e', 'Trương Thanh Trúc', '1997-05-20', 0, 1973156565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532171', 'e10adc3949ba59abbe56e057f20f883e', 'Dương Trần Vũ', '1997-05-20', 0, 1973157565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532173', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Phi Vũ', '1997-05-20', 0, 1973158565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532174', 'e10adc3949ba59abbe56e057f20f883e', 'Phạm Tuấn Vũ', '1997-05-20', 0, 1973159565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532175', 'e10adc3949ba59abbe56e057f20f883e', 'Tôn Thất Vũ', '1997-05-20', 0, 1973160565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532178', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Văn Thạch', '1997-05-20', 0, 1973148565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532179', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Minh Thanh', '1997-05-20', 0, 1973151565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532180', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Phúc Ngọc Mẫn', '1997-05-20', 0, 1973134565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532181', 'e10adc3949ba59abbe56e057f20f883e', 'Phan Văn Thai', '1997-05-20', 0, 1973150565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532182', 'e10adc3949ba59abbe56e057f20f883e', 'Hà Xuân Vương', '1997-05-20', 0, 1973161565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532183', 'e10adc3949ba59abbe56e057f20f883e', 'Doãn Mạnh', '1997-05-20', 0, 1973133565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532184', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Đình Lộc', '1997-05-20', 0, 1973132565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T1', 1),
+('141250532201', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Quảng An', '1997-05-20', 0, 1973111565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532202', 'e10adc3949ba59abbe56e057f20f883e', 'Tiêu Thị Thiên Ân', '1997-05-20', 0, 1973110565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532206', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Văn Thanh Bình', '1997-05-20', 0, 1973113565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532207', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Quốc Bình', '1997-05-20', 0, 1973114565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532208', 'e10adc3949ba59abbe56e057f20f883e', 'Đào Văn Chiến', '1997-05-20', 0, 1973115565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532209', 'e10adc3949ba59abbe56e057f20f883e', 'Hoàng Minh Cường', '1997-05-20', 0, 1973116565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532210', 'e10adc3949ba59abbe56e057f20f883e', 'Võ Văn Đàn', '1997-05-20', 0, 1973117565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532211', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Đình Đức', '1997-05-20', 0, 1973118565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532212', 'e10adc3949ba59abbe56e057f20f883e', 'Phạm Đình Đức', '1997-05-20', 0, 1973119565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532213', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Ngọc Duy', '1997-05-20', 0, 1973120565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532214', 'e10adc3949ba59abbe56e057f20f883e', 'Bùi Duy Hai', '1997-05-20', 0, 1973122565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532216', 'e10adc3949ba59abbe56e057f20f883e', 'Đoàn Đức Hạnh', '1997-05-20', 0, 1973121565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532218', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Nguyên Hoàng', '1997-05-20', 0, 1973123565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532220', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Văn Hùng', '1997-05-20', 0, 1973124565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532221', 'e10adc3949ba59abbe56e057f20f883e', 'Phạm Thanh Hùng', '1997-05-20', 0, 1973125565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532222', 'e10adc3949ba59abbe56e057f20f883e', 'Ngô Quốc Hưng', '1997-05-20', 0, 1973126565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532223', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Quốc Huy', '1997-05-20', 0, 1973127565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532224', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Ngọc Huy', '1997-05-20', 0, 1973128565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532225', 'e10adc3949ba59abbe56e057f20f883e', 'Tô Thái Huy', '1997-05-20', 0, 1973129565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532229', 'e10adc3949ba59abbe56e057f20f883e', 'Võ Trường Kỳ', '1997-05-20', 0, 1973130565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532230', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Ngọc Lâm', '1997-05-20', 0, 1973131565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532231', 'e10adc3949ba59abbe56e057f20f883e', 'Phạm Mạnh Linh', '1997-05-20', 0, 1973132565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532232', 'e10adc3949ba59abbe56e057f20f883e', 'Thi Thị Thùy Linh', '1997-05-20', 0, 1973133565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532233', 'e10adc3949ba59abbe56e057f20f883e', 'Phan Hữu Tài Lộc', '1997-05-20', 0, 1973134565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532235', 'e10adc3949ba59abbe56e057f20f883e', 'Cao Xuân Lực', '1997-05-20', 0, 1973135565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532236', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Đăng Lý', '1997-05-20', 0, 1973136565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532237', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Văn Minh', '1997-05-20', 0, 1973137565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532238', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Hoài Nam', '1997-05-20', 0, 1973139565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532239', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Thị Xuân Ngân', '1997-05-20', 0, 1973140565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532240', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Trọng Nghĩa', '1997-05-20', 0, 1973141565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532241', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Hữu Nghĩa', '1997-05-20', 0, 1973142565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532244', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Thị Ngọc Nhi', '1997-05-20', 0, 1973143565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532245', 'e10adc3949ba59abbe56e057f20f883e', 'Võ Viết Phước', '1997-05-20', 0, 1973144565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532246', 'e10adc3949ba59abbe56e057f20f883e', 'Phạm Hồng Quân', '1997-05-20', 0, 1973145565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532247', 'e10adc3949ba59abbe56e057f20f883e', 'Phạm Đình Quốc', '1997-05-20', 0, 1973146565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532249', 'e10adc3949ba59abbe56e057f20f883e', 'Tưởng Văn Sinh', '1997-05-20', 0, 1973148565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532250', 'e10adc3949ba59abbe56e057f20f883e', 'Đoàn Thanh Tâm', '1997-05-20', 0, 1973149565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532251', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Hoàng Tâm', '1997-05-20', 0, 1973150565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532253', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Phú Tân', '1997-05-20', 0, 1973151565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532254', 'e10adc3949ba59abbe56e057f20f883e', 'Phan Trọng Tân', '1997-05-20', 0, 1973152565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532255', 'e10adc3949ba59abbe56e057f20f883e', 'Hồ Công Thành', '1997-05-20', 0, 1973155565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532258', 'e10adc3949ba59abbe56e057f20f883e', 'Phùng Xuân Thương', '1997-05-20', 0, 1973157565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532259', 'e10adc3949ba59abbe56e057f20f883e', 'Thái Văn Thường', '1997-05-20', 0, 1973156565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532260', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Nhật Tiến', '1997-05-20', 0, 1973158565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532262', 'e10adc3949ba59abbe56e057f20f883e', 'Trương Đặng Quốc Tiến', '1997-05-20', 0, 1973159565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532263', 'e10adc3949ba59abbe56e057f20f883e', 'Võ Trọng Tín', '1997-05-20', 0, 1973160565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532265', 'e10adc3949ba59abbe56e057f20f883e', 'Hồ Anh Trung', '1997-05-20', 0, 1973161565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532266', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Thế Trung', '1997-05-20', 0, 1973162565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532269', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Văn Tuấn', '1997-05-20', 0, 1973164565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532271', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Phước Tuấn', '1997-05-20', 0, 1973165565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532272', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Văn Tùng', '1997-05-20', 0, 1973163565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532273', 'e10adc3949ba59abbe56e057f20f883e', 'Bùi Duy Vũ', '1997-05-20', 0, 1973167565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532274', 'e10adc3949ba59abbe56e057f20f883e', 'Đoàn Tấn Vũ', '1997-05-20', 0, 1973168565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532276', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Tự Thanh Thảo', '1997-05-20', 0, 1973154565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532279', 'e10adc3949ba59abbe56e057f20f883e', 'Hồ Tiến Quốc', '1997-05-20', 0, 1973147565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532280', 'e10adc3949ba59abbe56e057f20f883e', 'Lê Công Tuấn Anh', '1997-05-20', 0, 1973112565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532282', 'e10adc3949ba59abbe56e057f20f883e', 'Trần Thị Như Mỹ', '1997-05-20', 0, 1973138565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532284', 'e10adc3949ba59abbe56e057f20f883e', 'Đặng Thị Vân', '1997-05-20', 0, 1973166565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1),
+('141250532285', 'e10adc3949ba59abbe56e057f20f883e', 'Võ Văn Tám', '1997-05-20', 0, 1973153565, '2010-06-17', 'Quảng Nam', 'Thôn Kim Long', '03421', 'Nguyễn Tuấn', 'Nông dân', 'Nguyễn Thị Mai', 'Nông dân', '1', '2014-09-10', NULL, 2014, '14T2', 1);
 
 -- --------------------------------------------------------
 
@@ -13180,8 +13609,8 @@ INSERT INTO `sinhvien` (`MaSV`, `MatKhau`, `HoTen`, `NgaySinh`, `GioiTinh`, `CMN
 -- Table structure for table `sinhvien_phong`
 --
 
-CREATE TABLE `sinhvien_phong` (
-  `Id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `sinhvien_phong` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `MaSV` varchar(12) NOT NULL,
   `MaPhong` varchar(3) NOT NULL,
   `MaHK` int(11) NOT NULL,
@@ -13189,8 +13618,13 @@ CREATE TABLE `sinhvien_phong` (
   `NgayDK` datetime NOT NULL,
   `NgayXN` datetime DEFAULT NULL,
   `NguoiXN` varchar(45) DEFAULT NULL,
-  `GhiChu` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `GhiChu` text,
+  PRIMARY KEY (`Id`),
+  KEY `Id` (`Id`),
+  KEY `MaPhong` (`MaPhong`),
+  KEY `MaHK` (`MaHK`),
+  KEY `sinhvien_phong_ibfk_1` (`MaSV`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=135 ;
 
 --
 -- Dumping data for table `sinhvien_phong`
@@ -13198,17 +13632,22 @@ CREATE TABLE `sinhvien_phong` (
 
 INSERT INTO `sinhvien_phong` (`Id`, `MaSV`, `MaPhong`, `MaHK`, `TrangThai`, `NgayDK`, `NgayXN`, `NguoiXN`, `GhiChu`) VALUES
 (114, '111250532113', '203', 112, 'dachuyen', '2015-11-29 12:42:41', '2015-11-29 13:29:17', '10001', 'dachuyen:101'),
-(115, '111250532114', '203', 112, 'daxn', '2015-11-29 12:43:03', '2015-12-01 00:06:58', '10001', 'chochuyen:303'),
+(115, '111250532114', '203', 112, 'dachuyen', '2015-11-29 12:43:03', '2015-12-01 00:06:58', '10001', 'dachuyen:303'),
 (116, '111250532115', '203', 112, 'daxn', '2015-11-29 12:43:14', '2015-12-01 00:08:37', '10001', ''),
 (117, '111250532116', '203', 112, 'daxn', '2015-11-29 12:43:27', '2015-12-01 00:21:14', '10001', ''),
 (119, '111250532118', '203', 112, 'daxn', '2015-11-29 12:44:05', '2015-12-01 00:48:02', '10001', ''),
 (122, '111250532120', '203', 112, 'tuchoi', '2015-11-29 13:17:44', '2015-11-29 13:19:23', '10001', 'I dislike you. phặc phặc'),
 (124, '111250532120', '101', 112, 'tuchoi', '2015-11-30 23:13:22', '2015-12-01 00:28:09', '10001', 'I dislike you'),
 (125, '111250532106', '202', 112, 'dachuyen', '2015-12-01 00:52:36', '2015-12-01 22:56:20', '10001', 'dachuyen:101'),
-(126, '111250532107', '202', 112, 'chuaxn', '2015-12-01 00:54:11', NULL, NULL, NULL),
-(127, '111250532213', '105', 112, 'chuaxn', '2015-12-01 01:20:59', NULL, NULL, NULL),
+(126, '111250532107', '202', 112, 'daxn', '2015-12-01 00:54:11', '2016-05-18 23:44:12', '10001', 'Xác nhận'),
+(127, '111250532213', '105', 112, 'daxn', '2015-12-01 01:20:59', '2016-05-18 22:43:37', '10001', '1'),
 (128, '111250532106', '101', 112, 'daxn', '2015-12-01 00:52:36', '2016-03-08 01:50:26', '10001', NULL),
-(129, '111250532113', '101', 112, 'daxn', '2015-11-29 12:42:41', '2016-03-08 02:01:12', '10001', 'chochuyen:201');
+(129, '111250532113', '101', 112, 'dachuyen', '2015-11-29 12:42:41', '2016-03-08 02:01:12', '10001', 'dachuyen:201'),
+(130, '111250532237', '105', 112, 'daxn', '2016-05-18 23:53:02', '2016-05-18 23:53:21', '10001', 'chochuyen:101'),
+(131, '111250532238', '103', 112, 'daxn', '2016-05-18 23:54:26', '2016-05-18 23:55:17', '10001', ''),
+(132, '111250532239', '203', 112, 'chuaxn', '2016-05-19 07:00:11', NULL, NULL, NULL),
+(133, '111250532114', '303', 112, 'daxn', '2015-11-29 12:43:03', '2016-05-19 12:55:27', '10001', NULL),
+(134, '111250532113', '201', 112, 'daxn', '2015-11-29 12:42:41', '2016-05-19 13:20:54', '10001', NULL);
 
 -- --------------------------------------------------------
 
@@ -13216,15 +13655,16 @@ INSERT INTO `sinhvien_phong` (`Id`, `MaSV`, `MaPhong`, `MaHK`, `TrangThai`, `Nga
 -- Table structure for table `thongtinphanhoi`
 --
 
-CREATE TABLE `thongtinphanhoi` (
-  `MaSo` int(255) NOT NULL,
+CREATE TABLE IF NOT EXISTS `thongtinphanhoi` (
+  `MaSo` int(255) NOT NULL AUTO_INCREMENT,
   `TieuDe` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `NoiDung` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `NguoiGoi` varchar(12) NOT NULL,
   `MaSoCha` int(12) DEFAULT NULL,
   `ThoiGianCapNhat` datetime NOT NULL,
-  `TrangThai` int(255) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `TrangThai` int(255) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`MaSo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `thongtinphanhoi`
@@ -13246,21 +13686,20 @@ INSERT INTO `thongtinphanhoi` (`MaSo`, `TieuDe`, `NoiDung`, `NguoiGoi`, `MaSoCha
 -- Table structure for table `thongtintuyendung`
 --
 
-CREATE TABLE `thongtintuyendung` (
-  `MaSo` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `thongtintuyendung` (
+  `MaSo` int(11) NOT NULL AUTO_INCREMENT,
   `TieuDe` varchar(255) NOT NULL,
   `NoiDung` text NOT NULL,
   `NgayDangTin` datetime NOT NULL,
-  `NguoiDangTin` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `NguoiDangTin` varchar(255) NOT NULL,
+  PRIMARY KEY (`MaSo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
 
 --
 -- Dumping data for table `thongtintuyendung`
 --
 
 INSERT INTO `thongtintuyendung` (`MaSo`, `TieuDe`, `NoiDung`, `NgayDangTin`, `NguoiDangTin`) VALUES
-(1, 'Note: The following statements can be cached: select, from, join, where, like, group_by, having, order_by, set', 'Công ty Cổ phần Công Nghệ Rollthemes', '2016-04-02 10:53:51', '10001'),
-(2, 'Kỹ Sư Trực Ca Hệ Thống', 'Chi Nhánh Công Ty Cp Hạ Tầng Viễn Thông CMC (Tp Hà Nội)\r\nTầng 12, Tòa nhà CMC, Duy Tân, Cầu Giấy, Hà Nội, Hà Nội, Việt Nam\r\nLương: 6,000,000VNĐ - 7,000,000VNĐ</br>Mô tả chi tiết công việc\r\n\r\n- Theo dõi hệ thống: Xem xét các thông tin từ phần mềm giám sát để có các thông số và cảnh báo của toàn hệ thống\r\n- Kiểm tra đài trạm: Tiến hành kiểm tra và ghi nhận hiện trạng\r\n- Khắc phục sự cố: dựa trên các thông báo lỗi nhận được, phối hợp với các đối tác cung cấp kênh truyền để xử lí.\r\n- Giám sát và phân tích chất lượng, hiệu suất mạng lưới, điều chỉnh định tuyến kịp thời tới các hướng dự phòng đảm bảo tối ưu chất lượng dịch vụ và hiệu quả kinh tế;\r\n- Thực hiện báo cáo chất lượng, hiệu suất sử dụng mạng theo định kỳ.\r\n- Giám sát và vận hành Trung tâm dữ liệu, cơ sở vật chất và các chức năng trọng yếu nhằm đáp ứng hoặc vượt các yêu cầu Cấp độ dịch vụ\r\n- Đo lường và thống kê các dữ liệu quan trọng và đưa ra các báo cáo thích hợp theo ca trực và hàng tuần\r\n- Xử lý các sự cố về kỹ thuật khi có yêu cầu\r\n- Tham gia trực ca hệ thống 24/7\r\n\r\nKinh nghiệm/Kỹ năng chi tiết\r\n\r\n- Nam: từ 22 đến 35 tuổi.\r\n- Tốt nghiệp Cao đẳng chuyên ngành Điện tử Viễn thông, Công nghệ thông tin hoặc tương đương.\r\n- Có hiểu biết tổng thể mạng lưới và dịch vụ viễn thông;\r\n- Có kinh nghiệm vận hành, khai thác hệ thống mạng viễn thông;\r\n- Có kiến thức, kinh nghiệp về hệ điều hành Windows, Unix;\r\n- Có kiến thức về dịch vụ mạng: DNS, LDAP, Web server …\r\n- Có kinh nghiệm về hệ thống điện dân dụng hoặc điện công nghiệp là một lợi thế.\r\n- Có kinh nghiệm về networking, routing và switching TCP/IP, LAN/VLAN/WAN, NGN, báo hiệu số 7, ISDN là một lợi thế;\r\n- Có chứng chỉ/ trình độ Cisco, Juniper, Sun, Microsoft hoặc tương đương là 1 lợi thế.\r\n- Kỹ năng làm việc độc lập, theo nhóm.\r\n- Sẵn sàng làm việc thêm giờ theo yêu cầu.\r\n- Sẵn sàng đi công tác xa.\r\n- Trung thực, có tinh thần học hỏi, chia sẻ.\r\n- Bình tĩnh, tỉnh táo và linh hoạt giải quyết vấn đề trong mọi trường hợp, đặc biệt khi xảy ra sự cố.\r\n\r\nMô tả\r\n\r\nNgành nghề việc làm:\r\nKỹ thuật ứng dụng/ Cơ khí\r\nCNTT - Phần mềm\r\nCNTT - Phần cứng/ Mạng\r\nCấp bậc: Kỹ thuật viên/Kỹ sư\r\nNơi làm việc:\r\nHà Nội\r\nĐà Nẵng\r\nTrình độ học vấn: Cao đẳng\r\nMức kinh nghiệm: 0-1 năm kinh nghiệm\r\nLoại công việc: Toàn thời gian cố định\r\nTuổi: 22-35\r\nGiới tính: Nam\r\nThông tin liên hệ\r\n\r\nCách liên hệ: Nộp trực tuyến, Gửi kèm File, Trực tiếp\r\nMô tả:\r\n- Các ứng viên quan tâm vui lòng nộp hồ sơ trực tuyến, đính kèm file hay trực tiếp đến tại công ty\r\n* Chú ý:\r\n- Gửi CV ứng tuyển qua email: hn.tuyendung@cmctelecom.vn\r\n- Tiêu đề: Kỹ sư trực ca _ Họ và tên\r\n\r\nTên liên hệ: Phòng Hành chính nhân sự\r\nĐịa chỉ: Tầng 12, Tòa nhà CMC, Duy Tân, Cầu Giấy, Hà Nội, Hà Nội, Việt Nam', '2016-04-02 10:55:49', '10001'),
 (3, 'Lập Trình Viên Wordpress', 'Ngày gởi: 28/03/2016 Ngày hết hạn: 12/05/2016', '2016-04-02 15:22:20', '10001'),
 (5, 'Lập Trình Viên Wordpress', 'Ngày gởi: 28/03/2016 Ngày hết hạn: 12/05/2016', '2016-04-02 15:22:29', '10005'),
 (6, 'Note: All values are escaped automatically producing safer queries.', 'Ngày gởi: 28/03/2016 Ngày hết hạn: 12/05/2016', '2016-04-02 15:22:33', '10001'),
@@ -13279,10 +13718,11 @@ INSERT INTO `thongtintuyendung` (`MaSo`, `TieuDe`, `NoiDung`, `NgayDangTin`, `Ng
 -- Table structure for table `tinh`
 --
 
-CREATE TABLE `tinh` (
+CREATE TABLE IF NOT EXISTS `tinh` (
   `MaTinh` varchar(5) NOT NULL,
   `TenTinh` varchar(100) NOT NULL,
-  `Cap` varchar(30) NOT NULL
+  `Cap` varchar(30) NOT NULL,
+  PRIMARY KEY (`MaTinh`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -13360,11 +13800,13 @@ INSERT INTO `tinh` (`MaTinh`, `TenTinh`, `Cap`) VALUES
 -- Table structure for table `yeucaucapgiay`
 --
 
-CREATE TABLE `yeucaucapgiay` (
-  `MaYC` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `yeucaucapgiay` (
+  `MaYC` int(11) NOT NULL AUTO_INCREMENT,
   `MaSV` varchar(12) NOT NULL,
-  `NgayYC` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `NgayYC` datetime NOT NULL,
+  PRIMARY KEY (`MaYC`),
+  KEY `MaSV` (`MaSV`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=77 ;
 
 --
 -- Dumping data for table `yeucaucapgiay`
@@ -13440,255 +13882,6 @@ INSERT INTO `yeucaucapgiay` (`MaYC`, `MaSV`, `NgayYC`) VALUES
 (76, '111250532204', '2016-05-12 01:20:08');
 
 --
--- Indexes for dumped tables
---
-
---
--- Indexes for table `canbo`
---
-ALTER TABLE `canbo`
-  ADD PRIMARY KEY (`MaCB`);
-
---
--- Indexes for table `chitietgiayxacnhan`
---
-ALTER TABLE `chitietgiayxacnhan`
-  ADD PRIMARY KEY (`MaXN`,`MaSV`,`MaHK`,`MaLG`),
-  ADD KEY `MaSV` (`MaSV`),
-  ADD KEY `MaLG` (`MaLG`),
-  ADD KEY `MaHK` (`MaHK`);
-
---
--- Indexes for table `chitietyeucau`
---
-ALTER TABLE `chitietyeucau`
-  ADD PRIMARY KEY (`MaYC`,`MaLG`,`MaHK`),
-  ADD KEY `MaLG` (`MaLG`),
-  ADD KEY `MaHK` (`MaHK`);
-
---
--- Indexes for table `diemchinhtri`
---
-ALTER TABLE `diemchinhtri`
-  ADD PRIMARY KEY (`BienLaiSo`);
-
---
--- Indexes for table `doituong`
---
-ALTER TABLE `doituong`
-  ADD PRIMARY KEY (`MaDT`);
-
---
--- Indexes for table `giayxacnhan`
---
-ALTER TABLE `giayxacnhan`
-  ADD PRIMARY KEY (`MaXN`,`MaYC`),
-  ADD UNIQUE KEY `MaYC` (`MaYC`) USING BTREE;
-
---
--- Indexes for table `hedaotao`
---
-ALTER TABLE `hedaotao`
-  ADD PRIMARY KEY (`MaDaoTao`);
-
---
--- Indexes for table `hocky`
---
-ALTER TABLE `hocky`
-  ADD PRIMARY KEY (`id`,`MaHK`),
-  ADD KEY `MaHK` (`MaHK`);
-
---
--- Indexes for table `hocphi`
---
-ALTER TABLE `hocphi`
-  ADD PRIMARY KEY (`MaSV`,`MaHK`),
-  ADD KEY `MaHK` (`MaHK`);
-
---
--- Indexes for table `khoa`
---
-ALTER TABLE `khoa`
-  ADD PRIMARY KEY (`MaKhoa`),
-  ADD UNIQUE KEY `MaKhoa` (`MaKhoa`);
-
---
--- Indexes for table `ktx_phong`
---
-ALTER TABLE `ktx_phong`
-  ADD PRIMARY KEY (`MaPhong`);
-
---
--- Indexes for table `loaigiay`
---
-ALTER TABLE `loaigiay`
-  ADD PRIMARY KEY (`MaLG`);
-
---
--- Indexes for table `lop`
---
-ALTER TABLE `lop`
-  ADD PRIMARY KEY (`MaLop`),
-  ADD UNIQUE KEY `ILop` (`MaLop`),
-  ADD UNIQUE KEY `MaCB` (`MaCB`),
-  ADD KEY `LopNganh` (`MaNganh`),
-  ADD KEY `LopDT` (`MaDaoTao`);
-
---
--- Indexes for table `nganh`
---
-ALTER TABLE `nganh`
-  ADD PRIMARY KEY (`MaNganh`),
-  ADD KEY `MaKhoa` (`MaKhoa`);
-
---
--- Indexes for table `nghenghiep`
---
-ALTER TABLE `nghenghiep`
-  ADD PRIMARY KEY (`MaNghe`);
-
---
--- Indexes for table `ngoaitru`
---
-ALTER TABLE `ngoaitru`
-  ADD PRIMARY KEY (`MaNT`),
-  ADD UNIQUE KEY `MaSV` (`MaSV`,`NgayDen`),
-  ADD KEY `ngoaitru_ibfk_2` (`MaPhuong`),
-  ADD KEY `ngoaitru_ibfk_3` (`MaHK`);
-
---
--- Indexes for table `phuong`
---
-ALTER TABLE `phuong`
-  ADD PRIMARY KEY (`MaPhuong`),
-  ADD KEY `PhuongQuan` (`MaQuan`);
-
---
--- Indexes for table `quan`
---
-ALTER TABLE `quan`
-  ADD PRIMARY KEY (`MaQuan`),
-  ADD KEY `QuanTinh` (`MaTinh`);
-
---
--- Indexes for table `renluyen`
---
-ALTER TABLE `renluyen`
-  ADD PRIMARY KEY (`MaSV`,`MaHK`),
-  ADD KEY `MaLop` (`MaLop`),
-  ADD KEY `MaHK` (`MaHK`);
-
---
--- Indexes for table `sinhvien`
---
-ALTER TABLE `sinhvien`
-  ADD PRIMARY KEY (`MaSV`),
-  ADD KEY `MaPhuong` (`MaPhuong`),
-  ADD KEY `MaDoiTuong` (`DoiTuong`),
-  ADD KEY `MaLop` (`MaLop`),
-  ADD KEY `MaNgheCha` (`MaNgheCha`),
-  ADD KEY `MaNgheMe` (`MaNgheMe`);
-
---
--- Indexes for table `sinhvien_phong`
---
-ALTER TABLE `sinhvien_phong`
-  ADD PRIMARY KEY (`Id`),
-  ADD KEY `Id` (`Id`),
-  ADD KEY `MaPhong` (`MaPhong`),
-  ADD KEY `MaHK` (`MaHK`),
-  ADD KEY `sinhvien_phong_ibfk_1` (`MaSV`);
-
---
--- Indexes for table `thongtinphanhoi`
---
-ALTER TABLE `thongtinphanhoi`
-  ADD PRIMARY KEY (`MaSo`);
-
---
--- Indexes for table `thongtintuyendung`
---
-ALTER TABLE `thongtintuyendung`
-  ADD PRIMARY KEY (`MaSo`);
-
---
--- Indexes for table `tinh`
---
-ALTER TABLE `tinh`
-  ADD PRIMARY KEY (`MaTinh`);
-
---
--- Indexes for table `yeucaucapgiay`
---
-ALTER TABLE `yeucaucapgiay`
-  ADD PRIMARY KEY (`MaYC`),
-  ADD KEY `MaSV` (`MaSV`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `chitietgiayxacnhan`
---
-ALTER TABLE `chitietgiayxacnhan`
-  MODIFY `MaXN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
---
--- AUTO_INCREMENT for table `doituong`
---
-ALTER TABLE `doituong`
-  MODIFY `MaDT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
---
--- AUTO_INCREMENT for table `giayxacnhan`
---
-ALTER TABLE `giayxacnhan`
-  MODIFY `MaXN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
---
--- AUTO_INCREMENT for table `hedaotao`
---
-ALTER TABLE `hedaotao`
-  MODIFY `MaDaoTao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `hocky`
---
-ALTER TABLE `hocky`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `loaigiay`
---
-ALTER TABLE `loaigiay`
-  MODIFY `MaLG` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `nghenghiep`
---
-ALTER TABLE `nghenghiep`
-  MODIFY `MaNghe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT for table `ngoaitru`
---
-ALTER TABLE `ngoaitru`
-  MODIFY `MaNT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=263;
---
--- AUTO_INCREMENT for table `sinhvien_phong`
---
-ALTER TABLE `sinhvien_phong`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
---
--- AUTO_INCREMENT for table `thongtinphanhoi`
---
-ALTER TABLE `thongtinphanhoi`
-  MODIFY `MaSo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT for table `thongtintuyendung`
---
-ALTER TABLE `thongtintuyendung`
-  MODIFY `MaSo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
---
--- AUTO_INCREMENT for table `yeucaucapgiay`
---
-ALTER TABLE `yeucaucapgiay`
-  MODIFY `MaYC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
---
 -- Constraints for dumped tables
 --
 
@@ -13719,16 +13912,16 @@ ALTER TABLE `giayxacnhan`
 -- Constraints for table `hocphi`
 --
 ALTER TABLE `hocphi`
-  ADD CONSTRAINT `HPhiSV` FOREIGN KEY (`MaSV`) REFERENCES `sinhvien` (`MaSV`),
-  ADD CONSTRAINT `hocphi_ibfk_1` FOREIGN KEY (`MaHK`) REFERENCES `hocky` (`MaHK`);
+  ADD CONSTRAINT `hocphi_ibfk_1` FOREIGN KEY (`MaHK`) REFERENCES `hocky` (`MaHK`),
+  ADD CONSTRAINT `HPhiSV` FOREIGN KEY (`MaSV`) REFERENCES `sinhvien` (`MaSV`);
 
 --
 -- Constraints for table `lop`
 --
 ALTER TABLE `lop`
+  ADD CONSTRAINT `fk_macb` FOREIGN KEY (`MaCB`) REFERENCES `canbo` (`MaCB`),
   ADD CONSTRAINT `LopDT` FOREIGN KEY (`MaDaoTao`) REFERENCES `hedaotao` (`MaDaoTao`),
-  ADD CONSTRAINT `LopNganh` FOREIGN KEY (`MaNganh`) REFERENCES `nganh` (`MaNganh`),
-  ADD CONSTRAINT `fk_macb` FOREIGN KEY (`MaCB`) REFERENCES `canbo` (`MaCB`);
+  ADD CONSTRAINT `LopNganh` FOREIGN KEY (`MaNganh`) REFERENCES `nganh` (`MaNganh`);
 
 --
 -- Constraints for table `nganh`
